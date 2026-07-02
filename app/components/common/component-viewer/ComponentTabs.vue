@@ -65,8 +65,16 @@ const items = computed<TabsItem[]>(() => {
 });
 
 const demoCode = ref<string>("");
-const componentCode = ref<string>("");
 const componentsList = ref<{ ext: string; fileName: string; code: string }[]>([]);
+
+const componentCodeItems = computed(() =>
+  componentsList.value.map((item) => ({
+    label: item.fileName,
+    filename: item.fileName,
+    language: item.ext,
+    code: item.code,
+  })),
+);
 
 type ComponentCodeType = "ui" | "examples" | "configs";
 
@@ -109,25 +117,13 @@ async function loadDemoCode() {
 
   if (codeGetter) {
     demoCode.value = (await codeGetter()) as unknown as string;
-    demoCode.value = `
-## Component Usage
-
-
-::code-collapse
-
-\`\`\`${demoFile.split(".").at(-1)} [${demoFile}]
-${demoCode.value}
-\`\`\`
-
-::
-    `;
   }
 
   isDemoCodeLoading.value = false;
 }
 
 async function loadComponentCodes() {
-  if (!componentFiles.length || componentCode.value || isComponentCodeLoading.value) return;
+  if (!componentFiles.length || componentsList.value.length || isComponentCodeLoading.value) return;
 
   isComponentCodeLoading.value = true;
 
@@ -149,11 +145,6 @@ async function loadComponentCodes() {
   });
 
   componentsList.value = (await Promise.all(promises)).filter((item) => !!item);
-
-  componentCode.value = `
-::code-group
-${componentsList.value.map((item) => `\`\`\`${item.ext} [${item.fileName}]\n${item.code}\n\`\`\`\n`).join("\n")}
-::`;
 
   isComponentCodeLoading.value = false;
 }
@@ -200,11 +191,20 @@ watch(activeInstallationTab, (tab) => {
     }"
   >
     <template #code>
-      <MDC
+      <div
         v-if="demoCode"
-        :key="demoCode"
-        :value="demoCode"
-      />
+        class="space-y-5"
+      >
+        <h2 class="text-highlighted text-2xl font-semibold tracking-tight">Component Usage</h2>
+
+        <ProseCodeCollapse>
+          <RuntimeCodeBlock
+            :code="demoCode"
+            :filename="demoFile"
+            :language="demoFile.split('.').at(-1)"
+          />
+        </ProseCodeCollapse>
+      </div>
       <div
         v-else
         class="text-muted bg-elevated/35 ring-default/70 flex min-h-40 items-center justify-center gap-3 rounded-3xl ring"
@@ -260,10 +260,9 @@ watch(activeInstallationTab, (tab) => {
 
           <div class="text-muted mt-8 mb-4 text-sm">Source files</div>
 
-          <MDC
-            v-if="componentCode"
-            :key="componentCode"
-            :value="componentCode"
+          <RuntimeCodeGroup
+            v-if="componentCodeItems.length"
+            :items="componentCodeItems"
           />
           <div
             v-else-if="isComponentCodeLoading"

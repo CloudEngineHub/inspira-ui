@@ -30,12 +30,19 @@ const items = ref([
   },
 ]);
 
-const mdc = `
-::code-group
-${items.value.map((pm) => `\`\`\`bash [${pm.label}]\n${pm.command}\n\`\`\`\n`).join("\n")}
-::`;
+const codeItems = computed(() =>
+  items.value.map((pm) => ({
+    label: pm.label,
+    icon: pm.icon,
+    language: "bash",
+    code: pm.command,
+  })),
+);
 </script>
 
 <template>
-  <MDC :value="mdc" />
+  <RuntimeCodeGroup
+    sync="package-manager"
+    :items="codeItems"
+  />
 </template>

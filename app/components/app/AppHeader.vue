@@ -20,11 +20,21 @@ const links = computed(() =>
 
 <template>
   <UHeader
-    :ui="{ center: 'flex-1' }"
+    :ui="{
+      root: 'border-b border-default/60 bg-default/70 backdrop-blur-xl',
+      container: 'gap-3',
+      left: 'lg:flex-1 flex items-center gap-2',
+      center: 'hidden flex-1 justify-center lg:flex',
+      right: 'flex items-center justify-end lg:flex-1 gap-1.5',
+      title:
+        'rounded-full transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]',
+      toggle: 'lg:hidden',
+      body: 'bg-default/95 p-4 sm:p-6',
+    }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
     mode="drawer"
-    class="bg-default/15"
+    class="shadow-[0_1px_0_rgba(255,255,255,0.03)]"
   >
     <AppHeaderCenter />
 
@@ -50,10 +60,17 @@ const links = computed(() =>
         />
       </template>
 
-      <UContentSearchButton class="lg:hidden" />
+      <UContentSearchButton
+        class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96] lg:hidden"
+        :ui="{ leadingIcon: 'size-4' }"
+      />
 
       <ClientOnly>
-        <UColorModeButton />
+        <UColorModeButton
+          color="neutral"
+          variant="ghost"
+          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+        />
 
         <template #fallback>
           <div class="h-8 w-8 animate-pulse rounded-md bg-neutral-200 dark:bg-neutral-800" />
@@ -65,6 +82,8 @@ const links = computed(() =>
           v-for="(link, index) of links"
           :key="index"
           v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
+          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+          :ui="{ leadingIcon: 'size-4' }"
         />
       </template>
     </template>

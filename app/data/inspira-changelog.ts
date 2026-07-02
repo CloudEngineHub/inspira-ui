@@ -21,6 +21,14 @@ export interface InspiraChangelogEntry {
 
 export const inspiraChangelog: InspiraChangelogEntry[] = [
   {
+    type: "fixed",
+    date: "2026-07-03",
+    title: "Production code highlighting restored.",
+    description:
+      "Runtime code examples now use the bundled highlighter, so syntax colors stay consistent after deployment.",
+    links: [{ label: "Components", to: "/components" }],
+  },
+  {
     type: "added",
     date: "2026-06-30",
     title: "Floating Card added.",

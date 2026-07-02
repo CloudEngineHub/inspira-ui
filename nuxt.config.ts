@@ -51,6 +51,17 @@ export default defineNuxtConfig({
     mdc: true,
   },
 
+  mdc: {
+    highlight: {
+      noApiRoute: true,
+      theme: {
+        light: "material-theme-lighter",
+        default: "material-theme",
+        dark: "material-theme-palenight",
+      },
+    },
+  },
+
   colorMode: {
     preference: "dark",
     fallback: "dark",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from "@nuxt/content";
+import type { ContentNavigationItem, DocsEnCollectionItem } from "@nuxt/content";
 import { motion, MotionConfig } from "motion-v";
 
 const navigation = inject<Ref<ContentNavigationItem[]>>("navigation");
@@ -7,15 +7,25 @@ const navigation = inject<Ref<ContentNavigationItem[]>>("navigation");
 const { nav } = useNavigation(navigation);
 
 const route = useRoute();
+const { locale, isEnabled } = useDocusI18n();
 const navContainer = ref<HTMLElement | null>(null);
 const hoveredKey = ref<string | null>(null);
 const trailingSlashRe = /\/$/;
 const indicatorId = useId();
 
+const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` : "docs"));
+
+const { data: badgePages } = await useAsyncData(`docs_sidebar_badges_${locale.value}`, () => {
+  return queryCollection(collectionName.value as any).all() as Promise<DocsEnCollectionItem[]>;
+});
+
+type StatusBadge = "New" | "Updated";
+
 type NavItem = ContentNavigationItem & {
   "data-nav-path"?: string;
   children?: NavItem[];
   badge?: string | number | Record<string, unknown>;
+  statusBadge?: StatusBadge;
   trailingIcon?: string;
 };
 
@@ -25,17 +35,65 @@ interface NavGroup {
   items: NavItem[];
 }
 
-function addDataNavPath(items: ContentNavigationItem[] = []): NavItem[] {
-  return items.map((item) => ({
-    ...item,
-    "data-nav-path": item.path,
-    children: item.children ? addDataNavPath(item.children) : item.children,
-  }));
-}
-
 function normalizePath(path?: string | null) {
   if (!path) return "";
   return path.length > 1 ? path.replace(trailingSlashRe, "") : path;
+}
+
+function normalizeStatusBadge(badge?: unknown): StatusBadge | null {
+  const value =
+    typeof badge === "object" && badge !== null && "label" in badge
+      ? (badge as { label?: unknown }).label
+      : badge;
+
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalized = value.toLowerCase();
+
+  if (normalized === "new") {
+    return "New";
+  }
+
+  if (normalized === "updated") {
+    return "Updated";
+  }
+
+  return null;
+}
+
+function statusBadgeColor(badge: StatusBadge) {
+  return badge === "New" ? "success" : "primary";
+}
+
+const badgeByPath = computed(() => {
+  const map = new Map<string, StatusBadge>();
+
+  for (const page of badgePages.value || []) {
+    const badge = normalizeStatusBadge(page.badge);
+
+    if (page.path && badge) {
+      map.set(normalizePath(page.path), badge);
+    }
+  }
+
+  return map;
+});
+
+function addDataNavPath(items: ContentNavigationItem[] = []): NavItem[] {
+  return items.map((item) => {
+    const statusBadge =
+      normalizeStatusBadge((item as NavItem).badge) ||
+      badgeByPath.value.get(normalizePath(item.path));
+
+    return {
+      ...item,
+      "data-nav-path": item.path,
+      statusBadge,
+      children: item.children ? addDataNavPath(item.children) : item.children,
+    };
+  });
 }
 
 function itemKey(item?: NavItem | null) {
@@ -223,19 +281,15 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 </span>
 
                 <span
-                  v-if="link.badge || link.badge === 0 || link.trailingIcon"
-                  class="relative ms-auto inline-flex items-center gap-1.5"
+                  v-if="link.statusBadge || link.trailingIcon"
+                  class="relative inline-flex items-center gap-1.5"
                 >
                   <UBadge
-                    v-if="link.badge || link.badge === 0"
-                    color="neutral"
-                    variant="outline"
+                    v-if="link.statusBadge"
+                    :label="link.statusBadge"
+                    :color="statusBadgeColor(link.statusBadge)"
+                    variant="soft"
                     size="sm"
-                    v-bind="
-                      typeof link.badge === 'string' || typeof link.badge === 'number'
-                        ? { label: link.badge }
-                        : link.badge
-                    "
                   />
                   <UIcon
                     v-if="link.trailingIcon"
@@ -300,6 +354,25 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                       :class="isCurrent(child) ? 'font-semibold tracking-[-0.015em]' : undefined"
                     >
                       {{ child.title }}
+                    </span>
+
+                    <span
+                      v-if="child.statusBadge || child.trailingIcon"
+                      class="relative ms-auto inline-flex items-center gap-1.5"
+                    >
+                      <UBadge
+                        v-if="child.statusBadge"
+                        :label="child.statusBadge"
+                        :color="statusBadgeColor(child.statusBadge)"
+                        variant="soft"
+                        size="sm"
+                        class="rounded-full px-1.5 text-[0.56rem] font-semibold tracking-[0.12em] uppercase"
+                      />
+                      <UIcon
+                        v-if="child.trailingIcon"
+                        :name="child.trailingIcon"
+                        class="text-muted group-hover/link:text-toned size-4 shrink-0"
+                      />
                     </span>
                   </ULink>
                 </div>

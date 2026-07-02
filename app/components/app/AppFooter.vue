@@ -30,9 +30,9 @@ const socialLinks = computed(() =>
 </script>
 
 <template>
-  <footer class="border-default/70 bg-elevated/35 relative border-t py-8 lg:py-10">
+  <footer class="border-default/70 bg-elevated/35 relative overflow-hidden border-t py-8 lg:py-10">
     <span
-      class="bg-info/10 pointer-events-none absolute -top-24 right-10 size-52 rounded-full blur-3xl"
+      class="bg-info/10 pointer-events-none absolute -top-24 right-10 size-72 rounded-full blur-3xl"
     />
     <UContainer class="overflow-hidden">
       <div class="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr_1fr] lg:items-end">

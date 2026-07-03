@@ -1,16 +1,8 @@
 <script lang="ts" setup>
 const { locale } = useDocusI18n();
-const colorMode = useColorMode();
 
 const componentPath = computed(() => `/${locale.value}/components`);
 const installationPath = computed(() => `/${locale.value}/getting-started/installation`);
-
-const isMounted = ref(false);
-const isDarkPreview = computed(() => isMounted.value && colorMode.value === "dark");
-
-onMounted(() => {
-  isMounted.value = true;
-});
 </script>
 
 <template>
@@ -81,22 +73,15 @@ onMounted(() => {
 
         <div class="hero-beam relative rounded-[3rem] p-px">
           <div
-            class="hero-preview-card relative overflow-hidden rounded-[calc(3rem-1px)] border p-6 sm:p-8"
-            :class="
-              isDarkPreview
-                ? 'border-white/10 bg-[#050506] text-[#f5f1e8] shadow-none'
-                : 'border-[#aebdc7] bg-white/96 text-[#111315] shadow-[0_30px_90px_-42px_rgba(15,23,42,0.55)]'
-            "
+            class="hero-preview-card relative overflow-hidden rounded-[calc(3rem-1px)] border border-[#aebdc7] bg-white/96 p-6 text-[#111315] shadow-[0_30px_90px_-42px_rgba(15,23,42,0.55)] sm:p-8 dark:border-white/10 dark:bg-[#050506] dark:text-[#f5f1e8] dark:shadow-none"
           >
             <div
               aria-hidden="true"
-              class="hero-preview-line absolute inset-x-8 top-10 h-px bg-linear-to-r from-transparent to-transparent"
-              :class="isDarkPreview ? 'via-[#d6b16a]/40' : 'via-[#947545]/45'"
+              class="hero-preview-line absolute inset-x-8 top-10 h-px bg-linear-to-r from-transparent via-[#947545]/45 to-transparent dark:via-[#d6b16a]/40"
             />
             <div
               aria-hidden="true"
-              class="hero-preview-glow absolute right-8 bottom-8 size-52 rounded-full blur-3xl"
-              :class="isDarkPreview ? 'bg-[#d6b16a]/10' : 'bg-[#d9c49b]/28'"
+              class="hero-preview-glow absolute right-8 bottom-8 size-52 rounded-full bg-[#d9c49b]/28 blur-3xl dark:bg-[#d6b16a]/10"
             />
 
             <div class="relative z-10 flex min-h-112 flex-col justify-between">
@@ -105,25 +90,16 @@ onMounted(() => {
                   <p class="hero-preview-eyebrow font-mono text-[11px] tracking-[0.2em] uppercase">
                     Inspira UI
                   </p>
-                  <p
-                    class="mt-2 text-sm"
-                    :class="isDarkPreview ? 'text-[#a7abb4]' : 'text-[#5d6670]'"
-                  >
+                  <p class="mt-2 text-sm text-[#5d6670] dark:text-[#a7abb4]">
                     Motion patterns for interfaces that need more presence.
                   </p>
                 </div>
-                <p
-                  class="font-mono text-[11px]"
-                  :class="isDarkPreview ? 'text-[#a7abb4]' : 'text-[#5d6670]'"
-                >
-                  Open source
-                </p>
+                <p class="font-mono text-[11px] text-[#5d6670] dark:text-[#a7abb4]">Open source</p>
               </div>
 
               <div class="max-w-xl py-16">
                 <p
-                  class="font-mono text-xs tracking-[0.2em] uppercase"
-                  :class="isDarkPreview ? 'text-[#a7abb4]' : 'text-[#5d6670]'"
+                  class="font-mono text-xs tracking-[0.2em] text-[#5d6670] uppercase dark:text-[#a7abb4]"
                 >
                   Design with motion
                 </p>
@@ -133,24 +109,15 @@ onMounted(() => {
               </div>
 
               <div
-                class="hero-preview-rule flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between"
-                :class="isDarkPreview ? 'border-white/10' : 'border-[#d3dee5]'"
+                class="hero-preview-rule flex flex-col gap-3 border-t border-[#d3dee5] pt-5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10"
               >
-                <p
-                  class="max-w-sm text-sm leading-6"
-                  :class="isDarkPreview ? 'text-[#a7abb4]' : 'text-[#5d6670]'"
-                >
+                <p class="max-w-sm text-sm leading-6 text-[#5d6670] dark:text-[#a7abb4]">
                   Use animated backgrounds, cards, text effects, cursors, and interactions to make
-                  product surfaces feel more polished.
+                  your web pages feel more polished.
                 </p>
                 <NuxtLink
                   :to="componentPath"
-                  class="hero-preview-cta inline-flex h-10 min-w-fit items-center justify-center rounded-full border px-4 text-sm font-medium whitespace-nowrap transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
-                  :class="
-                    isDarkPreview
-                      ? 'border-white/10 bg-white/8 text-[#f5f1e8]'
-                      : 'border-black/10 bg-[#111315] text-white'
-                  "
+                  class="hero-preview-cta inline-flex h-10 min-w-fit items-center justify-center rounded-full border border-black/10 bg-[#111315] px-4 text-sm font-medium whitespace-nowrap text-white transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] dark:border-white/10 dark:bg-white/8 dark:text-[#f5f1e8]"
                 >
                   Browse components
                 </NuxtLink>

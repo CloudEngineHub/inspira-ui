@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 import { range } from "../../../common/dial-kit/dialkit-controls";
 
 const config = useDialKit("", {
@@ -15,7 +16,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <TracingBeamDemo v-bind="config" />
+      <TracingBeamDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 import { shaderToyControls } from "../../../common/dial-kit/dialkit-controls";
 
 const config = useDialKit(shaderToyControls());
@@ -11,7 +12,10 @@ const config = useDialKit(shaderToyControls());
     </template>
 
     <template #component>
-      <StractiumBackgroundDemo v-bind="config" />
+      <StractiumBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

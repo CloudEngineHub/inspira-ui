@@ -26,6 +26,8 @@ export function shaderToyControls() {
     speed: range(1, 0, 10, 0.01),
     mouseSensitivity: range(1, 0, 5, 0.01),
     damping: range(0, 0, 1, 0.01),
+    frameRate: range(60, 15, 60),
+    pixelRatio: range(1, 0.25, 2, 0.25),
     noise: {
       opacity: range(0, 0, 2, 0.1),
       scale: range(1, 0, 1, 0.01),

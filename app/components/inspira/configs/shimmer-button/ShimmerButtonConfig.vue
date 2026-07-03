@@ -20,7 +20,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <ShimmerButtonDemo v-bind="config" />
+      <ShimmerButtonDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

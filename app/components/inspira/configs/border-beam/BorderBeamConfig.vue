@@ -22,7 +22,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <BorderBeamDemo v-bind="config" />
+      <BorderBeamDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

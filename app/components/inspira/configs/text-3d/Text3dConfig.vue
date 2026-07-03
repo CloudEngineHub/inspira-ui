@@ -23,7 +23,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <Text3dDemo v-bind="config" />
+      <Text3dDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

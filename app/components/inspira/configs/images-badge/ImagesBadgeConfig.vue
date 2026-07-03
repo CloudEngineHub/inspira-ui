@@ -31,7 +31,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <ImagesBadgeDemo v-bind="config" />
+      <ImagesBadgeDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

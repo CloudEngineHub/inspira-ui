@@ -18,7 +18,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <RadiantTextDemo v-bind="config" />
+      <RadiantTextDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

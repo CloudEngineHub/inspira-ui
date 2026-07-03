@@ -16,7 +16,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <LineShadowTextDemo v-bind="config" />
+      <LineShadowTextDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

@@ -21,7 +21,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <SparklesTextDemo v-bind="config" />
+      <SparklesTextDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 import { range, select } from "../../../common/dial-kit/dialkit-controls";
 
 const config = useDialKit("", {
@@ -19,7 +20,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <GlowingEffectDemo v-bind="config as any" />
+      <GlowingEffectDemo
+        :key="JSON.stringify(config)"
+        v-bind="config as any"
+      />
     </template>
   </ComponentPlayground>
 </template>

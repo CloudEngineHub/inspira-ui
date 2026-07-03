@@ -17,7 +17,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <RippleButtonDemo v-bind="config" />
+      <RippleButtonDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

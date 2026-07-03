@@ -15,7 +15,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <AuroraBackgroundDemo v-bind="config" />
+      <AuroraBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

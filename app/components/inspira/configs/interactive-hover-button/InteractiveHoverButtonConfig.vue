@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 const config = useDialKit("", {
   text: "Button",
   wide: false,
@@ -12,7 +13,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <InteractiveHoverButtonDemo v-bind="config" />
+      <InteractiveHoverButtonDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 import { range, select } from "../../../common/dial-kit/dialkit-controls";
 
 const config = useDialKit("", {

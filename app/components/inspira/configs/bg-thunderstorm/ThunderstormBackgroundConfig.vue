@@ -13,7 +13,10 @@ const config = useDialKit("", shaderToyControls(), {
 <template>
   <ComponentPlayground>
     <template #component>
-      <ThunderstormBackgroundDemo v-bind="config" />
+      <ThunderstormBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

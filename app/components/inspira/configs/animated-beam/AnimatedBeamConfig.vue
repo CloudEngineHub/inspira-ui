@@ -23,7 +23,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <AnimatedBeamDemo v-bind="config" />
+      <AnimatedBeamDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

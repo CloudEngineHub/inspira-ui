@@ -16,7 +16,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <BlackHoleBackgroundDemo v-bind="config" />
+      <BlackHoleBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

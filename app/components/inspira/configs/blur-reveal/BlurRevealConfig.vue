@@ -19,7 +19,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <BlurRevealDemo v-bind="config" />
+      <BlurRevealDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

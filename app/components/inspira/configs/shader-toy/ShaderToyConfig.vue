@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDialKit } from "dialkit/vue";
 
-import { range, select, shaderToyControls } from "../../../common/dial-kit/dialkit-controls";
+import { select, shaderToyControls } from "../../../common/dial-kit/dialkit-controls";
 import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 export interface ConfigModel {
@@ -305,8 +305,6 @@ const config = useDialKit(
       { label: "Black Hole", value: "blackhole" },
     ]),
     ...shaderToyControls(),
-    frameRate: range(60, 15, 60),
-    pixelRatio: range(1, 0.25, 2, 0.25),
   },
   { id: "shader-toy", persist: false },
 );
@@ -332,6 +330,7 @@ const selectedExample = computed(
   <ComponentPlayground>
     <template #component>
       <ShaderToyDemo
+        :key="`${config.shader}:${JSON.stringify(shaderConfig)}`"
         v-bind="shaderConfig"
         :shader-code="selectedExample"
       />

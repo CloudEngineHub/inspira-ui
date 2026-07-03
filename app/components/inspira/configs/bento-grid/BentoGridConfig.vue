@@ -16,7 +16,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <BentoGridDemo v-bind="config as any" />
+      <BentoGridDemo
+        :key="JSON.stringify(config)"
+        v-bind="config as any"
+      />
     </template>
   </ComponentPlayground>
 </template>

@@ -19,7 +19,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <TextHoverEffectDemo v-bind="config" />
+      <TextHoverEffectDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

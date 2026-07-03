@@ -20,7 +20,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <ScalesDemo v-bind="config as any" />
+      <ScalesDemo
+        :key="JSON.stringify(config)"
+        v-bind="config as any"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

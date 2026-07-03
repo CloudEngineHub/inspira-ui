@@ -15,7 +15,10 @@ const config = useDialKit("", shaderToyControls(), {
 <template>
   <ComponentPlayground>
     <template #component>
-      <SingularityBackgroundDemo v-bind="config" />
+      <SingularityBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

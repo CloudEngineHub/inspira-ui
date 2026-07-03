@@ -30,7 +30,10 @@ const config = computed<Props>(() => ({
 <template>
   <ComponentPlayground>
     <template #component>
-      <ProgressiveBlurDemo v-bind="config" />
+      <ProgressiveBlurDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

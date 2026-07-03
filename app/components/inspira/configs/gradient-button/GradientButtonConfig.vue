@@ -20,7 +20,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <GradientButtonDemo v-bind="config" />
+      <GradientButtonDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

@@ -15,7 +15,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <FallingStarsBgDemo v-bind="config" />
+      <FallingStarsBgDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

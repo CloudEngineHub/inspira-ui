@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 const config = useDialKit("", {
   lineColor: "#0EA5E9",
 });
@@ -11,7 +12,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <WorldMapDemo v-bind="config" />
+      <WorldMapDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

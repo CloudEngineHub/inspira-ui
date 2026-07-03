@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 import { select } from "../../../common/dial-kit/dialkit-controls";
 
 const config = useDialKit("", {
@@ -16,7 +17,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <ContainerScrollDemo v-bind="config as any" />
+      <ContainerScrollDemo
+        :key="JSON.stringify(config)"
+        v-bind="config as any"
+      />
     </template>
   </ComponentPlayground>
 </template>

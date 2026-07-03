@@ -22,7 +22,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <AnimatedCircularProgressBarDemo v-bind="config" />
+      <AnimatedCircularProgressBarDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

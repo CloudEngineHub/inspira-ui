@@ -20,7 +20,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <AnimateGridDemo v-bind="config" />
+      <AnimateGridDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

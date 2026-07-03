@@ -14,7 +14,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <BubblesBgDemo v-bind="config" />
+      <BubblesBgDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

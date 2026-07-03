@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 const config = useDialKit("", {
   text: "Making UI beautiful using Inspira UI.",
 });
@@ -11,7 +12,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <TextScrollRevealDemo v-bind="config" />
+      <TextScrollRevealDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

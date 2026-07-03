@@ -2,15 +2,15 @@
 import type { BaseProps } from "../../ui/pattern-background";
 
 import { useDialKit } from "dialkit/vue";
+import { range, select } from "../../../common/dial-kit/dialkit-controls";
+
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 import {
   PATTERN_BACKGROUND_DIRECTION,
   PATTERN_BACKGROUND_MASK,
   PATTERN_BACKGROUND_SPEED,
   PATTERN_BACKGROUND_VARIANT,
 } from "../../ui/pattern-background";
-
-import { range, select } from "../../../common/dial-kit/dialkit-controls";
-import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const controls = useDialKit(
   "",
@@ -38,7 +38,10 @@ const config = computed<Omit<BaseProps, "class">>(() => ({
 <template>
   <ComponentPlayground>
     <template #component>
-      <PatternBackgroundDemo v-bind="config" />
+      <PatternBackgroundDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

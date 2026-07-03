@@ -2,10 +2,10 @@
 import type { DemoProps } from "../../examples/dither-shader/DitherShaderDemo.vue";
 
 import { useDialKit } from "dialkit/vue";
-import DitherShaderDemo from "../../examples/dither-shader/DitherShaderDemo.vue";
-
 import { range, select } from "../../../common/dial-kit/dialkit-controls.js";
+
 import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
+import DitherShaderDemo from "../../examples/dither-shader/DitherShaderDemo.vue";
 
 const controls = useDialKit(
   "",
@@ -40,7 +40,10 @@ const config = computed<Required<DemoProps>>(() => ({
 <template>
   <ComponentPlayground>
     <template #component>
-      <DitherShaderDemo v-bind="config" />
+      <DitherShaderDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
     <template #config>
       <DialKitConfigPanel />

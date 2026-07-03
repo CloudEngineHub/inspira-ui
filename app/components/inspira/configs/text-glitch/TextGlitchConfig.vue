@@ -19,7 +19,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <TextGlitchDemo v-bind="config" />
+      <TextGlitchDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

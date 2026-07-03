@@ -34,7 +34,10 @@ const config = useDialKit(
 <template>
   <ComponentPlayground>
     <template #component>
-      <CardDemo v-bind="config" />
+      <CardDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
 
     <template #config>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDialKit } from "dialkit/vue";
 const config = useDialKit("", {
   label: "Hover over below input",
   placeholder: "Hover over me",
@@ -13,7 +14,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <InputDemo v-bind="config" />
+      <InputDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

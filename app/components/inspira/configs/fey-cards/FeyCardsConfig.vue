@@ -2,10 +2,10 @@
 import type { Props as FeyCardsProps } from "../../ui/fey-cards/FeyCards.vue";
 
 import { useDialKit } from "dialkit/vue";
-import { FeyCards } from "../../ui/fey-cards";
-
 import { range } from "../../../common/dial-kit/dialkit-controls.js";
+
 import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
+import { FeyCards } from "../../ui/fey-cards";
 
 const imgSrc = [
   "https://cdn.inspira-ui.com/images/1.webp",

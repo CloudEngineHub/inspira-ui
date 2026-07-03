@@ -16,7 +16,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <NeuralBgDemo v-bind="config" />
+      <NeuralBgDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

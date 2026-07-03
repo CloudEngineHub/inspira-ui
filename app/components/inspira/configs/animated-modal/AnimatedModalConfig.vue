@@ -18,7 +18,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <AnimatedModalDemo v-bind="config" />
+      <AnimatedModalDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

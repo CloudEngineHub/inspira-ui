@@ -18,7 +18,10 @@ const config = useDialKit("", {
     </template>
 
     <template #component>
-      <SnowfallBgDemo v-bind="config" />
+      <SnowfallBgDemo
+        :key="JSON.stringify(config)"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

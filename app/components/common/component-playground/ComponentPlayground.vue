@@ -75,7 +75,7 @@ onUpdated(() => {
           class="bg-primary/8 pointer-events-none absolute top-0 right-12 size-56 rounded-full blur-3xl"
         />
 
-        <div class="absolute top-4 right-4 z-40 flex items-center gap-2">
+        <div class="absolute top-4 right-4 z-999 flex items-center gap-2">
           <UButton
             icon="i-lucide-refresh-cw"
             color="neutral"

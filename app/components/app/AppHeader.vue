@@ -27,7 +27,7 @@ const links = computed(() =>
       center: 'hidden flex-1 justify-center lg:flex',
       right: 'flex items-center justify-end lg:flex-1 gap-1.5',
       title:
-        'rounded-full transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]',
+        'rounded-full transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
       toggle: 'lg:hidden',
       body: 'bg-default/95 p-4 sm:p-6',
     }"
@@ -61,7 +61,7 @@ const links = computed(() =>
       </template>
 
       <UContentSearchButton
-        class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96] lg:hidden"
+        class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100 lg:hidden"
         :ui="{ leadingIcon: 'size-4' }"
       />
 
@@ -69,7 +69,7 @@ const links = computed(() =>
         <UColorModeButton
           color="neutral"
           variant="ghost"
-          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
         />
 
         <template #fallback>
@@ -82,7 +82,7 @@ const links = computed(() =>
           v-for="(link, index) of links"
           :key="index"
           v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
-          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
           :ui="{ leadingIcon: 'size-4' }"
         />
       </template>

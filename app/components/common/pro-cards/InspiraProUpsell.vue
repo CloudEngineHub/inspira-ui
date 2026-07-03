@@ -5,10 +5,10 @@
       target="_blank"
       rel="noreferrer"
       aria-label="Explore Inspira UI Pro templates and sections"
-      class="group relative overflow-hidden rounded-[1.75rem] bg-linear-to-br from-[#22d3ee]/85 via-[#1d4ed8]/70 to-[#020617] p-px shadow-[0_26px_100px_-58px_rgba(34,211,238,0.72)] transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-[0.98]"
+      class="group relative overflow-hidden rounded-[1.75rem] bg-linear-to-br from-[#22d3ee]/85 via-[#1d4ed8]/70 to-[#020617] p-px shadow-[0_26px_100px_-58px_rgba(34,211,238,0.72)] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none"
     >
       <span
-        class="pointer-events-none absolute -top-16 -right-14 size-44 rounded-full bg-[#22d3ee]/38 opacity-50 blur-3xl transition-opacity duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:opacity-90"
+        class="pointer-events-none absolute -top-16 -right-14 size-44 rounded-full bg-[#22d3ee]/38 opacity-50 blur-3xl transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-90"
       />
       <span
         class="pointer-events-none absolute -bottom-24 left-4 size-44 rounded-full bg-[#1d4ed8]/30 blur-3xl"
@@ -62,7 +62,7 @@
         >
           <span>Explore Pro</span>
           <span
-            class="flex size-6 items-center justify-center rounded-full bg-[#22d3ee]/18 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-px"
+            class="flex size-6 items-center justify-center rounded-full bg-[#22d3ee]/18 transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-px"
           >
             <UIcon
               name="i-lucide-arrow-up-right"

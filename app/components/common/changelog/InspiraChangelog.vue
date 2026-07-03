@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
           <span
             data-timeline-marker
             aria-hidden="true"
-            class="ring-default absolute top-11.5 left-0 z-10 size-2.5 rounded-full ring-4 transition-[opacity,transform,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] max-sm:top-6"
+            class="ring-default absolute top-11.5 left-0 z-10 size-2.5 rounded-full ring-4 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none max-sm:top-6"
             :class="[
               metaFor(entry).dot,
               activeIndex === index ? 'scale-125 opacity-100' : 'opacity-55',
@@ -218,14 +218,14 @@ onBeforeUnmount(() => {
           </time>
 
           <div
-            class="bg-elevated/35 ring-default/70 relative rounded-[1.75rem] p-1.5 shadow-[0_18px_70px_-54px_rgba(15,23,42,0.6)] ring backdrop-blur-xl transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5 dark:shadow-none"
+            class="bg-elevated/35 ring-default/70 relative rounded-[1.75rem] p-1.5 shadow-[0_18px_70px_-54px_rgba(15,23,42,0.6)] ring backdrop-blur-xl transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none dark:shadow-none"
           >
             <div
               class="bg-default/30 ring-default/60 relative overflow-hidden rounded-[calc(1.75rem-0.375rem)] p-5 ring backdrop-blur-xl sm:p-6"
             >
               <div
                 aria-hidden="true"
-                class="bg-primary/10 absolute -top-20 -right-20 size-48 rounded-full opacity-0 blur-3xl transition-opacity duration-300 ease-out group-hover:opacity-100"
+                class="bg-primary/10 absolute -top-20 -right-20 size-48 rounded-full opacity-0 blur-3xl transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-100 motion-reduce:transition-none"
               />
 
               <div class="relative z-10 flex flex-col gap-5">

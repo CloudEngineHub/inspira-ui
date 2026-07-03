@@ -33,7 +33,7 @@ const items = computed(() =>
           root: 'items-center',
           list: 'gap-1',
           item: 'py-0',
-          link: 'rounded-full px-3.5 py-1.5 text-[0.8125rem] transition-[color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] before:rounded-full before:transition-[background-color,opacity,transform] before:duration-300 before:ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]',
+          link: 'rounded-full px-3.5 py-1.5 text-[0.8125rem] transition-colors duration-150 before:rounded-full before:transition-colors before:duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
         }"
       />
     </div>

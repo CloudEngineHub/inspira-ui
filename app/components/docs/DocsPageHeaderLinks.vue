@@ -77,7 +77,7 @@ async function copyPage() {
       :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
       color="neutral"
       variant="subtle"
-      class="rounded-s-full px-3 transition-[background-color,color,transform] duration-150 active:scale-[0.98]"
+      class="rounded-s-full px-3 transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
       :ui="{
         leadingIcon: 'size-3.5',
       }"
@@ -97,7 +97,7 @@ async function copyPage() {
         icon="i-lucide-chevron-down"
         color="neutral"
         variant="subtle"
-        class="rounded-e-full border-l border-muted px-2 transition-[background-color,color,transform] duration-150 active:scale-[0.98]"
+        class="border-muted rounded-e-full border-l px-2 transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
         :ui="{ leadingIcon: 'size-3.5' }"
       />
     </UDropdownMenu>

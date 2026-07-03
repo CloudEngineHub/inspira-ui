@@ -61,7 +61,7 @@ const socialLinks = computed(() =>
             color="neutral"
             variant="ghost"
             size="sm"
-            class="text-muted hover:text-highlighted rounded-full px-3 transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+            class="text-muted hover:text-highlighted rounded-full px-3 transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100"
           />
         </nav>
 
@@ -73,7 +73,7 @@ const socialLinks = computed(() =>
             color="neutral"
             variant="ghost"
             size="sm"
-            class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+            class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
             :ui="{ leadingIcon: 'size-4' }"
           />
           <ClientOnly>
@@ -81,7 +81,7 @@ const socialLinks = computed(() =>
               color="neutral"
               variant="ghost"
               size="sm"
-              class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.96]"
+              class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
             />
             <template #fallback>
               <div class="bg-elevated/45 ring-default/60 size-8 rounded-full ring" />

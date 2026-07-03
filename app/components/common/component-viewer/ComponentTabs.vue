@@ -79,11 +79,7 @@ const componentCodeItems = computed(() =>
 type ComponentCodeType = "ui" | "examples" | "configs";
 
 const getClientComponentCode = import.meta.client
-  ? async (args: {
-      id: string;
-      fileName: string;
-      type: ComponentCodeType;
-    }) => {
+  ? async (args: { id: string; fileName: string; type: ComponentCodeType }) => {
       const { getComponentCode } = await import("~/lib/getComponentCode.client");
       return getComponentCode(args);
     }
@@ -186,7 +182,7 @@ watch(activeInstallationTab, (tab) => {
       list: 'w-fit max-w-full gap-1 overflow-auto rounded-full bg-elevated/70 p-1 ring ring-default/70',
       indicator: 'rounded-full',
       trigger:
-        'h-10 min-w-fit rounded-full px-4 text-sm transition-[color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]',
+        'h-10 min-w-fit rounded-full px-4 text-sm transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
       content: 'pt-6 focus:outline-none',
     }"
   >
@@ -230,7 +226,7 @@ watch(activeInstallationTab, (tab) => {
           root: 'gap-4',
           list: 'w-fit gap-5 border-muted',
           trigger:
-            'px-0 text-sm transition-[color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]',
+            'px-0 text-sm transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
           content: 'pt-4',
         }"
       >

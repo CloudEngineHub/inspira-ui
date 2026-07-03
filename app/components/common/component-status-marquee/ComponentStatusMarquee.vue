@@ -55,7 +55,7 @@ const releaseLabel = computed(() =>
         >
           <NuxtLink
             :to="component.path"
-            class="text-muted hover:text-highlighted transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            class="text-muted hover:text-highlighted transition-colors duration-150"
           >
             {{ component.title }}
           </NuxtLink>

@@ -5,7 +5,7 @@
       target="_blank"
       rel="noreferrer"
       aria-label="Hire the creator for custom Vue and Nuxt work"
-      class="group bg-elevated/35 ring-default/70 hover:bg-elevated/55 border-accent-foreground/25 relative overflow-hidden rounded-[1.5rem] border-2 border-solid p-1 ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-[0.98] dark:border-none"
+      class="group bg-elevated/35 ring-default/70 hover:bg-elevated/55 border-accent-foreground/25 relative overflow-hidden rounded-[1.5rem] border-2 border-solid p-1 ring transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none dark:border-none"
     >
       <div class="relative rounded-[calc(1.5rem-0.25rem)] p-3.5">
         <div class="flex items-start gap-3">
@@ -46,7 +46,7 @@
             </span>
           </div>
           <span
-            class="bg-inverted text-inverted flex size-8.5 items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:rotate-45"
+            class="bg-inverted text-inverted flex size-8.5 items-center justify-center rounded-full transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:rotate-45"
           >
             <UIcon
               name="i-lucide-arrow-up-right"

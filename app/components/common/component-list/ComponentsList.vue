@@ -381,7 +381,7 @@ const componentSections = computed(() => {
                 class="bg-default/50 ring-default/70 group-hover:bg-default/60 relative flex h-[stretch] min-h-48 overflow-hidden rounded-[calc(1.5rem-1px)] p-4 ring backdrop-blur-lg transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"
               >
                 <div
-                  class="pointer-events-none absolute -top-20 -right-20 size-48 rounded-full blur-3xl transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                  class="pointer-events-none absolute -top-20 -right-20 size-48 rounded-full blur-3xl transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
                   :class="cardGlowClass(component)"
                 />
 

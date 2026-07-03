@@ -4,7 +4,7 @@
       :collapsed="false"
       variant="subtle"
       size="sm"
-      class="group bg-elevated/40 ring-default/55 hover:bg-elevated/65 h-9 w-full justify-start rounded-[1.125rem] px-3.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring transition-[background-color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.985]"
+      class="group bg-elevated/40 ring-default/55 hover:bg-elevated/65 h-9 w-full justify-start rounded-[1.125rem] px-3.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring transition-colors duration-150 active:scale-[0.985] motion-reduce:transition-none motion-reduce:active:scale-100"
       :ui="{
         leadingIcon: 'size-4 text-muted transition-colors group-hover:text-default',
         label: 'text-muted font-normal',

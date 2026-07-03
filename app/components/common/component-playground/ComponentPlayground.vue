@@ -10,6 +10,18 @@ const labelAcronymBoundary = /([A-Z])([A-Z][a-z])/g;
 const labelWordSeparator = /[_-]/g;
 const labelWhitespace = /\s+/g;
 const labelFirstCharacter = /^./;
+const configControlStackClass = [
+  "flex flex-col gap-2.5 p-3",
+  "[&_.form-field]:grid [&_.form-field]:min-h-14 [&_.form-field]:grid-cols-[minmax(0,1fr)_minmax(8rem,auto)] [&_.form-field]:items-center [&_.form-field]:gap-4 [&_.form-field]:rounded-2xl [&_.form-field]:bg-elevated/45 [&_.form-field]:px-3.5 [&_.form-field]:py-3 [&_.form-field]:transition-colors [&_.form-field]:duration-150 [&_.form-field]:ease-[cubic-bezier(0.23,1,0.32,1)] [&_.form-field:hover]:bg-elevated/60",
+  "[&_.form-field:has(textarea)]:grid-cols-1 [&_.form-field:has(textarea)]:items-stretch",
+  "[&_.form-field>div]:min-w-0 [&_.form-field>div:last-child]:mt-0 [&_.form-field>div:last-child]:flex [&_.form-field>div:last-child]:justify-end [&_.form-field:has(textarea)>div:last-child]:justify-stretch",
+  "[&_.form-field_label]:text-muted [&_.form-field_label]:text-[0.8rem] [&_.form-field_label]:leading-[1.35] [&_.form-field_label]:font-medium [&_.form-field_label]:tracking-normal",
+  "[&_.form-field_input]:text-[0.8125rem] [&_.form-field_textarea]:text-[0.8125rem]",
+  "[&_.form-field>div:last-child>.relative.inline-flex]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>button]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>.relative.inline-flex]:rounded-full",
+  "[&_.form-field>div:last-child>.relative.inline-flex_input]:min-h-9 [&_.form-field>div:last-child>.relative.inline-flex_input]:rounded-[0.875rem] [&_.form-field>div:last-child>button]:min-h-9 [&_.form-field>div:last-child>button]:rounded-[0.875rem] [&_.form-field_textarea]:min-h-26 [&_.form-field_textarea]:resize-y [&_.form-field_textarea]:rounded-[0.875rem]",
+  "[&_.form-field>div:last-child>.relative.inline-flex]:bg-default/70 [&_.form-field>div:last-child>.relative.inline-flex]:ring [&_.form-field>div:last-child>.relative.inline-flex]:ring-muted/80",
+  "max-[480px]:[&_.form-field]:grid-cols-1 max-[480px]:[&_.form-field]:items-stretch max-[480px]:[&_.form-field>div:last-child]:justify-stretch max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:w-full max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:max-w-none max-[480px]:[&_.form-field>div:last-child>button]:w-full max-[480px]:[&_.form-field>div:last-child>button]:max-w-none",
+];
 
 function refreshPreview() {
   refreshKey.value += 1;
@@ -139,7 +151,7 @@ onUpdated(() => {
       <template #body>
         <div
           ref="configBody"
-          class="config-control-stack"
+          :class="configControlStackClass"
         >
           <slot name="config" />
         </div>
@@ -147,119 +159,3 @@ onUpdated(() => {
     </UDrawer>
   </div>
 </template>
-
-<style scoped>
-.config-control-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  padding: 0.75rem;
-}
-
-.config-control-stack :deep(.form-field) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(8rem, auto);
-  align-items: center;
-  min-height: 3.5rem;
-  gap: 1rem;
-  border-radius: 1rem;
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--ui-bg-elevated) 62%, transparent),
-    color-mix(in oklab, var(--ui-bg-elevated) 36%, transparent)
-  );
-  box-shadow:
-    inset 0 1px 0 color-mix(in oklab, var(--ui-border-muted) 44%, transparent),
-    0 1px 0 color-mix(in oklab, var(--ui-bg) 82%, transparent);
-  padding: 0.7rem 0.875rem;
-  transition:
-    background-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.config-control-stack :deep(.form-field:has(textarea)) {
-  grid-template-columns: minmax(0, 1fr);
-  align-items: stretch;
-}
-
-.config-control-stack :deep(.form-field > div) {
-  min-width: 0;
-}
-
-.config-control-stack :deep(.form-field > div:last-child) {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0;
-}
-
-.config-control-stack :deep(.form-field:has(textarea) > div:last-child) {
-  justify-content: stretch;
-}
-
-.config-control-stack :deep(.form-field label) {
-  color: var(--ui-text-muted);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.35;
-}
-
-.config-control-stack :deep(.form-field input),
-.config-control-stack :deep(.form-field textarea) {
-  font-size: 0.8125rem;
-}
-
-.config-control-stack :deep(.form-field > div:last-child > .relative.inline-flex),
-.config-control-stack :deep(.form-field > div:last-child > button) {
-  max-width: min(100%, 13rem);
-}
-
-.config-control-stack :deep(.form-field > div:last-child > .relative.inline-flex) {
-  border-radius: 9999px;
-}
-
-.config-control-stack :deep(.form-field > div:last-child > .relative.inline-flex input),
-.config-control-stack :deep(.form-field > div:last-child > button),
-.config-control-stack :deep(.form-field textarea) {
-  min-height: 2.25rem;
-  border-radius: 0.875rem;
-}
-
-.config-control-stack :deep(.form-field textarea) {
-  min-height: 6.5rem;
-  resize: vertical;
-}
-
-.config-control-stack :deep(.form-field > div:last-child > .relative.inline-flex) {
-  background-color: color-mix(in oklab, var(--ui-bg) 72%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ui-border-muted) 78%, transparent);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .config-control-stack :deep(.form-field:hover) {
-    background-color: color-mix(in oklab, var(--ui-bg-elevated) 72%, transparent);
-    box-shadow:
-      inset 0 1px 0 color-mix(in oklab, var(--ui-border) 58%, transparent),
-      0 10px 32px -28px color-mix(in oklab, var(--ui-text) 28%, transparent);
-    transform: translateY(-1px);
-  }
-}
-
-@media (max-width: 480px) {
-  .config-control-stack :deep(.form-field) {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: stretch;
-  }
-
-  .config-control-stack :deep(.form-field > div:last-child) {
-    justify-content: stretch;
-  }
-
-  .config-control-stack :deep(.form-field > div:last-child > .relative.inline-flex),
-  .config-control-stack :deep(.form-field > div:last-child > button) {
-    width: 100%;
-    max-width: none;
-  }
-}
-</style>

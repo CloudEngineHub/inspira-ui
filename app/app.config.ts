@@ -31,7 +31,7 @@ export default defineAppConfig({
         viewport: "space-y-1 px-2 pb-2 pt-1",
         group: "space-y-1 p-1",
         label: "px-3 pt-3 pb-2 text-[0.65rem] font-semibold tracking-[0.18em] text-toned uppercase",
-        item: "rounded-2xl px-3 py-2.5 transition-[color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] before:rounded-2xl before:transition-[background-color,opacity,transform] before:duration-200 before:ease-[cubic-bezier(0.32,0.72,0,1)] data-highlighted:not-data-disabled:scale-[1.003] data-highlighted:not-data-disabled:before:bg-elevated/60",
+        item: "rounded-2xl px-3 py-2.5 transition-colors duration-100 before:rounded-2xl before:transition-colors before:duration-100 data-highlighted:not-data-disabled:before:bg-elevated/60",
         itemLeadingIcon: "size-4",
         itemLabel: "text-sm",
         itemLabelBase:

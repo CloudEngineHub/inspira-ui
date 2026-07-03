@@ -10,8 +10,36 @@ const route = useRoute();
 const { locale, isEnabled } = useDocusI18n();
 const navContainer = ref<HTMLElement | null>(null);
 const hoveredKey = ref<string | null>(null);
+const preferredMotion = usePreferredReducedMotion();
 const trailingSlashRe = /\/$/;
 const indicatorId = useId();
+const reduceMotion = computed(() => preferredMotion.value === "reduce");
+const navMotionTransition = computed(() =>
+  reduceMotion.value
+    ? { duration: 0 }
+    : {
+        type: "spring",
+        stiffness: 560,
+        damping: 42,
+        mass: 0.62,
+      },
+);
+const navHoverTransition = computed(() =>
+  reduceMotion.value
+    ? { duration: 0 }
+    : {
+        type: "spring",
+        stiffness: 560,
+        damping: 38,
+        mass: 0.62,
+      },
+);
+const navHoverInitial = computed(() =>
+  reduceMotion.value ? { opacity: 0 } : { opacity: 0, scale: 0.985 },
+);
+const navHoverAnimate = computed(() =>
+  reduceMotion.value ? { opacity: 1 } : { opacity: 1, scale: 1 },
+);
 
 const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` : "docs"));
 
@@ -200,14 +228,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
 </script>
 
 <template>
-  <MotionConfig
-    :transition="{
-      type: 'spring',
-      stiffness: 560,
-      damping: 42,
-      mass: 0.62,
-    }"
-  >
+  <MotionConfig :transition="navMotionTransition">
     <nav
       ref="navContainer"
       class="-mx-1 pb-8"
@@ -238,33 +259,32 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 v-if="!link.children?.length"
                 :to="link.path"
                 :target="link.target as string"
-                class="group/link relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-[color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.985]"
+                class="group/link focus-visible:text-highlighted relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-colors duration-150 active:scale-[0.985]"
                 :class="isCurrent(link) ? 'text-highlighted' : 'text-muted hover:text-highlighted'"
                 :aria-current="isCurrent(link) ? 'page' : undefined"
                 :data-current="isCurrent(link) ? true : undefined"
                 :data-nav-path="link['data-nav-path']"
                 @mouseenter="hoveredKey = itemKey(link)"
-                @focus="hoveredKey = itemKey(link)"
                 @blur="hoveredKey = null"
               >
                 <motion.span
                   v-if="isCurrent(link)"
                   :layout-id="`${indicatorId}-active`"
                   class="bg-elevated/90 ring-default pointer-events-none absolute inset-0 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.12)] ring"
-                  :transition="{ type: 'spring', stiffness: 560, damping: 42, mass: 0.62 }"
+                  :transition="navMotionTransition"
                 />
 
                 <motion.span
                   v-else-if="hoveredKey === itemKey(link)"
                   :layout-id="`${indicatorId}-hover`"
                   class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-xl ring"
-                  :initial="{ opacity: 0, scale: 0.985 }"
-                  :animate="{ opacity: 1, scale: 1 }"
-                  :transition="{ type: 'spring', stiffness: 560, damping: 38, mass: 0.62 }"
+                  :initial="navHoverInitial"
+                  :animate="navHoverAnimate"
+                  :transition="navHoverTransition"
                 />
 
                 <span
-                  class="relative size-1.5 shrink-0 rounded-sm transition-[background-color,box-shadow] duration-200"
+                  class="relative size-1.5 shrink-0 rounded-sm transition-colors duration-150 motion-reduce:transition-none"
                   :class="isCurrent(link) ? 'bg-primary' : ''"
                 />
 
@@ -314,7 +334,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                     :key="child.path || child.title"
                     :to="child.path"
                     :target="child.target as string"
-                    class="group/link relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-[color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.985]"
+                    class="group/link focus-visible:text-highlighted relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-colors duration-150 active:scale-[0.985]"
                     :class="
                       isCurrent(child) ? 'text-highlighted' : 'text-muted hover:text-highlighted'
                     "
@@ -322,27 +342,26 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                     :data-current="isCurrent(child) ? true : undefined"
                     :data-nav-path="child['data-nav-path']"
                     @mouseenter="hoveredKey = itemKey(child)"
-                    @focus="hoveredKey = itemKey(child)"
                     @blur="hoveredKey = null"
                   >
                     <motion.span
                       v-if="isCurrent(child)"
                       :layout-id="`${indicatorId}-active`"
                       class="bg-elevated/90 ring-default pointer-events-none absolute inset-0 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.12)] ring"
-                      :transition="{ type: 'spring', stiffness: 560, damping: 42, mass: 0.62 }"
+                      :transition="navMotionTransition"
                     />
 
                     <motion.span
                       v-else-if="hoveredKey === itemKey(child)"
                       :layout-id="`${indicatorId}-hover`"
                       class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-xl ring"
-                      :initial="{ opacity: 0, scale: 0.985 }"
-                      :animate="{ opacity: 1, scale: 1 }"
-                      :transition="{ type: 'spring', stiffness: 560, damping: 38, mass: 0.62 }"
+                      :initial="navHoverInitial"
+                      :animate="navHoverAnimate"
+                      :transition="navHoverTransition"
                     />
 
                     <span
-                      class="relative size-1.5 shrink-0 rounded-full transition-[background-color,box-shadow] duration-200"
+                      class="relative size-1.5 shrink-0 rounded-full transition-colors duration-150 motion-reduce:transition-none"
                       :class="
                         isCurrent(child)
                           ? 'bg-primary shadow-[0_0_0_4px_color-mix(in_oklab,var(--ui-primary)_18%,transparent),0_0_18px_color-mix(in_oklab,var(--ui-primary)_72%,transparent)]'

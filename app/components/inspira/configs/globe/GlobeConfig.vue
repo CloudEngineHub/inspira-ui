@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { refThrottled } from "@vueuse/core";
 import { useDialKit } from "dialkit/vue";
 import { range } from "../../../common/dial-kit/dialkit-controls";
 
@@ -11,6 +12,9 @@ const config = useDialKit("", {
   tension: range(280, 80, 500, 10),
   friction: range(100, 20, 200, 5),
 });
+
+const configKey = computed(() => JSON.stringify(config.value));
+const throttledConfigKey = refThrottled(configKey, 120);
 </script>
 
 <template>
@@ -21,7 +25,7 @@ const config = useDialKit("", {
 
     <template #component>
       <GlobeDemo
-        :key="JSON.stringify(config)"
+        :key="throttledConfigKey"
         v-bind="config"
       />
     </template>

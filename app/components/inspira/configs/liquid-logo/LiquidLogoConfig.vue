@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { refThrottled } from "@vueuse/core";
 import { useDialKit } from "dialkit/vue";
 import { range } from "../../../common/dial-kit/dialkit-controls";
 
@@ -12,6 +13,9 @@ const config = useDialKit("", {
   speed: range(0.3, 0, 2, 0.1),
   showProcessing: true,
 });
+
+const configKey = computed(() => JSON.stringify(config.value));
+const throttledConfigKey = refThrottled(configKey, 120);
 </script>
 
 <template>
@@ -22,7 +26,7 @@ const config = useDialKit("", {
 
     <template #component>
       <LiquidLogoDemo
-        :key="config.imageUrl"
+        :key="throttledConfigKey"
         v-bind="config"
       />
     </template>

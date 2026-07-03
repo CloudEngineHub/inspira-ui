@@ -1,4 +1,12 @@
 <script lang="ts" setup>
+interface Props {
+  visibleImages?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  visibleImages: 8,
+});
+
 const items = [
   {
     src: "https://images.pexels.com/photos/16834200/pexels-photo-16834200/free-photo-of-young-brunette-in-a-white-dress-sitting-on-a-bench-and-holding-flowers.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
@@ -29,6 +37,6 @@ const items = [
 
 <template>
   <div class="flex items-center justify-center">
-    <PhotoGallery :items="items" />
+    <PhotoGallery :items="items.slice(0, props.visibleImages)" />
   </div>
 </template>

@@ -3,8 +3,8 @@ import { useDialKit } from "dialkit/vue";
 
 import ScalesDemo from "@/components/inspira/examples/scales/ScalesDemo.vue";
 
-import { range, select } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range, select } from "../../../common/dial-kit/dialkit-controls";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const config = useDialKit(
   "",

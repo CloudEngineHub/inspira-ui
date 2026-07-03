@@ -1,3 +1,21 @@
+<script setup lang="ts">
+interface Props {
+  initialSliderPercentage?: number;
+  slideMode?: "hover" | "drag";
+  showHandlebar?: boolean;
+  autoplay?: boolean;
+  autoplayDuration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialSliderPercentage: 50,
+  slideMode: "hover",
+  showHandlebar: true,
+  autoplay: false,
+  autoplayDuration: 5000,
+});
+</script>
+
 <template>
   <div class="flex w-full justify-center">
     <div
@@ -9,7 +27,11 @@
         first-content-class="object-cover object-top-left rounded-xl overflow-hidden"
         second-content-class="object-cover object-top-left rounded-xl overflow-hidden"
         class="h-[250px] w-[200px] md:h-96 md:w-[500px]"
-        slide-mode="hover"
+        :initial-slider-percentage="props.initialSliderPercentage"
+        :slide-mode="props.slideMode"
+        :show-handlebar="props.showHandlebar"
+        :autoplay="props.autoplay"
+        :autoplay-duration="props.autoplayDuration"
       />
     </div>
   </div>

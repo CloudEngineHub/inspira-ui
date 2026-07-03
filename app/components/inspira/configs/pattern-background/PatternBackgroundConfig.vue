@@ -9,8 +9,8 @@ import {
   PATTERN_BACKGROUND_VARIANT,
 } from "../../ui/pattern-background";
 
-import { range, select } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range, select } from "../../../common/dial-kit/dialkit-controls";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const controls = useDialKit(
   "",

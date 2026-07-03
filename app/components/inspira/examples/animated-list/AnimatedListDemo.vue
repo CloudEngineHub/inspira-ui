@@ -1,4 +1,12 @@
 <script setup lang="ts">
+interface Props {
+  delay?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  delay: 1000,
+});
+
 const notifications = [
   {
     name: "Payment received",
@@ -41,7 +49,7 @@ const notifications = [
 <template>
   <ClientOnly>
     <div class="relative flex h-[500px] w-full flex-col overflow-hidden p-6">
-      <AnimatedList>
+      <AnimatedList :delay="props.delay">
         <template #default>
           <Notification
             v-for="(item, idx) in notifications"

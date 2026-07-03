@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+interface Props {
+  zoomFactor?: number;
+  lensSize?: number;
+  isStatic?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  zoomFactor: 1.5,
+  lensSize: 170,
+  isStatic: false,
+});
+
 const hovering = ref(false);
 
 function setHovering(value: boolean) {
@@ -17,6 +29,9 @@ function setHovering(value: boolean) {
     <div class="relative z-10">
       <Lens
         :hovering="hovering"
+        :zoom-factor="props.zoomFactor"
+        :lens-size="props.lensSize"
+        :is-static="props.isStatic"
         @hover-update="setHovering"
       >
         <img

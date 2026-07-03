@@ -2,6 +2,24 @@
 import { useFullscreen } from "@vueuse/core";
 import { useTemplateRef } from "vue";
 
+interface Props {
+  gridCols?: number;
+  gridRows?: number;
+  tileSize?: number;
+  baseCameraZ?: number;
+  distortionIntensity?: number;
+  vignetteDarkness?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  gridCols: 4,
+  gridRows: 4,
+  tileSize: 3,
+  baseCameraZ: 10,
+  distortionIntensity: -0.2,
+  vignetteDarkness: 0,
+});
+
 const el = useTemplateRef<HTMLElement>("el");
 
 const { toggle } = useFullscreen(el);
@@ -154,6 +172,17 @@ const cardData = [
   },
 ];
 
+const options = computed(() => ({
+  gridCols: props.gridCols,
+  gridRows: props.gridRows,
+  tileSize: props.tileSize,
+  baseCameraZ: props.baseCameraZ,
+  postProcessParams: {
+    distortionIntensity: props.distortionIntensity,
+    vignetteDarkness: props.vignetteDarkness,
+  },
+}));
+
 function onTilesLoaded() {
   tilesLoaded.value = true;
 }
@@ -169,6 +198,7 @@ function onTilesLoaded() {
       >
         <InfiniteGrid
           :card-data
+          :options="options"
           @tiles-loaded="onTilesLoaded"
         />
       </div>

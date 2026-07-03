@@ -2,8 +2,24 @@
 import type { ColorPickerValue } from "@/components/content/inspira/ui/color-picker";
 import { ref } from "vue";
 
+interface Props {
+  initialColor?: `#${string}`;
+  type?: "hsl" | "hsla" | "rgb" | "rgba" | "hex";
+  open?: boolean;
+  hideContrastRatio?: boolean;
+  hideDefaultSwatches?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialColor: "#A35FFF",
+  type: "hsla",
+  open: false,
+  hideContrastRatio: false,
+  hideDefaultSwatches: false,
+});
+
 const color = ref<ColorPickerValue>({
-  hex: "#A35fFF",
+  hex: props.initialColor,
   hsl: { h: 265.5, s: 100, l: 67, a: 1 },
   hsla: { h: 265.5, s: 100, l: 67, a: 1 },
   rgb: { r: 163, g: 95, b: 255, a: 1 },
@@ -19,8 +35,11 @@ function setColor(newColor: ColorPickerValue) {
   <div class="flex flex-col items-center justify-center gap-6 p-6">
     <div class="flex items-center justify-center">
       <ColorPicker
-        :value="color.hsl"
-        type="hsla"
+        :value="props.initialColor"
+        :type="props.type"
+        :open="props.open"
+        :hide-contrast-ratio="props.hideContrastRatio"
+        :hide-default-swatches="props.hideDefaultSwatches"
         :swatches="['#AEDEAE', '#FFD3B6', '#FFB6B9', '#FFC0CB', '#FFD1DC']"
         @value-change="setColor"
       >

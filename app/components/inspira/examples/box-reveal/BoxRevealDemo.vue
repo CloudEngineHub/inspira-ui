@@ -1,30 +1,72 @@
+<script setup lang="ts">
+interface Props {
+  color?: string;
+  duration?: number;
+  delay?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  color: "#e1251b",
+  duration: 0.8,
+  delay: 0.25,
+});
+</script>
+
 <template>
   <div class="size-full max-w-lg items-center justify-center overflow-hidden p-8">
-    <BoxReveal color="#E1251B">
-      <p class="text-[3.5rem] font-semibold">Inspira UI<span class="text-[#E1251B]">.</span></p>
+    <BoxReveal
+      :color="props.color"
+      :duration="props.duration"
+      :delay="props.delay"
+    >
+      <p class="text-[3.5rem] font-semibold">
+        Inspira UI<span :style="{ color: props.color }">.</span>
+      </p>
     </BoxReveal>
 
     <BoxReveal
-      color="#E1251B"
-      :duration="0.8"
+      :color="props.color"
+      :duration="props.duration"
+      :delay="props.delay"
     >
       <h2 class="mt-[.5rem] text-[1rem]">
         Beautiful components for
-        <span class="text-[#E1251B]">Vue &amp; Nuxt.</span>
+        <span :style="{ color: props.color }">Vue &amp; Nuxt.</span>
       </h2>
     </BoxReveal>
 
     <BoxReveal
-      color="#E1251B"
-      :duration="1"
+      :color="props.color"
+      :duration="props.duration"
+      :delay="props.delay"
     >
       <div class="mt-6">
         <p>
           -&gt; Free and open-source animated components built with
-          <span class="font-semibold text-[#E1251B]"> Vue/Nuxt</span>,
-          <span class="font-semibold text-[#E1251B]"> Typescript</span>,
-          <span class="font-semibold text-[#E1251B]"> Tailwind CSS</span>, and
-          <span class="font-semibold text-[#E1251B]"> motion-v</span>
+          <span
+            class="font-semibold"
+            :style="{ color: props.color }"
+          >
+            Vue/Nuxt</span
+          >,
+          <span
+            class="font-semibold"
+            :style="{ color: props.color }"
+          >
+            Typescript</span
+          >,
+          <span
+            class="font-semibold"
+            :style="{ color: props.color }"
+          >
+            Tailwind CSS</span
+          >, and
+          <span
+            class="font-semibold"
+            :style="{ color: props.color }"
+          >
+            motion-v</span
+          >
           . <br />
           -&gt; 100% open-source, and customizable. <br />
         </p>

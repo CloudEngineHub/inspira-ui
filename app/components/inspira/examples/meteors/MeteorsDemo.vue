@@ -1,3 +1,13 @@
+<script setup lang="ts">
+interface Props {
+  count?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  count: 20,
+});
+</script>
+
 <template>
   <ClientOnly>
     <div class="flex w-full flex-col items-center justify-center py-24">
@@ -38,7 +48,7 @@
           </p>
 
           <button class="rounded-lg border border-gray-500 px-4 py-1 text-gray-300">Explore</button>
-          <Meteors />
+          <Meteors :count="props.count" />
         </div>
       </div>
     </div>

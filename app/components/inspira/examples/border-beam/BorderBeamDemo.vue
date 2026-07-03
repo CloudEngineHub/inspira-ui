@@ -1,3 +1,25 @@
+<script setup lang="ts">
+interface Props {
+  size?: number;
+  duration?: number;
+  delay?: number;
+  borderWidth?: number;
+  anchor?: number;
+  colorFrom?: string;
+  colorTo?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 250,
+  duration: 12,
+  delay: 9,
+  borderWidth: 2,
+  anchor: 90,
+  colorFrom: "#ffaa40",
+  colorTo: "#9c40ff",
+});
+</script>
+
 <template>
   <ClientOnly>
     <div
@@ -9,10 +31,13 @@
         Border Beam
       </span>
       <BorderBeam
-        :size="250"
-        :duration="12"
-        :delay="9"
-        :border-width="2"
+        :size="props.size"
+        :duration="props.duration"
+        :delay="props.delay"
+        :border-width="props.borderWidth"
+        :anchor="props.anchor"
+        :color-from="props.colorFrom"
+        :color-to="props.colorTo"
       />
     </div>
   </ClientOnly>

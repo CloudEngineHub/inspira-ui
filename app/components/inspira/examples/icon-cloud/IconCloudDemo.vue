@@ -1,4 +1,12 @@
 <script setup lang="ts">
+interface Props {
+  iconCount?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  iconCount: 30,
+});
+
 const slugs = [
   "typescript",
   "javascript",
@@ -32,7 +40,9 @@ const slugs = [
   "figma",
 ];
 
-const imageUrls = slugs.map((slug) => `https://cdn.simpleicons.org/${slug}/${slug}`);
+const imageUrls = computed(() =>
+  slugs.slice(0, props.iconCount).map((slug) => `https://cdn.simpleicons.org/${slug}/${slug}`),
+);
 </script>
 
 <template>

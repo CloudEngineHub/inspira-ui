@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import { ORBIT_DIRECTION } from "../../ui/orbit";
+
+interface Props {
+  duration?: number;
+  innerRadius?: number;
+  outerRadius?: number;
+  showPath?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  duration: 20,
+  innerRadius: 80,
+  outerRadius: 190,
+  showPath: true,
+});
 </script>
 
 <template>
@@ -11,9 +25,9 @@ import { ORBIT_DIRECTION } from "../../ui/orbit";
     <!-- Inner Circles -->
     <Orbit
       class="size-7.5 items-center justify-center border-none bg-transparent"
-      :duration="20"
+      :duration="props.duration"
       :delay="20"
-      :radius="80"
+      :radius="props.innerRadius"
       :direction="ORBIT_DIRECTION.CounterClockwise"
     >
       <Icon
@@ -23,10 +37,10 @@ import { ORBIT_DIRECTION } from "../../ui/orbit";
     </Orbit>
     <Orbit
       class="size-7.5 items-center justify-center border-none bg-transparent"
-      :duration="20"
+      :duration="props.duration"
       :delay="10"
-      :radius="80"
-      path
+      :radius="props.innerRadius"
+      :path="props.showPath"
       :direction="ORBIT_DIRECTION.CounterClockwise"
     >
       <Icon
@@ -38,9 +52,9 @@ import { ORBIT_DIRECTION } from "../../ui/orbit";
     <!-- Outer Circles (reverse) -->
     <Orbit
       class="size-12.5 items-center justify-center border-none bg-transparent"
-      :radius="190"
-      :duration="20"
-      path
+      :radius="props.outerRadius"
+      :duration="props.duration"
+      :path="props.showPath"
     >
       <Icon
         name="logos:google-drive"
@@ -49,8 +63,8 @@ import { ORBIT_DIRECTION } from "../../ui/orbit";
     </Orbit>
     <Orbit
       class="size-12.5 items-center justify-center border-none bg-transparent"
-      :radius="190"
-      :duration="20"
+      :radius="props.outerRadius"
+      :duration="props.duration"
       :delay="200"
       :direction="ORBIT_DIRECTION.CounterClockwise"
     >

@@ -1,9 +1,23 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { range } from "../../../common/dial-kit/dialkit-controls";
+
+const config = useDialKit("", {
+  autoRotate: true,
+  duration: range(5, 1, 12, 0.5),
+});
+</script>
 
 <template>
   <ComponentPlayground>
+    <template #config>
+      <DialKitConfigPanel />
+    </template>
+
     <template #component>
-      <TestimonialSliderDemo />
+      <TestimonialSliderDemo
+        :key="`${config.autoRotate}-${config.duration}`"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

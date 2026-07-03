@@ -1,3 +1,15 @@
+<script setup lang="ts">
+interface Props {
+  width?: number;
+  height?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  width: 400,
+  height: 200,
+});
+</script>
+
 <template>
   <div class="flex h-160 flex-col items-center justify-center px-4">
     <p class="mx-auto mb-10 max-w-3xl text-xl text-neutral-500 md:text-3xl dark:text-neutral-400">
@@ -20,8 +32,8 @@
       Visit
       <LinkPreview
         url="https://inspira-ui.com"
-        :width="400"
-        :height="200"
+        :width="props.width"
+        :height="props.height"
       >
         <span
           class="bg-linear-to-br from-purple-500 to-pink-500 bg-clip-text font-bold text-transparent"

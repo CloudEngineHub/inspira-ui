@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
+
+interface Props {
+  mode?: "simple" | "async";
+  defaultDuration?: number;
+  preventClose?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: "simple",
+  defaultDuration: 1500,
+  preventClose: true,
+});
 
 interface Step {
   text: string; // Display text for the step
@@ -26,31 +38,33 @@ const uiState = reactive({
   },
 });
 
+const message = ref("");
+
 // Simple loading steps configuration
 const simpleLoadingSteps = computed<Step[]>(() => [
   {
     text: "Checking Payment",
-    duration: 2000,
+    duration: props.defaultDuration,
   },
   {
     text: "Saving Order",
-    duration: 1500,
+    duration: props.defaultDuration,
   },
   {
     text: "Sending Confirmation Email",
-    duration: 2500,
+    duration: props.defaultDuration,
   },
   {
     text: "Processing Request",
-    duration: 1800,
+    duration: props.defaultDuration,
   },
   {
     text: "Finalizing",
-    duration: 1000,
+    duration: props.defaultDuration,
   },
   {
     text: "Redirecting",
-    duration: 1000,
+    duration: props.defaultDuration,
     action: handleSimpleLoadingComplete,
   },
 ]);
@@ -80,7 +94,7 @@ const asyncLoadingSteps = computed<Step[]>(() => [
 ]);
 
 // Event handlers
-function handleStateChange(state: number) {
+function handleStateChange(_state: number) {
   // Handle Loading State Change
 }
 
@@ -89,12 +103,12 @@ function handleComplete() {
 }
 
 function handleSimpleLoadingComplete() {
-  alert("Simple loading complete, redirecting...");
+  message.value = "Simple loading complete.";
   uiState.isSimpleLoading = false;
 }
 
 function handleAsyncLoadingComplete() {
-  alert("Async loading complete, redirecting...");
+  message.value = "Async loading complete.";
   uiState.isAfterTextLoading = false;
 }
 
@@ -124,7 +138,7 @@ async function startAsyncLoading() {
     await simulateAsyncStep("isProcessing", 2000);
     await simulateAsyncStep("isSavingOrder", 3000);
     await simulateAsyncStep("sendingMails", 2500);
-  } catch (error) {
+  } catch {
     uiState.isAfterTextLoading = false;
   }
 }
@@ -132,13 +146,16 @@ async function startAsyncLoading() {
 
 <template>
   <div class="flex flex-col items-start gap-4">
-    <!-- Simple Loading Demo -->
-    <section class="flex w-full flex-col items-center justify-center">
-      <h2 class="mb-2 text-lg font-semibold">Simple Loading Demo (prevent close)</h2>
+    <section
+      v-if="props.mode === 'simple'"
+      class="flex w-full flex-col items-center justify-center"
+    >
+      <h2 class="mb-2 text-lg font-semibold">Simple Loading Demo</h2>
       <MultiStepLoader
         :steps="simpleLoadingSteps"
         :loading="uiState.isSimpleLoading"
-        :prevent-close="true"
+        :default-duration="props.defaultDuration"
+        :prevent-close="props.preventClose"
         @state-change="handleStateChange"
         @complete="handleComplete"
       />
@@ -148,14 +165,23 @@ async function startAsyncLoading() {
       >
         {{ uiState.isSimpleLoading ? "Stop Loading" : "Start Simple Loading" }}
       </button>
+      <p
+        v-if="message"
+        class="text-muted mt-3 text-sm"
+      >
+        {{ message }}
+      </p>
     </section>
-    <hr class="my-4 h-px w-full bg-gray-200" />
-    <!-- Async Loading Demo -->
-    <section class="flex w-full flex-col items-center justify-center">
+    <section
+      v-else
+      class="flex w-full flex-col items-center justify-center"
+    >
       <h2 class="mb-2 text-lg font-semibold">Async Loading Demo</h2>
       <MultiStepLoader
         :steps="asyncLoadingSteps"
         :loading="uiState.isAfterTextLoading"
+        :default-duration="props.defaultDuration"
+        :prevent-close="props.preventClose"
         @state-change="handleStateChange"
         @complete="handleComplete"
         @close="uiState.closeAsync"
@@ -167,6 +193,12 @@ async function startAsyncLoading() {
       >
         Start Async Loading
       </button>
+      <p
+        v-if="message"
+        class="text-muted mt-3 text-sm"
+      >
+        {{ message }}
+      </p>
     </section>
   </div>
 </template>

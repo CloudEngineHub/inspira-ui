@@ -3,8 +3,8 @@ import { useDialKit } from "dialkit/vue";
 
 import FloatingCard from "../../ui/floating-card/FloatingCard.vue";
 
-import { range } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range } from "../../../common/dial-kit/dialkit-controls.js";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const config = useDialKit(
   "",

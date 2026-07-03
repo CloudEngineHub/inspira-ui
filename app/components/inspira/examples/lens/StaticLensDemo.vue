@@ -1,12 +1,4 @@
-<script setup lang="ts">
-import { ref } from "vue";
-
-const hovering = ref(false);
-
-function setHovering(value: boolean) {
-  hovering.value = value;
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div
@@ -24,10 +16,7 @@ function setHovering(value: boolean) {
           class="rounded-2xl"
         />
       </Lens>
-      <div
-        :style="{ filter: hovering ? 'blur(2px)' : 'blur(0px)' }"
-        class="relative z-20 py-4"
-      >
+      <div class="relative z-20 py-4">
         <h2 class="text-left text-2xl font-bold text-white">Apple Vision Pro</h2>
         <p class="mt-4 text-left text-neutral-200">
           The all new apple vision pro was the best thing that happened around 8 months ago, not

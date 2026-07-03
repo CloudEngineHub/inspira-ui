@@ -1,4 +1,12 @@
 <script lang="ts" setup>
+interface Props {
+  initialIndex?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialIndex: 2,
+});
+
 const calendarData = [
   { month: "APRIL", date: 22, day: "TUE" },
   { month: "APRIL", date: 23, day: "WED" },
@@ -30,6 +38,9 @@ const calendarData = [
 
 <template>
   <div class="flex min-h-128 w-full items-center justify-center py-4">
-    <SpringCalendar :calendar-data="calendarData" />
+    <SpringCalendar
+      :calendar-data="calendarData"
+      :initial-index="props.initialIndex"
+    />
   </div>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useDialKit } from "dialkit/vue";
 
-import { range } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range } from "../../../common/dial-kit/dialkit-controls";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const config = useDialKit(
   "",

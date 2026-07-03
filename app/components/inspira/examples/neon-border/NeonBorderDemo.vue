@@ -1,6 +1,27 @@
+<script setup lang="ts">
+interface Props {
+  color1?: string;
+  color2?: string;
+  animationType?: "none" | "half" | "full";
+  duration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  color1: "#0496ff",
+  color2: "#ff0a54",
+  animationType: "half",
+  duration: 6,
+});
+</script>
+
 <template>
   <div class="flex h-96 w-full flex-col items-center justify-center gap-16">
-    <NeonBorder animation-type="none">
+    <NeonBorder
+      animation-type="none"
+      :color1="props.color1"
+      :color2="props.color2"
+      :duration="props.duration"
+    >
       <input
         type="text"
         class="bg-background size-full rounded-lg px-4 text-sm"
@@ -8,7 +29,12 @@
       />
     </NeonBorder>
 
-    <NeonBorder>
+    <NeonBorder
+      :color1="props.color1"
+      :color2="props.color2"
+      :animation-type="props.animationType"
+      :duration="props.duration"
+    >
       <input
         type="text"
         class="bg-background size-full rounded-lg px-4 text-sm"
@@ -16,7 +42,12 @@
       />
     </NeonBorder>
 
-    <NeonBorder animation-type="full">
+    <NeonBorder
+      animation-type="full"
+      :color1="props.color1"
+      :color2="props.color2"
+      :duration="props.duration"
+    >
       <input
         type="text"
         class="bg-background size-full rounded-lg px-4 text-sm"

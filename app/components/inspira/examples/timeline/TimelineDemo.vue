@@ -1,4 +1,16 @@
 <script setup lang="ts">
+interface Props {
+  title?: string;
+  description?: string;
+  itemCount?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: "Beam me up",
+  description: "Show the timeline in style",
+  itemCount: 6,
+});
+
 const data = [
   {
     id: "version1.0",
@@ -27,17 +39,18 @@ const data = [
     label: "Version 6.0",
   },
 ];
+const visibleData = computed(() => data.slice(0, props.itemCount));
 </script>
 
 <template>
   <div class="h-fit w-full">
     <Timeline
-      :items="data"
-      title="Beam me up"
-      description="Show the timeline in style"
+      :items="visibleData"
+      :title="props.title"
+      :description="props.description"
     >
       <template
-        v-for="(item, index) in data"
+        v-for="(item, index) in visibleData"
         :key="`${item.id}template`"
         #[item.id]
       >

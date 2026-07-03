@@ -3,8 +3,8 @@ import { useDialKit } from "dialkit/vue";
 
 import SingularityBackgroundDemo from "@/components/inspira/examples/bg-singularity/SingularityBackgroundDemo.vue";
 
-import { shaderToyControls } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { shaderToyControls } from "../../../common/dial-kit/dialkit-controls";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const config = useDialKit("", shaderToyControls(), {
   id: "bg-singularity",

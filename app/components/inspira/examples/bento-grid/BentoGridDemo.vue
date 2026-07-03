@@ -1,4 +1,17 @@
 <script lang="ts" setup>
+const props = withDefaults(
+  defineProps<{
+    itemCount?: number;
+    layout?: "featured" | "even";
+    animatedHeaders?: boolean;
+  }>(),
+  {
+    itemCount: 7,
+    layout: "featured",
+    animatedHeaders: true,
+  },
+);
+
 const items = [
   {
     title: "The Dawn of Innovation",
@@ -29,17 +42,26 @@ const items = [
     description: "Embark on exciting journeys and thrilling discoveries.",
   },
 ];
+
+const visibleItems = computed(() => items.slice(0, props.itemCount));
+
+function isWide(index: number) {
+  return props.layout === "featured" && (index === 3 || index === 6);
+}
 </script>
 
 <template>
   <BentoGrid class="mx-auto max-w-4xl">
     <BentoGridItem
-      v-for="(item, index) in items"
+      v-for="(item, index) in visibleItems"
       :key="index"
-      :class="index === 3 || index === 6 ? 'md:col-span-2' : ''"
+      :class="isWide(index) ? 'md:col-span-2' : ''"
     >
       <template #header>
-        <div class="flex size-full animate-pulse space-x-4">
+        <div
+          class="flex size-full space-x-4"
+          :class="props.animatedHeaders ? 'animate-pulse' : ''"
+        >
           <div class="flex size-full flex-1 rounded-md bg-zinc-800" />
         </div>
       </template>

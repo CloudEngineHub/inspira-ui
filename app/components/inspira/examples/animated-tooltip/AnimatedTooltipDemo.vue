@@ -1,4 +1,12 @@
 <script setup lang="ts">
+interface Props {
+  visibleItems?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  visibleItems: 6,
+});
+
 const people = [
   {
     id: 1,
@@ -47,6 +55,6 @@ const people = [
 
 <template>
   <div class="mb-10 flex min-h-96 w-full flex-row items-center justify-center">
-    <AnimatedTooltip :items="people" />
+    <AnimatedTooltip :items="people.slice(0, props.visibleItems)" />
   </div>
 </template>

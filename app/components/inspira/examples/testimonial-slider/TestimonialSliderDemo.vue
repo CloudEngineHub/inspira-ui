@@ -1,6 +1,16 @@
 <script lang="ts" setup>
 import { rand } from "@vueuse/core";
 
+interface Props {
+  autoRotate?: boolean;
+  duration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  autoRotate: true,
+  duration: 5,
+});
+
 const testimonials = [
   {
     img: `https://randomuser.me/api/portraits/men/${getRandomNumber()}.jpg`,
@@ -40,7 +50,11 @@ function getRandomNumber() {
 <template>
   <div class="bg-background relative h-[500px] w-full overflow-hidden rounded-lg border">
     <div class="mt-[64px] flex justify-center px-12">
-      <TestimonialSlider :testimonials="testimonials" />
+      <TestimonialSlider
+        :testimonials="testimonials"
+        :auto-rotate="props.autoRotate"
+        :duration="props.duration"
+      />
     </div>
   </div>
 </template>

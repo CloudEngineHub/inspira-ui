@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import { lightSpeedPresets } from "../../ui/light-speed";
 
-const preset = ref("one");
+interface Props {
+  preset?: "one" | "two" | "three" | "four" | "five" | "six";
+  speedUp?: number;
+  fov?: number;
+}
 
-const selectedPreset = computed(() => lightSpeedPresets[preset.value]);
+const props = withDefaults(defineProps<Props>(), {
+  preset: "one",
+  speedUp: 2,
+  fov: 90,
+});
+
+const selectedPreset = computed(() => ({
+  ...lightSpeedPresets[props.preset],
+  speedUp: props.speedUp,
+  fov: props.fov,
+}));
 
 function getName(key: string) {
   const names = {
@@ -25,26 +39,11 @@ function getName(key: string) {
       class="relative flex h-96 w-full flex-col items-center justify-center gap-4 overflow-clip rounded-xl border border-zinc-800"
     >
       <LightSpeed
-        :key="preset"
+        :key="`${props.preset}-${props.speedUp}-${props.fov}`"
         :effect-options="selectedPreset"
       />
       <div class="absolute top-6 text-2xl text-neutral-500">Click to speed up</div>
     </div>
-    <Select v-model="preset">
-      <SelectTrigger class="w-[180px]">
-        <SelectValue placeholder="Select an effect" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem
-            v-for="effect in Object.keys(lightSpeedPresets)"
-            :key="effect"
-            :value="effect"
-          >
-            {{ getName(effect) }}
-          </SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <p class="text-muted-foreground text-sm">{{ getName(props.preset) }}</p>
   </div>
 </template>

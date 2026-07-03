@@ -2,6 +2,15 @@
 import type { AnimatedTab } from "../../ui/animated-tabs";
 import { cn } from "@inspira-ui/plugins";
 
+const props = withDefaults(
+  defineProps<{
+    initialTab?: string;
+  }>(),
+  {
+    initialTab: "product",
+  },
+);
+
 const tabs: AnimatedTab[] = [
   {
     title: "Product",
@@ -30,7 +39,7 @@ const tabs: AnimatedTab[] = [
   },
 ];
 
-const modelValue = ref(tabs[0]?.value ?? "");
+const modelValue = ref(props.initialTab);
 </script>
 
 <template>

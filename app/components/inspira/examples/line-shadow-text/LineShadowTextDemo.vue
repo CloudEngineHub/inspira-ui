@@ -2,7 +2,16 @@
 import { useColorMode } from "@vueuse/core";
 import { computed } from "vue";
 
-const isDark = computed(() => useColorMode().value == "dark");
+interface Props {
+  text?: string;
+  shadowColor?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  text: "Fast",
+});
+
+const isDark = computed(() => useColorMode().value === "dark");
 const shadowColor = computed(() => (isDark.value ? "white" : "black"));
 </script>
 
@@ -12,9 +21,9 @@ const shadowColor = computed(() => (isDark.value ? "white" : "black"));
       Ship
       <LineShadowText
         class="italic"
-        :shadow-color="shadowColor"
+        :shadow-color="props.shadowColor || shadowColor"
       >
-        Fast
+        {{ props.text }}
       </LineShadowText>
     </h1>
   </div>

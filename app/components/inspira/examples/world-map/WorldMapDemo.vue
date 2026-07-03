@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import { Motion } from "motion-v";
 
+interface Props {
+  lineColor?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  lineColor: "#0EA5E9",
+});
+
 const dots = [
   {
     start: {
@@ -34,7 +42,7 @@ const dots = [
   },
 ];
 
-const isDark = computed(() => useColorMode().value == "dark");
+const isDark = computed(() => useColorMode().value === "dark");
 </script>
 
 <template>
@@ -63,6 +71,7 @@ const isDark = computed(() => useColorMode().value == "dark");
     </div>
     <WorldMap
       :dots="dots"
+      :line-color="props.lineColor"
       :map-color="isDark ? '#FFFFFF40' : '#00000040'"
       :map-bg-color="isDark ? 'black' : 'white'"
     />

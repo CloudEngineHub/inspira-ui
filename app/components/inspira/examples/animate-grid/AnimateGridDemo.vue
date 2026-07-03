@@ -11,9 +11,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const cards = Array.from({ length: 16 }, () => ({
+const cards = Array.from({ length: 16 }).fill({
   logo: cloudflare,
-}));
+});
 </script>
 
 <template>

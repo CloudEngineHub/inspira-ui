@@ -15,6 +15,22 @@ interface Props {
   endYOffset?: number;
 }
 
+const props = withDefaults(defineProps<Props>(), {
+  curvature: 75,
+  reverse: false,
+  pathColor: "gray",
+  pathWidth: 2,
+  pathOpacity: 0.2,
+  gradientStartColor: "#ffaa40",
+  gradientStopColor: "#9c40ff",
+  delay: 0,
+  duration: 4,
+  startXOffset: 0,
+  startYOffset: 0,
+  endXOffset: 0,
+  endYOffset: 10,
+});
+
 const containerRef = useTemplateRef("containerRef");
 const div1Ref = useTemplateRef("div1Ref");
 const div2Ref = useTemplateRef("div2Ref");
@@ -105,42 +121,52 @@ const div7Ref = useTemplateRef("div7Ref");
     </div>
 
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div1Ref"
       :to-ref="div4Ref"
-      :curvature="-75"
-      :end-y-offset="-10"
+      :curvature="-props.curvature"
+      :end-y-offset="-props.endYOffset"
     />
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div2Ref"
       :to-ref="div4Ref"
+      :curvature="0"
+      :end-y-offset="0"
     />
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div3Ref"
       :to-ref="div4Ref"
-      :curvature="75"
-      :end-y-offset="10"
+      :curvature="props.curvature"
+      :end-y-offset="props.endYOffset"
     />
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div5Ref"
       :to-ref="div4Ref"
-      :curvature="-75"
-      :end-y-offset="-10"
+      :curvature="-props.curvature"
+      :end-y-offset="-props.endYOffset"
     />
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div6Ref"
       :to-ref="div4Ref"
+      :curvature="0"
+      :end-y-offset="0"
     />
     <AnimatedBeam
+      v-bind="props"
       :container-ref="containerRef"
       :from-ref="div7Ref"
       :to-ref="div4Ref"
-      :curvature="75"
-      :end-y-offset="10"
+      :curvature="props.curvature"
+      :end-y-offset="props.endYOffset"
     />
   </div>
 </template>

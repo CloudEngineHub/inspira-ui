@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useDialKit } from "dialkit/vue";
 
-import { range, select } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range, select } from "../../../common/dial-kit/dialkit-controls";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 interface Props {
   direction: "top" | "right" | "left" | "bottom";

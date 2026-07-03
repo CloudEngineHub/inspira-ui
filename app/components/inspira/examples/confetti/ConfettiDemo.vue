@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const confettiRef = ref(null);
+interface Props {
+  particleCount?: number;
+  spread?: number;
+  startVelocity?: number;
+  scalar?: number;
+}
 
-// Function to trigger confetti
+const props = withDefaults(defineProps<Props>(), {
+  particleCount: 120,
+  spread: 70,
+  startVelocity: 35,
+  scalar: 1,
+});
+
+const confettiRef = ref<{ fire: (options?: Record<string, unknown>) => void } | null>(null);
+
 function fireConfetti() {
-  confettiRef.value?.fire({});
+  confettiRef.value?.fire({
+    particleCount: props.particleCount,
+    spread: props.spread,
+    startVelocity: props.startVelocity,
+    scalar: props.scalar,
+  });
 }
 </script>
 
@@ -23,7 +41,11 @@ function fireConfetti() {
     <Confetti
       ref="confettiRef"
       class="absolute top-0 left-0 z-0 size-full"
-      @mouseenter="fireConfetti"
+    />
+    <InteractiveHoverButton
+      text="Fire confetti"
+      class="relative z-10"
+      @click="fireConfetti"
     />
   </div>
 </template>

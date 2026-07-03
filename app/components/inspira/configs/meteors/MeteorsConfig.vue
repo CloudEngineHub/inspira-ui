@@ -1,9 +1,19 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { range } from "../../../common/dial-kit/dialkit-controls";
+
+const config = useDialKit("", {
+  count: range(20, 1, 80),
+});
+</script>
 
 <template>
   <ComponentPlayground>
+    <template #config>
+      <DialKitConfigPanel />
+    </template>
+
     <template #component>
-      <MeteorsDemo />
+      <MeteorsDemo v-bind="config" />
     </template>
   </ComponentPlayground>
 </template>

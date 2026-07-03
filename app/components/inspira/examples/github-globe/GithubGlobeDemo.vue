@@ -1,8 +1,28 @@
 <script setup lang="ts">
-const globeConfig = {
+interface Props {
+  pointSize?: number;
+  arcTime?: number;
+  arcLength?: number;
+  rings?: number;
+  maxRings?: number;
+  autoRotateSpeed?: number;
+  showAtmosphere?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
   pointSize: 1,
-  globeColor: "#0b43bd",
+  arcTime: 1000,
+  arcLength: 1,
+  rings: 1,
+  maxRings: 10,
+  autoRotateSpeed: 2.5,
   showAtmosphere: true,
+});
+
+const globeConfig = computed(() => ({
+  pointSize: props.pointSize,
+  globeColor: "#0b43bd",
+  showAtmosphere: props.showAtmosphere,
   atmosphereColor: "#FFFFFF",
   atmosphereAltitude: 0.1,
   emissive: "#062056",
@@ -13,14 +33,14 @@ const globeConfig = {
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
   pointLight: "#ffffff",
-  arcTime: 1000,
-  arcLength: 1,
-  rings: 1,
-  maxRings: 10,
+  arcTime: props.arcTime,
+  arcLength: props.arcLength,
+  rings: props.rings,
+  maxRings: props.maxRings,
   initialPosition: { lat: 22.3193, lng: 114.1694 },
   autoRotate: true,
-  autoRotateSpeed: 2.5,
-};
+  autoRotateSpeed: props.autoRotateSpeed,
+}));
 
 const colors = [
   "#eae547",

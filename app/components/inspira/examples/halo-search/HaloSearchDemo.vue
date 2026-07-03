@@ -1,9 +1,36 @@
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    hint?: string;
+    height?: "sm" | "md" | "lg";
+    showHint?: boolean;
+  }>(),
+  {
+    hint: "Hover the field, then type.",
+    height: "md",
+    showHint: true,
+  },
+);
+
+const heightClass = computed(() => ({
+  "h-80": props.height === "sm",
+  "h-96": props.height === "md",
+  "h-[28rem]": props.height === "lg",
+}));
+</script>
+
 <template>
-  <div class="relative z-0 flex h-96 w-full flex-col items-center justify-center">
+  <div
+    class="relative z-0 flex w-full flex-col items-center justify-center"
+    :class="heightClass"
+  >
     <HaloSearch />
 
-    <span class="text-muted-foreground mt-24 font-light">
-      Try hovering over component and typing in it.
+    <span
+      v-if="props.showHint"
+      class="text-muted mt-24 font-light"
+    >
+      {{ props.hint }}
     </span>
   </div>
 </template>

@@ -1,11 +1,23 @@
 <script lang="ts" setup>
-import AnimatedTabsDemo from "~/components/inspira/examples/animated-tabs/AnimatedTabsDemo.vue";
+import { useDialKit } from "dialkit/vue";
+import { select } from "../../../common/dial-kit/dialkit-controls";
+
+const config = useDialKit("", {
+  initialTab: select("product", ["product", "services", "playground", "content", "random"]),
+});
 </script>
 
 <template>
   <ComponentPlayground>
+    <template #config>
+      <DialKitConfigPanel />
+    </template>
+
     <template #component>
-      <AnimatedTabsDemo />
+      <AnimatedTabsDemo
+        :key="config.initialTab"
+        v-bind="config as any"
+      />
     </template>
   </ComponentPlayground>
 </template>

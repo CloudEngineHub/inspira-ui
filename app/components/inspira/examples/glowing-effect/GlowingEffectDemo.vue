@@ -1,4 +1,24 @@
 <script lang="ts" setup>
+interface Props {
+  spread?: number;
+  proximity?: number;
+  blur?: number;
+  borderWidth?: number;
+  movementDuration?: number;
+  variant?: "default" | "white";
+  glow?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  spread: 40,
+  proximity: 64,
+  blur: 0,
+  borderWidth: 1,
+  movementDuration: 2,
+  variant: "default",
+  glow: true,
+});
+
 const gridItems = [
   {
     area: "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
@@ -50,11 +70,15 @@ const gridItems = [
     >
       <div class="rounded-2.5xl relative h-full border p-2 md:rounded-3xl md:p-3">
         <GlowingEffect
-          :spread="40"
-          :glow="true"
+          :spread="props.spread"
+          :glow="props.glow"
           :disabled="false"
-          :proximity="64"
+          :proximity="props.proximity"
           :inactive-zone="0.01"
+          :blur="props.blur"
+          :border-width="props.borderWidth"
+          :movement-duration="props.movementDuration"
+          :variant="props.variant"
         />
         <div
           class="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]"

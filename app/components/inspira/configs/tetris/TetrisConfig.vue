@@ -1,9 +1,23 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { range } from "../../../common/dial-kit/dialkit-controls";
+
+const config = useDialKit("", {
+  base: range(15, 6, 28),
+  squareColor: "#00C16A",
+});
+</script>
 
 <template>
   <ComponentPlayground>
+    <template #config>
+      <DialKitConfigPanel />
+    </template>
+
     <template #component>
-      <TetrisDemo />
+      <TetrisDemo
+        :key="`${config.base}-${config.squareColor}`"
+        v-bind="config"
+      />
     </template>
   </ComponentPlayground>
 </template>

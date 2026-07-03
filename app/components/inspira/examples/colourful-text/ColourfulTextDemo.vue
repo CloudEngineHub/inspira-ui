@@ -1,5 +1,17 @@
 <script setup lang="ts">
 import { Motion } from "motion-v";
+
+interface Props {
+  text?: string;
+  highlight?: string;
+  duration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  text: "The best",
+  highlight: "components",
+  duration: 0.5,
+});
 </script>
 
 <template>
@@ -20,7 +32,11 @@ import { Motion } from "motion-v";
       <h1
         class="relative z-2 text-center font-sans text-2xl font-bold text-white md:text-5xl lg:text-7xl"
       >
-        The best <ColourfulText text="components" />
+        {{ props.text }}
+        <ColourfulText
+          :text="props.highlight"
+          :duration="props.duration"
+        />
         <br />
         you will ever find
       </h1>

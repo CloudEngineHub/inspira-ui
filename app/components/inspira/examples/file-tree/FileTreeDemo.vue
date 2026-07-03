@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import type { TreeViewElement } from "~/components/content/inspira/ui/file-tree/index";
 
+const props = withDefaults(
+  defineProps<{
+    selectedId?: string;
+    expanded?: "minimal" | "components" | "full";
+    direction?: "ltr" | "rtl";
+    indicator?: boolean;
+  }>(),
+  {
+    selectedId: "1",
+    expanded: "full",
+    direction: "ltr",
+    indicator: true,
+  },
+);
+
 const ELEMENTS: TreeViewElement[] = [
   {
     id: "1",
@@ -67,33 +82,42 @@ const ELEMENTS: TreeViewElement[] = [
     ],
   },
 ];
+
+const expandedItems = computed(() => {
+  if (props.expanded === "minimal") return ["1"];
+  if (props.expanded === "components") return ["1", "2", "3"];
+  return [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+  ];
+});
 </script>
 
 <template>
   <Tree
+    :key="`${props.selectedId}-${props.expanded}-${props.direction}`"
     class="bg-background overflow-hidden rounded-md p-2"
-    initial-selected-id="1"
-    :initial-expanded-items="[
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-    ]"
+    :initial-selected-id="props.selectedId"
+    :initial-expanded-items="expandedItems"
+    :direction="props.direction"
+    :indicator="props.indicator"
     :elements="ELEMENTS"
   >
     <Folder

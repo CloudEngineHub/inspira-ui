@@ -1,6 +1,19 @@
+<script setup lang="ts">
+interface Props {
+  particleCount?: number;
+  blur?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  particleCount: 2000,
+  blur: 2,
+});
+</script>
+
 <template>
   <ParticleWhirlpoolBg
-    :blur="2"
+    :particle-count="props.particleCount"
+    :blur="props.blur"
     class="h-96"
   >
     <div

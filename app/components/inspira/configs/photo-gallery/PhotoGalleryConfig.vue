@@ -1,9 +1,19 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { range } from "../../../common/dial-kit/dialkit-controls";
+
+const config = useDialKit("", {
+  visibleImages: range(8, 5, 8),
+});
+</script>
 
 <template>
   <ComponentPlayground>
+    <template #config>
+      <DialKitConfigPanel />
+    </template>
+
     <template #component>
-      <PhotoGalleryDemo />
+      <PhotoGalleryDemo v-bind="config" />
     </template>
   </ComponentPlayground>
 </template>

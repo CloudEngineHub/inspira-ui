@@ -1,4 +1,18 @@
 <script lang="ts" setup>
+interface Props {
+  autoplay?: number;
+  direction?: "vertical" | "horizontal";
+  hideOverlay?: boolean;
+  perspective?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  autoplay: 5000,
+  direction: "vertical",
+  hideOverlay: false,
+  perspective: "1000px",
+});
+
 const images = [
   "https://picsum.photos/seed/waiting/1920/1080",
   "https://picsum.photos/seed/full-collapse/1920/1080",
@@ -14,7 +28,10 @@ const images = [
   <div>
     <ImagesSlider
       :images="images"
-      autoplay
+      :autoplay="props.autoplay"
+      :direction="props.direction"
+      :hide-overlay="props.hideOverlay"
+      :perspective="props.perspective"
     >
       <div
         class="flex size-full items-end justify-center bg-linear-to-b from-transparent via-transparent to-black/80 p-8"

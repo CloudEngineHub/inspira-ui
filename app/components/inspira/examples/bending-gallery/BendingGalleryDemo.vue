@@ -1,4 +1,16 @@
 <script lang="ts" setup>
+interface Props {
+  bend?: number;
+  borderRadius?: number;
+  textColor?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  bend: 2,
+  borderRadius: 0.1,
+  textColor: "#ffffff",
+});
+
 const items = ref<Array<{ image: string; text: string }>>([
   {
     image:
@@ -34,8 +46,9 @@ const items = ref<Array<{ image: string; text: string }>>([
   >
     <BendingGallery
       :items="items"
-      :bend="2"
-      :border-radius="0.1"
+      :bend="props.bend"
+      :border-radius="props.borderRadius"
+      :text-color="props.textColor"
     />
   </div>
 </template>

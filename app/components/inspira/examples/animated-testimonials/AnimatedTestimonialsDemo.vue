@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+interface Props {
+  autoplay?: boolean;
+  duration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  autoplay: false,
+  duration: 5000,
+});
+
 const testimonials = [
   {
     quote:
@@ -45,6 +55,10 @@ const testimonials = [
 
 <template>
   <ClientOnly>
-    <AnimatedTestimonials :testimonials="testimonials" />
+    <AnimatedTestimonials
+      :testimonials="testimonials"
+      :autoplay="props.autoplay"
+      :duration="props.duration"
+    />
   </ClientOnly>
 </template>

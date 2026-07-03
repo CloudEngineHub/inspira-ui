@@ -1,37 +1,50 @@
 <script setup lang="ts">
-// Dummy content data
-const dummyContent = [
+const props = withDefaults(
+  defineProps<{
+    itemCount?: number;
+    showImages?: boolean;
+    compact?: boolean;
+  }>(),
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    itemCount: 3,
+    showImages: true,
+    compact: false,
+  },
+);
+
+const content = [
+  {
+    title: "Build with motion that explains itself",
     description: [
-      "Sit duis est minim proident non nisi velit non consectetur. Esse adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt Lorem ut aliqua anim do. Duis cupidatat qui irure cupidatat incididunt incididunt enim magna id est qui sunt fugiat. Laboris do duis pariatur fugiat Lorem aute sit ullamco. Qui deserunt non reprehenderit dolore nisi velit exercitation Lorem qui do enim culpa. Aliqua eiusmod in occaecat reprehenderit laborum nostrud fugiat voluptate do Lorem culpa officia sint labore. Tempor consectetur excepteur ut fugiat veniam commodo et labore dolore commodo pariatur.",
-      "Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad veniam in commodo id reprehenderit adipisicing. Proident duis exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.",
-      "Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod reprehenderit deserunt amet laborum consequat adipisicing officia qui irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud. Amet culpa officia aliquip deserunt veniam deserunt officia adipisicing aliquip proident officia sunt.",
+      "Tracing Beam keeps long-form content readable while giving readers a clear sense of progress.",
+      "Use it for stories, timelines, release notes, or guided sections that benefit from scroll context.",
     ],
     badge: "Vue",
     image:
       "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "Keep sections connected",
     description: [
-      "Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.",
-      "In dolore veniam excepteur eu est et sunt velit. Ipsum sint esse veniam fugiat esse qui sint ad sunt reprehenderit do qui proident reprehenderit. Laborum exercitation aliqua reprehenderit ea sint cillum ut mollit.",
+      "The beam follows the reading path and creates a subtle relationship between independent content blocks.",
+      "It stays decorative, so the page remains useful without the animation.",
     ],
     badge: "Nuxt",
     image:
       "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "Add motion without taking over",
     description: [
-      "Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.",
+      "The effect is strongest when the content is calm: good spacing, readable type, and one visible path.",
     ],
     badge: "Inspira UI",
     image:
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=3506&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
+
+const visibleContent = computed(() => content.slice(0, props.itemCount));
 </script>
 
 <template>
@@ -39,9 +52,9 @@ const dummyContent = [
     <TracingBeam class="px-6">
       <div class="relative mx-auto max-w-2xl pt-4 antialiased">
         <div
-          v-for="(item, index) in dummyContent"
+          v-for="(item, index) in visibleContent"
           :key="`content-${index}`"
-          class="mb-10"
+          :class="props.compact ? 'mb-6' : 'mb-10'"
         >
           <div
             class="mb-4 w-fit rounded-full bg-black px-2 text-sm text-white dark:bg-white dark:text-black"
@@ -55,7 +68,7 @@ const dummyContent = [
 
           <div class="prose prose-sm dark:prose-invert text-sm">
             <img
-              v-if="item.image"
+              v-if="props.showImages && item.image"
               :src="item.image"
               alt="blog thumbnail"
               class="mb-10 rounded-lg object-cover"

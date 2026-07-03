@@ -1,8 +1,33 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+interface Props {
+  perspective?: number;
+  beamsPerSide?: number;
+  beamSize?: number;
+  beamDelayMax?: number;
+  beamDuration?: number;
+  gridColor?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  perspective: 100,
+  beamsPerSide: 3,
+  beamSize: 5,
+  beamDelayMax: 3,
+  beamDuration: 3,
+  gridColor: "hsl(var(--border))",
+});
+</script>
 
 <template>
   <div class="w-full">
-    <WarpBackground>
+    <WarpBackground
+      :perspective="props.perspective"
+      :beams-per-side="props.beamsPerSide"
+      :beam-size="props.beamSize"
+      :beam-delay-max="props.beamDelayMax"
+      :beam-duration="props.beamDuration"
+      :grid-color="props.gridColor"
+    >
       <div class="bg-card mx-auto w-72 rounded-lg border shadow-sm">
         <div class="flex flex-col gap-2 p-4">
           <h3 class="text-xl leading-none font-semibold tracking-tight">
@@ -17,5 +42,3 @@
     </WarpBackground>
   </div>
 </template>
-
-<style></style>

@@ -4,8 +4,8 @@ import type { DemoProps } from "../../examples/dither-shader/DitherShaderDemo.vu
 import { useDialKit } from "dialkit/vue";
 import DitherShaderDemo from "../../examples/dither-shader/DitherShaderDemo.vue";
 
-import { range, select } from "../dialkit-controls";
-import DialKitConfigPanel from "../DialKitConfigPanel.vue";
+import { range, select } from "../../../common/dial-kit/dialkit-controls.js";
+import DialKitConfigPanel from "../../../common/dial-kit/DialKitConfigPanel.vue";
 
 const controls = useDialKit(
   "",

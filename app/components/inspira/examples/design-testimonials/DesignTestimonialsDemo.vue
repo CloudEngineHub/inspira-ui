@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+interface Props {
+  title?: string;
+  duration?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: "Testimonials",
+  duration: 6000,
+});
+
 const testimonials = [
   {
     quote:
@@ -30,5 +40,9 @@ const testimonials = [
 ];
 </script>
 <template>
-  <DesignTestimonials :testimonials />
+  <DesignTestimonials
+    :testimonials
+    :title="props.title"
+    :duration="props.duration"
+  />
 </template>

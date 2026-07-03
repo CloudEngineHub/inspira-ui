@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+interface Props {
+  pauseOnHover?: boolean;
+  reverseSecondRow?: boolean;
+  repeat?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  pauseOnHover: true,
+  reverseSecondRow: true,
+  repeat: 4,
+});
+
 // Reviews data
 const reviews = [
   {
@@ -52,7 +64,8 @@ const secondRow = ref(reviews.slice(reviews.length / 2));
   >
     <!-- First Marquee -->
     <Marquee
-      pause-on-hover
+      :pause-on-hover="props.pauseOnHover"
+      :repeat="props.repeat"
       class="[--duration:20s]"
     >
       <ReviewCard
@@ -67,8 +80,9 @@ const secondRow = ref(reviews.slice(reviews.length / 2));
 
     <!-- Second Marquee (reverse) -->
     <Marquee
-      reverse
-      pause-on-hover
+      :reverse="props.reverseSecondRow"
+      :pause-on-hover="props.pauseOnHover"
+      :repeat="props.repeat"
       class="[--duration:20s]"
     >
       <ReviewCard

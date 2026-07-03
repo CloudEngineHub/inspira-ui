@@ -1,7 +1,38 @@
+<script setup lang="ts">
+interface Props {
+  particleCount?: number;
+  rangeY?: number;
+  baseHue?: number;
+  baseSpeed?: number;
+  rangeSpeed?: number;
+  baseRadius?: number;
+  rangeRadius?: number;
+  backgroundColor?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  particleCount: 700,
+  rangeY: 100,
+  baseHue: 220,
+  baseSpeed: 0,
+  rangeSpeed: 1.5,
+  baseRadius: 1,
+  rangeRadius: 2,
+  backgroundColor: "#000000",
+});
+</script>
+
 <template>
   <div class="mx-auto h-120 w-[calc(100%-4rem)] overflow-hidden rounded-md">
     <Vortex
-      background-color="black"
+      :particle-count="props.particleCount"
+      :range-y="props.rangeY"
+      :base-hue="props.baseHue"
+      :base-speed="props.baseSpeed"
+      :range-speed="props.rangeSpeed"
+      :base-radius="props.baseRadius"
+      :range-radius="props.rangeRadius"
+      :background-color="props.backgroundColor"
       class="flex size-full flex-col items-center justify-center px-2 py-4 md:px-10"
     >
       <h2 class="text-center text-2xl font-bold text-white md:text-6xl">The hell is this?</h2>

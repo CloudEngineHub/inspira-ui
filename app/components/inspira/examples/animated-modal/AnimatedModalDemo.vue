@@ -1,28 +1,49 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+interface Props {
+  triggerLabel?: string;
+  confirmLabel?: string;
+  closeOnEsc?: boolean;
+  closeOnOutside?: boolean;
+  lockScroll?: boolean;
+  showClose?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  triggerLabel: "Open modal",
+  confirmLabel: "Confirm",
+  closeOnEsc: true,
+  closeOnOutside: true,
+  lockScroll: false,
+  showClose: true,
+});
+
 const open = ref(false);
 </script>
 
 <template>
   <div class="flex w-full items-center justify-center gap-4 py-8">
-    <!-- Method 1: Controlled Mode -->
     <UButton
-      label="Open Modal (Controlled)"
+      :label="`${props.triggerLabel} (controlled)`"
       @click="open = true"
     />
 
-    <!-- Method 2: Uncontrolled Mode -->
     <AnimatedModal
       v-slot="{ openModal, closeModal }"
       v-model:open="open"
+      :close-on-esc="props.closeOnEsc"
     >
       <UButton
-        label="Open Modal (Uncontrolled)"
+        :label="`${props.triggerLabel} (slot)`"
         @click="openModal"
       />
 
-      <AnimatedModalBody :lock-scroll="false">
+      <AnimatedModalBody
+        :lock-scroll="props.lockScroll"
+        :close-on-outside="props.closeOnOutside"
+        :show-close="props.showClose"
+      >
         <AnimatedModalContent>
           <h3 class="text-highlighted text-xl font-semibold">How to Use</h3>
           <p class="text-muted mt-4 text-sm">
@@ -71,7 +92,7 @@ const open = ref(false);
             @click="closeModal"
           />
           <UButton
-            label="Confirm"
+            :label="props.confirmLabel"
             @click="closeModal"
           />
         </AnimatedModalFooter>

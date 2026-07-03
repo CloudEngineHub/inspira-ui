@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+interface Props {
+  title?: string;
+  visibleLogos?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: "Trusted by Companies like",
+  visibleLogos: 8,
+});
+
 const logos = [
   {
     name: "Hume AI",
@@ -38,8 +48,8 @@ const logos = [
 <template>
   <div>
     <IconLogoCloud
-      :logos
-      title="Trusted by Companies like"
+      :logos="logos.slice(0, props.visibleLogos)"
+      :title="props.title"
     />
   </div>
 </template>

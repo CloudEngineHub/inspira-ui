@@ -2,7 +2,21 @@
 import { useColorMode } from "@vueuse/core";
 import { computed } from "vue";
 
+interface Props {
+  quantity?: number;
+  ease?: number;
+  staticity?: number;
+  color?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  quantity: 100,
+  ease: 100,
+  staticity: 10,
+});
+
 const isDark = computed(() => useColorMode().value === "dark");
+const particleColor = computed(() => props.color || (isDark.value ? "#ffffff" : "#000000"));
 </script>
 
 <template>
@@ -15,12 +29,12 @@ const isDark = computed(() => useColorMode().value === "dark");
       Particles
     </span>
     <ParticlesBg
-      :key="isDark.toString()"
+      :key="`${isDark}-${props.quantity}`"
       class="absolute inset-0"
-      :quantity="100"
-      :ease="100"
-      :color="isDark ? '#FFF' : '#000'"
-      :staticity="10"
+      :quantity="props.quantity"
+      :ease="props.ease"
+      :color="particleColor"
+      :staticity="props.staticity"
       refresh
     />
   </div>

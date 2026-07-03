@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+interface Props {
+  initialScroll?: number;
+  visibleCards?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialScroll: 0,
+  visibleCards: 6,
+});
+
 const data = [
   {
     category: "Artificial Intelligence",
@@ -36,9 +46,9 @@ const data = [
 
 <template>
   <div class="w-full overflow-hidden">
-    <AppleCardCarousel>
+    <AppleCardCarousel :initial-scroll="props.initialScroll">
       <AppleCarouselItem
-        v-for="(card, index) in data"
+        v-for="(card, index) in data.slice(0, props.visibleCards)"
         :key="index"
         :index="index"
       >

@@ -2,18 +2,47 @@
 import { useColorMode } from "@vueuse/core";
 import { computed } from "vue";
 
-const isDark = computed(() => useColorMode().value == "dark");
-const rightColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
-const indicatorColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
+interface Props {
+  initialValue?: number;
+  leftColor?: string;
+  rightColor?: string;
+  minShiftLimit?: number;
+  maxShiftLimit?: number;
+  leftContent?: string;
+  rightContent?: string;
+  indicatorColor?: string;
+  borderRadius?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialValue: 50,
+  leftColor: "#e68a00",
+  minShiftLimit: 40,
+  maxShiftLimit: 68,
+  leftContent: "COFFEE",
+  rightContent: "MILK",
+  borderRadius: 8,
+});
+
+const isDark = computed(() => useColorMode().value === "dark");
+const rightColor = computed(() => props.rightColor || (isDark.value ? "#FFFFFF" : "#000000"));
+const indicatorColor = computed(
+  () => props.indicatorColor || (isDark.value ? "#FFFFFF" : "#000000"),
+);
 </script>
 
 <template>
   <div class="w-full p-4">
     <BalanceSlider
+      :initial-value="props.initialValue"
+      :left-color="props.leftColor"
       :right-color="rightColor"
-      left-content="COFFEE"
-      right-content="MILK"
+      :min-shift-limit="props.minShiftLimit"
+      :max-shift-limit="props.maxShiftLimit"
+      :left-content="props.leftContent"
+      :right-content="props.rightContent"
       :indicator-color="indicatorColor"
+      :border-radius="props.borderRadius"
     />
   </div>
 </template>

@@ -68,4 +68,8 @@ import { DialRoot } from "dialkit/vue";
   letter-spacing: 0;
   padding-left: 4px;
 }
+
+.dialkit-config-shell :deep(.dialkit-select-dropdown) {
+  background: #212121;
+}
 </style>

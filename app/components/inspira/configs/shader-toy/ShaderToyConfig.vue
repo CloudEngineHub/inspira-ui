@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDialKit } from "dialkit/vue";
 
-import { select, shaderToyControls } from "../dialkit-controls";
+import { range, select, shaderToyControls } from "../dialkit-controls";
 import DialKitConfigPanel from "../DialKitConfigPanel.vue";
 
 export interface ConfigModel {
@@ -11,6 +11,8 @@ export interface ConfigModel {
   speed: number;
   mouseSensitivity: number;
   damping: number;
+  frameRate: number;
+  pixelRatio: number;
   noise: {
     opacity: number;
     scale: number;
@@ -303,6 +305,8 @@ const config = useDialKit(
       { label: "Black Hole", value: "blackhole" },
     ]),
     ...shaderToyControls(),
+    frameRate: range(60, 15, 60),
+    pixelRatio: range(1, 0.25, 2, 0.25),
   },
   { id: "shader-toy", persist: false },
 );
@@ -314,6 +318,8 @@ const shaderConfig = computed<ConfigModel>(() => ({
   speed: config.value.speed,
   mouseSensitivity: config.value.mouseSensitivity,
   damping: config.value.damping,
+  frameRate: config.value.frameRate,
+  pixelRatio: config.value.pixelRatio,
   noise: config.value.noise,
 }));
 

@@ -26,6 +26,9 @@ export class InspiraShaderToy {
   private geometry: Geometry;
   private program: Program | null = null;
   private mesh: Mesh | null = null;
+  private resizeObserver?: ResizeObserver;
+  private animationFrameId = 0;
+  private removeEventListeners: (() => void)[] = [];
 
   // Timing
   private isPlaying: boolean = false;
@@ -43,10 +46,11 @@ export class InspiraShaderToy {
   private iMouse: MouseState = { x: 0, y: 0, clickX: 0, clickY: 0 };
   private hsv: HSVControls = { hue: 0, saturation: 1, brightness: 1 };
   private _mouseMode: MouseMode = "click";
-  private _mouseSensitivity: number = 1.0; // New: mouse sensitivity multiplier
-  private _mouseDamping: number = 0.9; // New: mouse movement damping factor (0-1)
+  private _mouseSensitivity: number = 1.0;
+  private _mouseDamping: number = 0.9;
 
-  private _speed: number = 1; // Speed multiplier
+  private _speed: number = 1;
+  private _pixelRatio: number = 1;
 
   // Shader source
   private shaderSource: string = "";
@@ -125,6 +129,7 @@ export class InspiraShaderToy {
     private container: HTMLElement,
     mouseMode?: MouseMode,
     fps?: number,
+    pixelRatio = 1,
   ) {
     if (mouseMode) {
       this._mouseMode = mouseMode;
@@ -132,12 +137,13 @@ export class InspiraShaderToy {
     if (fps) {
       this.setFrameRate(fps);
     }
+    this.setPixelRatio(pixelRatio);
 
     // Create renderer with WebGL 2 context
     this.renderer = new Renderer({
-      width: this.container.clientWidth,
-      height: this.container.clientHeight,
-      dpr: window.devicePixelRatio,
+      width: this.getSafeWidth(),
+      height: this.getSafeHeight(),
+      dpr: this._pixelRatio,
       alpha: true,
       depth: false,
       stencil: false,
@@ -176,13 +182,58 @@ export class InspiraShaderToy {
     this.setupResizeHandler();
   }
 
+  private getSafeWidth(): number {
+    return Math.max(1, this.container.clientWidth);
+  }
+
+  private getSafeHeight(): number {
+    return Math.max(1, this.container.clientHeight);
+  }
+
+  private getResolution(): [number, number, number] {
+    const width = this.getSafeWidth();
+    const height = this.getSafeHeight();
+    const dpr = this._pixelRatio;
+
+    return [width * dpr, height * dpr, dpr];
+  }
+
+  private updateProgramResolution(): void {
+    if (this.program) {
+      this.program.uniforms.iResolution.value = this.getResolution();
+    }
+  }
+
+  private resize(): void {
+    const width = this.getSafeWidth();
+    const height = this.getSafeHeight();
+    const dpr = this._pixelRatio;
+
+    this.renderer.dpr = dpr;
+    this.renderer.setSize(width, height);
+    this.renderer.setViewport(width * dpr, height * dpr);
+    this.updateProgramResolution();
+  }
+
+  private addEventListener(
+    target: EventTarget,
+    type: string,
+    listener: EventListener,
+    options?: AddEventListenerOptions,
+  ): void {
+    target.addEventListener(type, listener, options);
+    this.removeEventListeners.push(() => {
+      target.removeEventListener(type, listener, options);
+    });
+  }
+
   private setupMouseEvents(): void {
     const canvas = this.renderer.gl.canvas;
     let isMouseDown = false;
 
     const getScaledMousePos = (event: MouseEvent | Touch) => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio;
+      const dpr = this._pixelRatio;
 
       // Get mouse position relative to canvas
       const x = event.clientX - rect.left;
@@ -195,8 +246,9 @@ export class InspiraShaderToy {
       };
     };
 
-    canvas.addEventListener("mousemove", (event: MouseEvent) => {
-      const { x: newX, y: newY } = getScaledMousePos(event);
+    const onMouseMove = (event: Event) => {
+      const mouseEvent = event as MouseEvent;
+      const { x: newX, y: newY } = getScaledMousePos(mouseEvent);
 
       // Apply damping with configurable factor
       this.iMouse.x = this.iMouse.x * this._mouseDamping + newX * (1 - this._mouseDamping);
@@ -210,26 +262,29 @@ export class InspiraShaderToy {
         this.iMouse.clickX = newX;
         this.iMouse.clickY = newY;
       }
-    });
+    };
 
-    canvas.addEventListener("mousedown", (event: MouseEvent) => {
+    const onMouseDown = (event: Event) => {
+      const mouseEvent = event as MouseEvent;
       isMouseDown = true;
-      const { x: clickX, y: clickY } = getScaledMousePos(event);
+      const { x: clickX, y: clickY } = getScaledMousePos(mouseEvent);
 
       if (this._mouseMode === "click") {
         this.iMouse.clickX = clickX;
         this.iMouse.clickY = clickY;
       }
-    });
+    };
 
-    canvas.addEventListener("mouseup", () => {
+    const stopPress = () => {
       isMouseDown = false;
-    });
+    };
 
     // Handle touch events for mobile
-    canvas.addEventListener("touchmove", (event: TouchEvent) => {
-      event.preventDefault();
-      const touch = event.touches[0];
+    const onTouchMove = (event: Event) => {
+      const touchEvent = event as TouchEvent;
+      touchEvent.preventDefault();
+      const touch = touchEvent.touches[0];
+      if (!touch) return;
       const { x: newX, y: newY } = getScaledMousePos(touch);
 
       this.iMouse.x = newX;
@@ -239,52 +294,40 @@ export class InspiraShaderToy {
         this.iMouse.clickX = newX;
         this.iMouse.clickY = newY;
       }
-    });
+    };
 
-    canvas.addEventListener("touchstart", (event: TouchEvent) => {
-      event.preventDefault();
+    const onTouchStart = (event: Event) => {
+      const touchEvent = event as TouchEvent;
+      touchEvent.preventDefault();
       isMouseDown = true;
-      const touch = event.touches[0];
+      const touch = touchEvent.touches[0];
+      if (!touch) return;
       const { x: clickX, y: clickY } = getScaledMousePos(touch);
 
       if (this._mouseMode === "click") {
         this.iMouse.clickX = clickX;
         this.iMouse.clickY = clickY;
       }
-    });
+    };
 
-    canvas.addEventListener("touchend", () => {
-      isMouseDown = false;
-    });
+    this.addEventListener(canvas, "mousemove", onMouseMove);
+    this.addEventListener(canvas, "mousedown", onMouseDown);
+    this.addEventListener(canvas, "mouseup", stopPress);
+    this.addEventListener(canvas, "mouseleave", stopPress);
+    this.addEventListener(window, "mouseup", stopPress);
+    this.addEventListener(canvas, "touchmove", onTouchMove, { passive: false });
+    this.addEventListener(canvas, "touchstart", onTouchStart, { passive: false });
+    this.addEventListener(canvas, "touchend", stopPress);
+    this.addEventListener(canvas, "touchcancel", stopPress);
   }
 
   private setupResizeHandler(): void {
-    const resizeObserver = new ResizeObserver(() => {
-      const width = this.container.clientWidth;
-      const height = this.container.clientHeight;
-
-      // Update renderer size
-      this.renderer.setSize(width, height);
-
-      // Update viewport
-      this.renderer.gl.viewport(
-        0,
-        0,
-        width * window.devicePixelRatio,
-        height * window.devicePixelRatio,
-      );
-
-      // Update resolution uniform if program exists
-      if (this.program) {
-        this.program.uniforms.iResolution.value = [
-          width * window.devicePixelRatio,
-          height * window.devicePixelRatio,
-          window.devicePixelRatio,
-        ];
-      }
+    this.resizeObserver = new ResizeObserver(() => {
+      this.resize();
     });
 
-    resizeObserver.observe(this.container);
+    this.resizeObserver.observe(this.container);
+    this.resize();
   }
 
   private compileProgram(): boolean {
@@ -298,11 +341,7 @@ export class InspiraShaderToy {
         fragment: fullFragmentShader,
         uniforms: {
           iResolution: {
-            value: [
-              this.container.clientWidth * window.devicePixelRatio,
-              this.container.clientHeight * window.devicePixelRatio,
-              window.devicePixelRatio,
-            ],
+            value: this.getResolution(),
           },
           iTime: { value: 0 },
           iTimeDelta: { value: 0 },
@@ -315,11 +354,14 @@ export class InspiraShaderToy {
         },
       });
 
-      this.program = program;
-      this.mesh = new Mesh(this.renderer.gl, {
+      const mesh = new Mesh(this.renderer.gl, {
         geometry: this.geometry,
         program,
       });
+
+      this.program?.remove();
+      this.program = program;
+      this.mesh = mesh;
 
       return true;
     } catch (error) {
@@ -335,17 +377,6 @@ export class InspiraShaderToy {
     }
 
     const now = this.isPlaying ? Date.now() : this.prevDrawTime;
-
-    // Frame rate limiting
-    if (this.isPlaying && this.targetFPS < 60) {
-      const elapsed = now - this.lastFrameTime;
-      if (elapsed < this.frameInterval) {
-        requestAnimationFrame(() => this.animate());
-        return;
-      }
-      this.lastFrameTime = now - (elapsed % this.frameInterval);
-    }
-
     const date = new Date(now);
 
     if (this.firstDrawTime === 0) {
@@ -362,11 +393,7 @@ export class InspiraShaderToy {
 
     if (this.program && this.mesh) {
       // Update uniforms
-      this.program.uniforms.iResolution.value = [
-        this.container.clientWidth * window.devicePixelRatio,
-        this.container.clientHeight * window.devicePixelRatio,
-        window.devicePixelRatio,
-      ];
+      this.program.uniforms.iResolution.value = this.getResolution();
       this.program.uniforms.iTime.value = iTime;
       this.program.uniforms.iTimeDelta.value = iTimeDelta;
       this.program.uniforms.iFrameRate.value = this.targetFPS;
@@ -390,10 +417,28 @@ export class InspiraShaderToy {
   }
 
   private animate = (): void => {
-    if (this.isPlaying) {
-      this.draw();
-      requestAnimationFrame(this.animate);
+    this.animationFrameId = 0;
+
+    if (!this.isPlaying) return;
+
+    let shouldDraw = true;
+
+    if (this.targetFPS < 60) {
+      const now = Date.now();
+      const elapsed = now - this.lastFrameTime;
+
+      if (elapsed < this.frameInterval) {
+        shouldDraw = false;
+      } else {
+        this.lastFrameTime = now - (elapsed % this.frameInterval);
+      }
     }
+
+    if (shouldDraw) {
+      this.draw();
+    }
+
+    this.animationFrameId = requestAnimationFrame(this.animate);
   };
 
   // Public methods
@@ -473,6 +518,21 @@ export class InspiraShaderToy {
     return this.targetFPS;
   }
 
+  public setPixelRatio(pixelRatio: number): void {
+    this._pixelRatio = Math.max(0.25, Math.min(2, pixelRatio));
+
+    if (this.renderer) {
+      this.resize();
+      if (!this.isPlaying && this.program && this.mesh) {
+        this.draw();
+      }
+    }
+  }
+
+  public getPixelRatio(): number {
+    return this._pixelRatio;
+  }
+
   public setOnDraw(callback: () => void): void {
     this.onDrawCallback = callback;
   }
@@ -496,6 +556,10 @@ export class InspiraShaderToy {
 
   public pause(): void {
     this.isPlaying = false;
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = 0;
+    }
   }
 
   public play(): void {
@@ -506,12 +570,22 @@ export class InspiraShaderToy {
       this.firstDrawTime = now - elapsed;
       this.prevDrawTime = now;
       this.lastFrameTime = now;
-      this.animate();
+      this.draw();
+      this.animationFrameId = requestAnimationFrame(this.animate);
     }
   }
 
   public dispose(): void {
     this.pause();
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
+    this.removeEventListeners.forEach((remove) => remove());
+    this.removeEventListeners = [];
+    this.program?.remove();
+    this.program = null;
+    this.mesh = null;
+    this.geometry.remove();
+
     if (this.renderer.gl.canvas.parentElement) {
       this.renderer.gl.canvas.parentElement.removeChild(this.renderer.gl.canvas);
     }

@@ -3,6 +3,7 @@ title: Shader Toy Viewer
 description: 在浏览器中渲染 ShaderToy GLSL 着色器的强大灵活组件。
 category: Miscellaneous
 tags: [css, tailwind, shader-toy, ogl, webgl]
+badge: Updated
 ---
 
 ::ComponentViewer{demoFile="ShaderToyDemo.vue" config="ShaderToyConfig" componentId="shader-toy" :componentFiles='["ShaderToy.vue", "InspiraShaderToy.ts"]' dependencies="ogl"}
@@ -19,6 +20,10 @@ tags: [css, tailwind, shader-toy, ogl, webgl]
 | `saturation` | `number`             | `1`       | 调整着色器输出的饱和度。                |
 | `brightness` | `number`             | `1`       | 调整着色器输出的亮度。                  |
 | `speed`      | `number`             | `1`       | 调整着色器输出的速度。                  |
+| `frameRate`  | `number`             | `60`      | 为较重的着色器限制渲染帧率。            |
+| `pixelRatio` | `number`             | `1`       | 控制画布渲染倍率，平衡清晰度与性能。    |
+| `paused`     | `boolean`            | `false`   | 手动暂停播放。                          |
+| `autoPause`  | `boolean`            | `true`    | 离开视口或标签页隐藏时暂停渲染。        |
 | `class`      | `string`             | `-`       | 应用于容器的自定义类。                  |
 
 #credits

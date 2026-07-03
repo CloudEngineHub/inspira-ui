@@ -6,6 +6,8 @@ interface Props {
   speed?: number;
   mouseSensitivity?: number;
   damping?: number;
+  frameRate?: number;
+  pixelRatio?: number;
   noise?: {
     opacity: number;
     scale: number;
@@ -20,7 +22,6 @@ const props = defineProps<Props>();
 <template>
   <div class="flex h-96 w-full flex-col items-center justify-center gap-4">
     <ShaderToy
-      :key="shaderCode"
       class="h-full w-full"
       v-bind="props"
     />

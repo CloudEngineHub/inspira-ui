@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import type { MouseMode } from "./InspiraShaderToy";
 import { cn } from "@inspira-ui/plugins";
-import { onMounted, onUnmounted, watch } from "vue";
+import { computed, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { InspiraShaderToy } from "./InspiraShaderToy";
 
 interface NoiseConfig {
@@ -20,6 +20,11 @@ interface Props {
   speed?: number;
   mouseSensitivity?: number;
   damping?: number;
+  frameRate?: number;
+  pixelRatio?: number;
+  paused?: boolean;
+  autoPause?: boolean;
+  interactive?: boolean;
   noise?: NoiseConfig;
 }
 
@@ -31,24 +36,71 @@ const props = withDefaults(defineProps<Props>(), {
   speed: 1,
   mouseSensitivity: 1,
   damping: 0,
+  frameRate: 60,
+  pixelRatio: 1,
+  paused: false,
+  autoPause: true,
+  interactive: true,
 });
 
+const emit = defineEmits<{
+  ready: [];
+  error: [message: string];
+}>();
+
 const containerRef = useTemplateRef("containerRef");
+const isInViewport = shallowRef(true);
+const isDocumentVisible = shallowRef(true);
+
 let shader: InspiraShaderToy | undefined;
+let intersectionObserver: IntersectionObserver | undefined;
 
 const backgroundSize = computed(() => `${(props.noise?.scale || 0) * 200}%`);
+const noiseOpacity = computed(() => Math.min(1, Math.max(0, (props.noise?.opacity ?? 0) / 2)));
+const shouldPlay = computed(
+  () => !props.paused && (!props.autoPause || (isInViewport.value && isDocumentVisible.value)),
+);
+
+function updatePlayback() {
+  if (!shader) return;
+
+  if (shouldPlay.value) {
+    shader.play();
+  } else {
+    shader.pause();
+  }
+}
+
+function setShaderSource(source: string) {
+  if (!shader) return;
+
+  const success = shader.setShader({ source });
+
+  if (!success) {
+    emit("error", "Failed to compile shader");
+    return;
+  }
+
+  emit("ready");
+  updatePlayback();
+}
+
+function handleVisibilityChange() {
+  isDocumentVisible.value = document.visibilityState === "visible";
+}
 
 onMounted(() => {
   if (!containerRef.value) return;
 
-  shader = new InspiraShaderToy(containerRef.value, props.mouseMode);
-
-  const success = shader.setShader({
-    source: props.shaderCode,
-  });
-
-  if (!success) {
-    console.error("Failed to compile shader");
+  try {
+    shader = new InspiraShaderToy(
+      containerRef.value,
+      props.mouseMode,
+      props.frameRate,
+      props.pixelRatio,
+    );
+  } catch (error) {
+    emit("error", error instanceof Error ? error.message : "Failed to initialize WebGL");
     return;
   }
 
@@ -57,18 +109,43 @@ onMounted(() => {
     saturation: props.saturation,
     brightness: props.brightness,
   });
-
   shader.setSpeed(props.speed);
-
   shader.setMouseSensitivity(props.mouseSensitivity);
   shader.setMouseDamping(props.damping);
+  setShaderSource(props.shaderCode);
 
-  shader.play();
+  if (props.autoPause) {
+    intersectionObserver = new IntersectionObserver(([entry]) => {
+      isInViewport.value = entry?.isIntersecting ?? true;
+    });
+    intersectionObserver.observe(containerRef.value);
+  }
+
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  handleVisibilityChange();
+  updatePlayback();
 });
 
 onUnmounted(() => {
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
+  intersectionObserver?.disconnect();
   shader?.dispose();
+  shader = undefined;
 });
+
+watch(
+  () => props.shaderCode,
+  (v) => setShaderSource(v),
+);
+
+watch(
+  () => props.mouseMode,
+  (v) => {
+    if (shader) {
+      shader.mouseMode = v;
+    }
+  },
+);
 
 watch(
   () => props.hue,
@@ -123,40 +200,47 @@ watch(
     }
   },
 );
+
+watch(
+  () => props.frameRate,
+  (v) => {
+    if (v !== undefined && shader) {
+      shader.setFrameRate(v);
+    }
+  },
+);
+
+watch(
+  () => props.pixelRatio,
+  (v) => {
+    if (v !== undefined && shader) {
+      shader.setPixelRatio(v);
+    }
+  },
+);
+
+watch(shouldPlay, updatePlayback);
 </script>
 
 <template>
   <div
     ref="containerRef"
-    :class="cn(`shadertoy-container isolate`, props.class)"
+    :class="
+      cn(
+        'relative isolate block h-full w-full overflow-hidden [&>canvas]:block [&>canvas]:h-full [&>canvas]:w-full [&>canvas]:max-w-full',
+        props.interactive ? '[&>canvas]:cursor-pointer' : 'pointer-events-none',
+        props.class,
+      )
+    "
   >
     <div
       v-if="props.noise && props.noise.opacity > 0"
-      :key="props.noise.toString()"
-      class="absolute inset-0 z-10 bg-[url(https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png)] bg-repeat"
+      class="pointer-events-none absolute inset-0 z-10 bg-[url(https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png)] bg-repeat"
       :style="{
         backgroundSize,
         backgroundPosition: 'center',
-        opacity: props.noise.opacity / 2,
+        opacity: noiseOpacity,
       }"
     />
   </div>
 </template>
-
-<style scoped>
-.shadertoy-container {
-  display: block;
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-.shadertoy-container canvas {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  z-index: 0;
-}
-</style>

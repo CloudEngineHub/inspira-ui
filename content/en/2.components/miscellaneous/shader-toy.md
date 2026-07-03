@@ -3,6 +3,7 @@ title: Shader Toy Viewer
 description: A powerful and flexible component to render interactive GLSL shaders from ShaderToy in the browser.
 category: Miscellaneous
 tags: [css, tailwind, shader-toy, ogl, webgl]
+badge: Updated
 ---
 
 ::ComponentViewer{demoFile="ShaderToyDemo.vue" config="ShaderToyConfig" componentId="shader-toy" :componentFiles='["ShaderToy.vue", "InspiraShaderToy.ts"]' dependencies="ogl"}
@@ -19,6 +20,10 @@ tags: [css, tailwind, shader-toy, ogl, webgl]
 | `saturation` | `number`             | `1`       | Adjust the saturation of the shader output.               |
 | `brightness` | `number`             | `1`       | Adjust the brightness of the shader output.               |
 | `speed`      | `number`             | `1`       | Adjust the speed of the shader output.                    |
+| `frameRate`  | `number`             | `60`      | Caps render frequency for heavier shaders.                |
+| `pixelRatio` | `number`             | `1`       | Controls canvas render scale for quality/performance.     |
+| `paused`     | `boolean`            | `false`   | Pauses playback manually.                                 |
+| `autoPause`  | `boolean`            | `true`    | Pauses rendering while off-screen or when the tab hides.  |
 | `class`      | `string`             | `-`       | Custom classes to apply to the container.                 |
 
 #credits

@@ -1,37 +1,57 @@
 <script lang="ts" setup>
+import { Motion } from "motion-v";
+
 const { locale } = useDocusI18n();
 
 const componentPath = computed(() => `/${locale.value}/components`);
 const installationPath = computed(() => `/${locale.value}/getting-started/installation`);
+const preferredMotion = usePreferredReducedMotion();
+const reduceMotion = computed(() => preferredMotion.value === "reduce");
+const heroInitial = computed(() => (reduceMotion.value ? false : { opacity: 0, y: 28 }));
+const heroAnimate = { opacity: 1, y: 0 };
+const heroTransition = computed(() =>
+  reduceMotion.value
+    ? { duration: 0 }
+    : {
+        duration: 0.72,
+        ease: [0.16, 1, 0.3, 1],
+      },
+);
 </script>
 
 <template>
-  <section class="relative overflow-hidden py-20 sm:py-28 lg:py-32">
+  <Motion
+    as="section"
+    class="relative overflow-hidden py-16 sm:py-24 lg:py-28"
+    :initial="heroInitial"
+    :animate="heroAnimate"
+    :transition="heroTransition"
+  >
     <div class="grid gap-16 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
       <div class="max-w-3xl">
-        <p class="font-mono text-xs tracking-[0.22em] text-[#947545] uppercase dark:text-[#d6b16a]">
+        <p class="text-primary font-mono text-xs tracking-[0.2em] uppercase">
           Inspira UI for Vue and Nuxt
         </p>
 
         <h1
-          class="mt-8 max-w-4xl text-5xl font-semibold tracking-tighter text-balance sm:text-6xl lg:text-7xl"
+          class="text-highlighted mt-8 max-w-4xl text-5xl leading-[0.96] font-semibold tracking-[-0.055em] text-balance sm:text-6xl lg:text-7xl"
         >
-          Animated UI components for Vue and Nuxt.
+          Animated components for Vue and Nuxt.
         </h1>
 
-        <p class="mt-7 max-w-xl text-lg leading-8 text-[#5d6670] dark:text-[#a7abb4]">
-          Explore reusable components with live previews, props, API docs, install notes, and source
-          code.
+        <p class="text-muted mt-7 max-w-xl text-lg leading-8 text-pretty">
+          Preview motion, tune props, read API details, and copy source from focused component
+          pages.
         </p>
 
         <div class="mt-9 flex flex-col gap-3 sm:flex-row">
           <NuxtLink
             :to="componentPath"
-            class="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#111315] px-5 text-sm font-medium text-white transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] dark:bg-[#f5f1e8] dark:text-[#050506]"
+            class="group bg-primary text-inverted inline-flex h-12 items-center justify-center gap-3 rounded-full px-5 text-sm font-medium transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] motion-reduce:transition-none"
           >
             Browse components
             <span
-              class="grid size-7 place-items-center rounded-full bg-white/10 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 dark:bg-black/10"
+              class="grid size-7 place-items-center rounded-full bg-white/12 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px motion-reduce:transition-none dark:bg-black/10"
             >
               <UIcon
                 name="i-lucide-arrow-right"
@@ -42,11 +62,11 @@ const installationPath = computed(() => `/${locale.value}/getting-started/instal
 
           <NuxtLink
             :to="installationPath"
-            class="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-white/75 px-5 text-sm font-medium text-[#111315] ring-1 ring-[#dfe5e8] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] dark:bg-white/[0.05] dark:text-[#f5f1e8] dark:ring-white/10"
+            class="group bg-elevated/45 text-highlighted ring-default/70 inline-flex h-12 items-center justify-center gap-3 rounded-full px-5 text-sm font-medium ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] motion-reduce:transition-none"
           >
             Installation guide
             <span
-              class="grid size-7 place-items-center rounded-full bg-[#111315]/5 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 dark:bg-white/10"
+              class="bg-default/60 grid size-7 place-items-center rounded-full transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px motion-reduce:transition-none"
             >
               <UIcon
                 name="i-lucide-book-open"
@@ -56,68 +76,64 @@ const installationPath = computed(() => `/${locale.value}/getting-started/instal
           </NuxtLink>
         </div>
 
-        <p
-          class="mt-8 font-mono text-xs tracking-[0.16em] text-[#6b737d] uppercase dark:text-[#a7abb4]"
-        >
-          130+ components / 4.7k+ Github Stars
+        <p class="text-muted mt-8 font-mono text-xs tracking-[0.14em]">
+          130+ components / live previews / source included
         </p>
       </div>
 
       <div class="relative">
         <p
           aria-hidden="true"
-          class="pointer-events-none absolute -top-16 right-0 hidden text-[10rem] leading-none font-semibold tracking-normal text-[#121313]/5 uppercase lg:block dark:text-white/[0.035]"
+          class="text-toned/5 pointer-events-none absolute -top-16 right-0 hidden text-[10rem] leading-none font-semibold tracking-normal lg:block"
         >
           UI
         </p>
 
-        <div class="hero-beam relative rounded-[3rem] p-px">
+        <div
+          class="from-primary/16 via-muted/10 to-primary/5 ring-default/70 relative rounded-[3rem] bg-linear-to-br p-1.5 shadow-[0_30px_110px_-72px_rgba(0,0,0,0.75)] ring transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:shadow-none"
+        >
           <div
-            class="hero-preview-card relative overflow-hidden rounded-[calc(3rem-1px)] border border-[#aebdc7] bg-white/96 p-6 text-[#111315] shadow-[0_30px_90px_-42px_rgba(15,23,42,0.55)] sm:p-8 dark:border-white/10 dark:bg-[#050506] dark:text-[#f5f1e8] dark:shadow-none"
+            class="bg-default/90 text-highlighted ring-default/70 relative overflow-hidden rounded-[calc(3rem-0.375rem)] p-6 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--ui-text-highlighted)_8%,transparent)] ring sm:p-8"
           >
             <div
               aria-hidden="true"
-              class="hero-preview-line absolute inset-x-8 top-10 h-px bg-linear-to-r from-transparent via-[#947545]/45 to-transparent dark:via-[#d6b16a]/40"
+              class="from-primary/0 via-primary/28 to-primary/0 absolute inset-x-8 top-10 h-px bg-linear-to-r"
             />
             <div
               aria-hidden="true"
-              class="hero-preview-glow absolute right-8 bottom-8 size-52 rounded-full bg-[#d9c49b]/28 blur-3xl dark:bg-[#d6b16a]/10"
+              class="bg-primary/8 absolute right-8 bottom-8 size-60 rounded-full blur-3xl"
             />
 
-            <div class="relative z-10 flex min-h-112 flex-col justify-between">
+            <div class="relative z-10 flex min-h-[28rem] flex-col justify-between">
               <div class="flex items-center justify-between gap-4">
                 <div>
-                  <p class="hero-preview-eyebrow font-mono text-[11px] tracking-[0.2em] uppercase">
-                    Inspira UI
-                  </p>
-                  <p class="mt-2 text-sm text-[#5d6670] dark:text-[#a7abb4]">
-                    Motion patterns for interfaces that need more presence.
+                  <p class="text-primary font-mono text-[11px] tracking-[0.16em]">Inspira UI</p>
+                  <p class="text-muted mt-2 text-sm">
+                    Components with motion, props, API notes, and source.
                   </p>
                 </div>
-                <p class="font-mono text-[11px] text-[#5d6670] dark:text-[#a7abb4]">Open source</p>
+                <p class="text-muted font-mono text-[11px]">Vue / Nuxt</p>
               </div>
 
               <div class="max-w-xl py-16">
-                <p
-                  class="font-mono text-xs tracking-[0.2em] text-[#5d6670] uppercase dark:text-[#a7abb4]"
+                <p class="text-muted font-mono text-xs tracking-[0.16em]">Component preview</p>
+                <h2
+                  class="mt-4 text-4xl leading-[0.92] font-semibold tracking-[-0.04em] text-balance sm:text-5xl"
                 >
-                  Design with motion
-                </p>
-                <h2 class="mt-4 text-4xl leading-[0.92] font-semibold tracking-normal sm:text-5xl">
                   Make Vue interfaces feel crafted.
                 </h2>
               </div>
 
               <div
-                class="hero-preview-rule flex flex-col gap-3 border-t border-[#d3dee5] pt-5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10"
+                class="border-default/70 flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between"
               >
-                <p class="max-w-sm text-sm leading-6 text-[#5d6670] dark:text-[#a7abb4]">
-                  Use animated backgrounds, cards, text effects, cursors, and interactions to make
-                  your web pages feel more polished.
+                <p class="text-muted max-w-sm text-sm leading-6 text-pretty">
+                  Add animated backgrounds, cards, text effects, cursors, and interactions without
+                  hiding the code.
                 </p>
                 <NuxtLink
                   :to="componentPath"
-                  class="hero-preview-cta inline-flex h-10 min-w-fit items-center justify-center rounded-full border border-black/10 bg-[#111315] px-4 text-sm font-medium whitespace-nowrap text-white transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] dark:border-white/10 dark:bg-white/8 dark:text-[#f5f1e8]"
+                  class="bg-elevated/70 text-highlighted ring-default/70 inline-flex h-10 min-w-fit items-center justify-center rounded-full px-4 text-sm font-medium whitespace-nowrap ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] motion-reduce:transition-none"
                 >
                   Browse components
                 </NuxtLink>
@@ -127,47 +143,5 @@ const installationPath = computed(() => `/${locale.value}/getting-started/instal
         </div>
       </div>
     </div>
-  </section>
+  </Motion>
 </template>
-
-<style scoped>
-.hero-beam::before {
-  position: absolute;
-  inset: 0;
-  content: "";
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from 180deg,
-    transparent,
-    rgba(214, 177, 106, 0.25),
-    rgba(142, 168, 255, 0.18),
-    transparent 42%
-  );
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0.8;
-}
-
-.hero-preview-eyebrow {
-  color: #947545;
-}
-
-:global(.dark) .hero-preview-eyebrow {
-  color: #d6b16a;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-beam::before {
-    animation: hero-beam-spin 16s linear infinite;
-  }
-}
-
-@keyframes hero-beam-spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-</style>

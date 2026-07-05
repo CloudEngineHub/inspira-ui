@@ -33,33 +33,29 @@ const links = [
 
 <template>
   <div
-    class="rounded-[3rem] bg-[#d5dfe6] p-2 shadow-[0_28px_90px_-52px_rgba(15,23,42,0.62)] ring-1 ring-[#b9c7d0] dark:bg-white/[0.035] dark:shadow-none dark:ring-white/10"
+    class="bg-elevated/45 ring-default/70 rounded-[3rem] p-1.5 shadow-[0_26px_90px_-62px_rgba(0,0,0,0.58)] ring transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:shadow-none"
   >
     <div
-      class="rounded-[calc(3rem-0.5rem)] bg-white p-6 ring-1 ring-[#c4d0d8] dark:bg-[#07080b]/85 dark:ring-white/10"
+      class="bg-default/86 ring-default/70 rounded-[calc(3rem-0.375rem)] p-6 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--ui-text-highlighted)_8%,transparent)] ring"
     >
       <div class="flex items-start justify-between gap-4">
         <div>
-          <p
-            class="font-mono text-xs tracking-[0.2em] text-[#947545] uppercase dark:text-[#d6b16a]"
-          >
-            Community
-          </p>
-          <h3 class="mt-3 text-2xl leading-tight font-semibold tracking-normal">
-            Connect with us.
+          <p class="text-primary font-mono text-xs tracking-[0.14em]">Community</p>
+          <h3 class="text-highlighted mt-3 text-2xl leading-tight font-semibold tracking-[-0.03em]">
+            Stay close to the project.
           </h3>
-          <p class="mt-3 text-sm leading-6 text-[#5d6670] dark:text-[#a7abb4]">
+          <p class="text-muted mt-3 text-sm leading-6 text-pretty">
             Follow the latest updates, ask questions, report issues, and share what you build.
           </p>
         </div>
         <UIcon
           name="i-lucide-users-round"
-          class="size-5 text-[#947545] dark:text-[#d6b16a]"
+          class="text-primary size-5"
         />
       </div>
 
       <div
-        class="mt-5 divide-y divide-[#d8e1e7] overflow-hidden rounded-[2rem] dark:divide-white/10"
+        class="border-default/70 bg-border/60 mt-5 grid gap-px overflow-hidden rounded-[2rem] border sm:grid-cols-2"
       >
         <NuxtLink
           v-for="link in links"
@@ -67,11 +63,11 @@ const links = [
           :to="link.to"
           :target="link.target"
           rel="noopener noreferrer"
-          class="group flex items-center justify-between gap-4 bg-[#f7fafb] px-4 py-3 transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#edf3f6] active:bg-[#e6edf1] dark:bg-white/[0.035] dark:hover:bg-white/[0.06] dark:active:bg-white/[0.055]"
+          class="group bg-muted/35 hover:bg-elevated/75 active:bg-elevated flex items-center justify-between gap-4 px-4 py-3 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
         >
           <div class="flex items-center gap-3">
             <span
-              class="grid size-8 shrink-0 place-items-center rounded-full bg-[#e6edf1] text-[#111315] ring-1 ring-[#c7d3db] dark:bg-white/[0.06] dark:text-[#f5f1e8] dark:ring-white/10"
+              class="bg-elevated/70 text-highlighted ring-default/60 grid size-8 shrink-0 place-items-center rounded-full ring"
             >
               <UIcon
                 :name="link.icon"
@@ -79,16 +75,16 @@ const links = [
               />
             </span>
             <div>
-              <p class="text-sm font-medium">
+              <p class="text-highlighted text-sm font-medium">
                 {{ link.title }}
               </p>
-              <p class="mt-0.5 text-xs leading-5 text-[#5d6670] dark:text-[#a7abb4]">
+              <p class="text-muted mt-0.5 text-xs leading-5">
                 {{ link.description }}
               </p>
             </div>
           </div>
           <span
-            class="grid size-8 shrink-0 place-items-center rounded-full bg-[#e6edf1] text-[#111315] ring-1 ring-[#c7d3db] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 dark:bg-white/[0.06] dark:text-[#f5f1e8] dark:ring-white/10"
+            class="bg-elevated/70 text-highlighted ring-default/60 grid size-8 shrink-0 place-items-center rounded-full ring transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px motion-reduce:transition-none"
           >
             <UIcon
               name="i-lucide-arrow-up-right"

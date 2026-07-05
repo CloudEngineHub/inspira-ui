@@ -1,7 +1,6 @@
 ---
 seo:
-  title: Build beautifull website using Vue & Nuxt.
-  description: Ship fast, flexible, and SEO-optimized documentation with beautiful
-    design out of the box. Docus brings together the best of the Nuxt ecosystem.
-    Powered by Nuxt UI.
+  title: Animated components for Vue and Nuxt.
+  description: Copy ready animated components for Vue and Nuxt with live previews,
+    props, API docs, and source code.
 ---

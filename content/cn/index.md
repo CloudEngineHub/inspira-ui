@@ -1,5 +1,5 @@
 ---
 seo:
-  title: 使用 Vue 和 Nuxt 构建美丽的网站。
-  description: 快速、灵活、SEO 优化的文档，开箱即用美观设计。Docus 汇集了 Nuxt 生态系统的精华。由 Nuxt UI 驱动。
+  title: 适用于 Vue 和 Nuxt 的动画组件。
+  description: 为 Vue 和 Nuxt 提供可直接复制的动画组件，包含实时预览、属性、API 文档和源码。
 ---

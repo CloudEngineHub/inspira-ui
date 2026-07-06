@@ -91,8 +91,10 @@ function normalizeStatusBadge(badge?: unknown): StatusBadge | null {
   return null;
 }
 
-function statusBadgeColor(badge: StatusBadge) {
-  return badge === "New" ? "success" : "primary";
+function statusBadgeClass(badge: StatusBadge) {
+  return badge === "New"
+    ? "bg-success/10 text-success ring-success/20"
+    : "bg-warning/10 text-warning ring-warning/20";
 }
 
 const badgeByPath = computed(() => {
@@ -231,11 +233,11 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
   <MotionConfig :transition="navMotionTransition">
     <nav
       ref="navContainer"
-      class="-mx-1 pb-8"
+      class="-mx-2 pb-8"
       aria-label="Documentation"
       @mouseleave="hoveredKey = null"
     >
-      <div class="space-y-6">
+      <div class="space-y-7">
         <section
           v-for="group in navGroups"
           :key="group.key"
@@ -243,14 +245,16 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
         >
           <div
             v-if="group.title"
-            class="mb-1 flex items-center justify-between gap-3 px-2"
+            class="mb-2 flex items-center justify-between gap-3 px-3"
           >
-            <p class="text-toned truncate text-sm font-bold uppercase">
+            <p
+              class="text-toned truncate font-mono text-[0.65rem] font-semibold tracking-[0.22em] uppercase"
+            >
               {{ group.title }}
             </p>
           </div>
 
-          <div class="space-y-0.5">
+          <div class="space-y-1">
             <template
               v-for="link in group.items"
               :key="link.path || link.title"
@@ -259,7 +263,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 v-if="!link.children?.length"
                 :to="link.path"
                 :target="link.target as string"
-                class="group/link focus-visible:text-highlighted relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-colors duration-150 active:scale-[0.985]"
+                class="group/link focus-visible:text-highlighted relative isolate flex min-h-9 items-center gap-3 overflow-hidden rounded-full px-3 py-1.5 text-[0.8125rem] leading-5 tracking-[-0.01em] transition-[color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.985] motion-reduce:transition-none motion-reduce:active:scale-100"
                 :class="isCurrent(link) ? 'text-highlighted' : 'text-muted hover:text-highlighted'"
                 :aria-current="isCurrent(link) ? 'page' : undefined"
                 :data-current="isCurrent(link) ? true : undefined"
@@ -270,22 +274,26 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 <motion.span
                   v-if="isCurrent(link)"
                   :layout-id="`${indicatorId}-active`"
-                  class="bg-elevated/90 ring-default pointer-events-none absolute inset-0 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.12)] ring"
+                  class="bg-elevated/90 ring-default/70 pointer-events-none absolute inset-0 rounded-full shadow-[0_18px_44px_-34px_rgba(0,0,0,0.75)] ring"
                   :transition="navMotionTransition"
                 />
 
                 <motion.span
                   v-else-if="hoveredKey === itemKey(link)"
                   :layout-id="`${indicatorId}-hover`"
-                  class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-xl ring"
+                  class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-full ring"
                   :initial="navHoverInitial"
                   :animate="navHoverAnimate"
                   :transition="navHoverTransition"
                 />
 
                 <span
-                  class="relative size-1.5 shrink-0 rounded-sm transition-colors duration-150 motion-reduce:transition-none"
-                  :class="isCurrent(link) ? 'bg-primary' : ''"
+                  class="relative size-1.5 shrink-0 rounded-full transition-colors duration-200 motion-reduce:transition-none"
+                  :class="
+                    isCurrent(link)
+                      ? 'bg-primary shadow-[0_0_0_4px_color-mix(in_oklab,var(--ui-primary)_18%,transparent),0_0_18px_color-mix(in_oklab,var(--ui-primary)_72%,transparent)]'
+                      : 'bg-muted/70 group-hover/link:bg-primary/40'
+                  "
                 />
 
                 <span
@@ -302,15 +310,15 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
 
                 <span
                   v-if="link.statusBadge || link.trailingIcon"
-                  class="relative inline-flex items-center gap-1.5"
+                  class="relative ms-auto inline-flex items-center gap-1.5"
                 >
-                  <UBadge
+                  <span
                     v-if="link.statusBadge"
-                    :label="link.statusBadge"
-                    :color="statusBadgeColor(link.statusBadge)"
-                    variant="soft"
-                    size="sm"
-                  />
+                    class="rounded-full px-1.5 py-0.5 font-mono text-[0.54rem] font-semibold tracking-[0.12em] uppercase ring"
+                    :class="statusBadgeClass(link.statusBadge)"
+                  >
+                    {{ link.statusBadge }}
+                  </span>
                   <UIcon
                     v-if="link.trailingIcon"
                     :name="link.trailingIcon"
@@ -321,20 +329,20 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
 
               <div
                 v-else
-                class="mt-4"
+                class="mt-5"
               >
                 <p
-                  class="text-dimmed mb-1.5 px-2 text-[0.62rem] font-semibold tracking-[0.2em] uppercase"
+                  class="text-toned mb-2 px-3 font-mono text-[0.65rem] font-semibold tracking-[0.22em] uppercase"
                 >
                   {{ link.title }}
                 </p>
-                <div class="space-y-0.5">
+                <div class="space-y-1">
                   <ULink
                     v-for="child in link.children"
                     :key="child.path || child.title"
                     :to="child.path"
                     :target="child.target as string"
-                    class="group/link focus-visible:text-highlighted relative isolate flex min-h-8 items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-[0.88rem] leading-6 tracking-[-0.012em] transition-colors duration-150 active:scale-[0.985]"
+                    class="group/link focus-visible:text-highlighted relative isolate flex min-h-9 items-center gap-3 overflow-hidden rounded-full px-3 py-1.5 text-[0.8125rem] leading-5 tracking-[-0.01em] transition-[color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.985] motion-reduce:transition-none motion-reduce:active:scale-100"
                     :class="
                       isCurrent(child) ? 'text-highlighted' : 'text-muted hover:text-highlighted'
                     "
@@ -347,14 +355,14 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                     <motion.span
                       v-if="isCurrent(child)"
                       :layout-id="`${indicatorId}-active`"
-                      class="bg-elevated/90 ring-default pointer-events-none absolute inset-0 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.12)] ring"
+                      class="bg-elevated/90 ring-default/70 pointer-events-none absolute inset-0 rounded-full shadow-[0_18px_44px_-34px_rgba(0,0,0,0.75)] ring"
                       :transition="navMotionTransition"
                     />
 
                     <motion.span
                       v-else-if="hoveredKey === itemKey(child)"
                       :layout-id="`${indicatorId}-hover`"
-                      class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-xl ring"
+                      class="bg-elevated/45 ring-default/40 pointer-events-none absolute inset-0 rounded-full ring"
                       :initial="navHoverInitial"
                       :animate="navHoverAnimate"
                       :transition="navHoverTransition"
@@ -365,7 +373,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                       :class="
                         isCurrent(child)
                           ? 'bg-primary shadow-[0_0_0_4px_color-mix(in_oklab,var(--ui-primary)_18%,transparent),0_0_18px_color-mix(in_oklab,var(--ui-primary)_72%,transparent)]'
-                          : 'bg-muted/80 group-hover/link:bg-toned'
+                          : 'bg-muted/70 group-hover/link:bg-primary/40'
                       "
                     />
                     <span
@@ -379,14 +387,13 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                       v-if="child.statusBadge || child.trailingIcon"
                       class="relative ms-auto inline-flex items-center gap-1.5"
                     >
-                      <UBadge
+                      <span
                         v-if="child.statusBadge"
-                        :label="child.statusBadge"
-                        :color="statusBadgeColor(child.statusBadge)"
-                        variant="soft"
-                        size="sm"
-                        class="rounded-full px-1.5 text-[0.56rem] font-semibold tracking-[0.12em] uppercase"
-                      />
+                        class="rounded-full px-1.5 py-0.5 font-mono text-[0.54rem] font-semibold tracking-[0.12em] uppercase ring"
+                        :class="statusBadgeClass(child.statusBadge)"
+                      >
+                        {{ child.statusBadge }}
+                      </span>
                       <UIcon
                         v-if="child.trailingIcon"
                         :name="child.trailingIcon"

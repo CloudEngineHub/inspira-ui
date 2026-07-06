@@ -72,18 +72,26 @@ function isUpdated(component: DocsEnCollectionItem) {
 
 function filterButtonClass(id: string) {
   if (selectedCategory.value === id) {
+    if (id === "new") {
+      return "bg-success text-inverted shadow-[0_16px_40px_-28px_color-mix(in_oklab,var(--ui-success)_80%,transparent)]";
+    }
+
+    if (id === "updated") {
+      return "bg-warning text-inverted shadow-[0_16px_40px_-28px_color-mix(in_oklab,var(--ui-warning)_80%,transparent)]";
+    }
+
     return "bg-inverted text-inverted shadow-sm";
   }
 
   if (id === "new") {
-    return "bg-success/5 text-highlighted ring-success/10 ring hover:bg-success/10";
+    return "bg-success/5 text-highlighted ring-success/15 ring hover:bg-success/10";
   }
 
   if (id === "updated") {
-    return "bg-info/5 text-highlighted ring-info/10 ring hover:bg-info/10";
+    return "bg-warning/5 text-highlighted ring-warning/15 ring hover:bg-warning/10";
   }
 
-  return "bg-elevated/45 text-muted ring-default/70 hover:text-highlighted ring";
+  return "bg-elevated/40 text-muted ring-default/60 hover:bg-elevated/60 hover:text-highlighted ring";
 }
 
 function filterCountClass(id: string) {
@@ -96,7 +104,7 @@ function filterCountClass(id: string) {
   }
 
   if (id === "updated") {
-    return "bg-info/10 text-highlighted";
+    return "bg-warning/10 text-highlighted";
   }
 
   return "bg-default/60";
@@ -104,35 +112,35 @@ function filterCountClass(id: string) {
 
 function cardShellClass(component: DocsEnCollectionItem) {
   if (isNew(component)) {
-    return "bg-success/5 ring-success/10 hover:bg-success/5";
+    return "bg-elevated/45 ring-success/20 hover:ring-success/30";
   }
 
   if (isUpdated(component)) {
-    return "bg-info/5 ring-info/10 hover:bg-info/5";
+    return "bg-elevated/45 ring-warning/20 hover:ring-warning/30";
   }
 
-  return "bg-elevated/45 ring-default/70";
+  return "bg-elevated/40 ring-default/60 hover:ring-default";
 }
 
 function cardGlowClass(component: DocsEnCollectionItem) {
   if (isNew(component)) {
-    return "bg-success/10 opacity-0 group-hover:opacity-100";
+    return "bg-success/15 opacity-0 group-hover:opacity-100";
   }
 
   if (isUpdated(component)) {
-    return "bg-info/10 opacity-0 group-hover:opacity-100";
+    return "bg-warning/15 opacity-0 group-hover:opacity-100";
   }
 
-  return "bg-primary/20 opacity-0 group-hover:opacity-100";
+  return "bg-primary/10 opacity-0 group-hover:opacity-100";
 }
 
 function badgeClass(badge?: string) {
   if (badge === "New") {
-    return "bg-success/10 text-highlighted ring-success/15";
+    return "bg-success/10 text-success ring-success/20";
   }
 
   if (badge === "Updated") {
-    return "bg-info/10 text-highlighted ring-info/15";
+    return "bg-warning/10 text-warning ring-warning/20";
   }
 
   return "bg-elevated/70 text-toned ring-default/70";
@@ -208,7 +216,7 @@ const componentSections = computed(() => {
         class="bg-elevated/45 ring-default/70 rounded-4xl p-1.5 shadow-[0_18px_60px_-48px_rgba(15,23,42,0.5)] ring backdrop-blur-xl dark:shadow-none"
       >
         <div
-          class="bg-default/60 ring-default/70 grid gap-4 rounded-[calc(2rem-0.375rem)] p-8 ring backdrop-blur-lg max-md:p-4"
+          class="bg-default/60 ring-default/70 grid gap-4 rounded-[calc(2rem-0.375rem)] p-8 ring max-md:p-4"
         >
           <div class="min-w-0 space-y-4">
             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -263,10 +271,10 @@ const componentSections = computed(() => {
             </div>
 
             <div class="space-y-2 px-1 pb-4 max-md:pt-2">
-              <div class="text-highlighted text-4xl font-medium tracking-[-0.04em]">
+              <div class="text-highlighted text-4xl leading-none font-semibold tracking-[-0.05em]">
                 Browse the components
               </div>
-              <div class="text-muted">
+              <div class="text-muted max-w-2xl text-sm leading-6">
                 Open a component page to preview behavior, read API details, and copy source.
               </div>
             </div>
@@ -332,63 +340,57 @@ const componentSections = computed(() => {
         >
           <div
             v-if="section.grouped"
-            class="flex flex-col gap-3 px-1 pt-2 md:flex-row md:items-center"
+            class="flex flex-col gap-3 px-1 pt-1 md:flex-row md:items-center"
           >
             <div class="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
-              <span class="bg-primary ring-primary/20 size-1.5 rounded-full ring-4" />
+              <span class="from-primary/80 to-primary/20 h-px w-8 rounded-full bg-linear-to-r" />
               <h2
-                class="text-highlighted font-mono text-base font-medium tracking-[0.28em] uppercase"
+                class="text-highlighted font-mono text-[0.78rem] font-semibold tracking-[0.24em] uppercase"
               >
                 {{ section.label }}
               </h2>
-              <span
-                class="bg-elevated/45 text-muted ring-default/70 rounded-full px-2.5 py-1 font-mono text-[0.65rem] ring"
-              >
-                {{ section.count }} components
-              </span>
             </div>
 
-            <div class="flex flex-wrap gap-2 md:order-last">
+            <div class="flex flex-wrap gap-2 md:order-last md:ms-auto">
               <span
                 v-if="section.newCount"
-                class="bg-success/10 text-highlighted ring-success/15 rounded-full px-2.5 py-1 text-xs font-medium ring"
+                class="bg-success/10 text-success ring-success/15 rounded-full px-2.5 py-1 text-xs font-medium ring"
               >
                 {{ section.newCount }} new
               </span>
               <span
                 v-if="section.updatedCount"
-                class="bg-info/10 text-highlighted ring-info/15 rounded-full px-2.5 py-1 text-xs font-medium ring"
+                class="bg-primary/10 text-primary ring-primary/15 rounded-full px-2.5 py-1 text-xs font-medium ring"
               >
                 {{ section.updatedCount }} updated
               </span>
             </div>
 
             <div class="flex items-center gap-2 md:flex-1">
-              <span class="bg-primary/50 block h-px w-10 shrink-0" />
-              <span class="bg-default/20 h-px min-w-6 flex-1" />
+              <span class="bg-default/30 h-px min-w-6 flex-1" />
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             <NuxtLink
               v-for="component in section.items"
               :key="component.path"
               :to="component.path"
-              class="group focus-visible:ring-primary/40 rounded-[1.5rem] p-1.5 ring backdrop-blur-lg transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:outline-none active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none"
+              class="group focus-visible:ring-primary/40 rounded-[1.5rem] p-1.5 ring transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-[0_24px_70px_-56px_color-mix(in_oklab,var(--ui-primary)_38%,transparent)] focus-visible:ring-2 focus-visible:outline-none active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none"
               :class="cardShellClass(component)"
             >
               <article
-                class="bg-default/50 ring-default/70 group-hover:bg-default/60 relative flex h-[stretch] min-h-48 overflow-hidden rounded-[calc(1.5rem-1px)] p-4 ring backdrop-blur-lg transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                class="bg-default/50 ring-default/70 group-hover:bg-default/60 relative flex h-[stretch] min-h-48 overflow-hidden rounded-[calc(1.5rem-1px)] p-4 ring transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
               >
                 <div
-                  class="pointer-events-none absolute -top-20 -right-20 size-48 rounded-full blur-3xl transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
+                  class="pointer-events-none absolute -top-20 -right-20 size-48 rounded-full blur-3xl transition-opacity duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
                   :class="cardGlowClass(component)"
                 />
 
                 <div class="relative flex w-full flex-col">
                   <div class="flex items-start justify-between gap-3">
                     <span
-                      class="bg-elevated/45 text-toned ring-default/70 inline-flex items-center rounded-full px-2.5 py-1 font-mono text-[0.62rem] tracking-[0.16em] uppercase ring"
+                      class="bg-elevated/45 text-toned ring-default/60 inline-flex items-center rounded-full px-2.5 py-1 font-mono text-[0.6rem] tracking-[0.16em] uppercase ring"
                     >
                       {{ component.category }}
                     </span>

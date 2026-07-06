@@ -31,10 +31,10 @@ const communityLinks = computed(() => {
 </script>
 
 <template>
-  <div class="hidden lg:flex lg:flex-col lg:gap-4">
+  <div class="hidden lg:flex lg:flex-col lg:gap-3">
     <div
       v-if="showExplainWithAi"
-      class="bg-elevated/45 ring-default/70 rounded-2xl p-2 ring"
+      class="bg-elevated/35 ring-default/55 rounded-[1.5rem] p-1 ring"
     >
       <UButton
         :icon="explainIcon"
@@ -43,36 +43,40 @@ const communityLinks = computed(() => {
         color="neutral"
         variant="ghost"
         size="sm"
-        class="justify-start rounded-xl"
-        :ui="{ leadingIcon: 'size-4' }"
+        class="h-10 justify-start rounded-[1.25rem] px-3 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] motion-reduce:transition-none"
+        :ui="{ leadingIcon: 'size-4 text-muted', label: 'font-medium' }"
         @click="open(`Explain the page ${pageUrl}`, true)"
       />
     </div>
 
     <div
       v-if="communityLinks.length"
-      class="bg-elevated/45 ring-default/70 mt-11 gap-4 rounded-2xl p-2 ring"
+      class="bg-elevated/35 ring-default/60 rounded-[1.75rem] p-1 ring"
     >
-      <div
-        class="text-toned px-2.5 pt-1.5 pb-2 text-[0.65rem] font-medium tracking-[0.18em] uppercase"
-      >
-        Community
-      </div>
+      <div class="rounded-[calc(1.75rem-0.25rem)] p-3">
+        <div class="flex items-center justify-between gap-3 px-1 pb-2.5">
+          <div
+            class="text-toned font-mono text-[0.62rem] font-semibold tracking-[0.18em] uppercase"
+          >
+            Community
+          </div>
+        </div>
 
-      <div class="grid gap-1">
-        <UButton
-          v-for="link in communityLinks"
-          :key="link.label"
-          v-bind="link"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          class="justify-start rounded-xl"
-          :ui="{
-            leadingIcon: 'size-4 text-muted',
-            label: 'truncate text-left',
-          }"
-        />
+        <div class="grid gap-1.5">
+          <UButton
+            v-for="link in communityLinks"
+            :key="link.label"
+            v-bind="link"
+            color="neutral"
+            variant="soft"
+            size="sm"
+            class="group h-8 justify-start rounded-xl px-2.5 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none"
+            :ui="{
+              leadingIcon: 'size-4 text-muted group-hover:text-toned',
+              label: 'truncate text-left text-xs font-medium',
+            }"
+          />
+        </div>
       </div>
     </div>
 
@@ -82,7 +86,7 @@ const communityLinks = computed(() => {
 
     <ClientOnly v-if="showAd">
       <InspiraCarbonAds
-        class="bg-elevated/45 text-default ring-default/70 w-full rounded-2xl border-0 ring dark:bg-white/[0.035]"
+        class="bg-elevated/35 text-default ring-default/60 w-full rounded-[1.75rem] border-0 ring dark:bg-white/[0.035]"
       />
     </ClientOnly>
   </div>

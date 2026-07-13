@@ -7,70 +7,88 @@ const props = defineProps<{
 }>();
 
 const { locale, isEnabled } = useDocusI18n();
-
 const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` : "docs"));
+const componentPath = computed(() => `/${locale.value}/components`);
+const changelogPath = computed(() => `/${locale.value}/changelogs`);
 
-const { data: components } = await useAsyncData("new_component_collection", () => {
+const { data: collection } = await useAsyncData("new_component_collection", () => {
   return queryCollection(collectionName.value as any).all() as Promise<DocsEnCollectionItem[]>;
 });
 
-const path = `/${locale.value}/components`;
+const releaseGroups = computed(() => {
+  const components = (collection.value ?? []).filter(
+    (component) =>
+      component.path.startsWith(componentPath.value) && component.path !== componentPath.value,
+  );
 
-components.value = components.value
-  ?.filter((c) => c.path.startsWith(path) && c.path !== path)
-  .filter((component) => component.badge?.toLowerCase() === "new");
-
-const releaseLabel = computed(() =>
-  components.value && components.value.length > 1
-    ? "New Components Released:"
-    : "New Component Released:",
-);
+  return [
+    {
+      label: "New releases",
+      status: "new",
+      components: components.filter((component) => component.badge?.toLowerCase() === "new"),
+    },
+    {
+      label: "Updated",
+      status: "updated",
+      components: components.filter((component) => component.badge?.toLowerCase() === "updated"),
+    },
+  ].filter((group) => group.components.length);
+});
 </script>
 
 <template>
   <div
-    v-if="components && components?.length"
+    v-if="releaseGroups.length"
     class="z-20"
     :class="[props.inline ? 'relative' : 'absolute inset-x-0 top-0 mt-16', props.class]"
   >
-    <UMarquee
-      class="border-default/60 bg-elevated/45 text-muted h-11 border-y shadow-[0_18px_80px_-72px_rgba(0,0,0,0.9)] backdrop-blur-xl [--duration:28s] [--gap:--spacing(10)]"
-      :overlay="true"
-      pause-on-hover
-    >
-      <div class="mx-8 flex items-center gap-3 text-sm whitespace-nowrap">
-        <span
-          class="text-primary text-base leading-none"
-          aria-hidden="true"
+    <div class="border-default/70 bg-default/88 border-y backdrop-blur-xl">
+      <UContainer class="flex h-12 items-stretch overflow-hidden px-0 sm:px-6 lg:px-8">
+        <UMarquee
+          :overlay="false"
+          :repeat="2"
+          pause-on-hover
+          class="min-w-0 flex-1 [--duration:14s] [--gap:--spacing(0)]"
+          :ui="{ content: 'w-auto! justify-start motion-reduce:animate-none' }"
         >
-          ✦
-        </span>
-        <span class="text-highlighted font-semibold">
-          {{ releaseLabel }}
-        </span>
-        <span
-          v-for="(component, index) in components"
-          :key="component.title"
-          class="flex items-center gap-3"
-        >
-          <NuxtLink
-            :to="component.path"
-            class="text-muted hover:text-highlighted transition-colors duration-150"
+          <div
+            v-for="group in releaseGroups"
+            :key="group.status"
+            class="border-default/70 mx-16 flex h-12 shrink-0 items-stretch border-l"
           >
-            {{ component.title }}
-          </NuxtLink>
-          <span
-            v-if="index !== components.length - 1"
-            class="bg-primary/75 size-1 rounded-full"
-          />
-        </span>
-        <span
-          class="text-primary text-base leading-none"
-          aria-hidden="true"
+            <div
+              class="border-default/70 flex shrink-0 items-center gap-2 border-r px-5 text-xs font-medium"
+              :class="group.status === 'new' ? 'text-success' : 'text-warning'"
+            >
+              <span
+                class="size-1.5"
+                :class="group.status === 'new' ? 'bg-success' : 'bg-warning'"
+              />
+              {{ group.label }}
+            </div>
+
+            <NuxtLink
+              v-for="component in group.components"
+              :key="component.path"
+              :to="component.path"
+              class="group border-default/70 text-muted hover:bg-elevated/45 hover:text-highlighted focus-visible:ring-primary flex h-12 shrink-0 items-center gap-3 border-r px-6 text-sm transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset motion-reduce:transition-none"
+            >
+              {{ component.title }}
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="size-3.5 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 motion-reduce:transition-none"
+              />
+            </NuxtLink>
+          </div>
+        </UMarquee>
+
+        <NuxtLink
+          :to="changelogPath"
+          class="border-default/70 bg-default/90 text-toned hover:text-highlighted focus-visible:ring-primary relative z-10 hidden shrink-0 items-center border-l pl-5 text-xs transition-colors duration-300 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset sm:flex"
         >
-          ✦
-        </span>
-      </div>
-    </UMarquee>
+          Changelog
+        </NuxtLink>
+      </UContainer>
+    </div>
   </div>
 </template>

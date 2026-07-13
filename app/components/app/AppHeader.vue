@@ -21,36 +21,36 @@ const links = computed(() =>
 <template>
   <UHeader
     :ui="{
-      root: 'border-b border-default/60 bg-default/70 backdrop-blur-xl',
-      container: 'gap-3',
+      root: 'border-b border-default/70 bg-default/85 backdrop-blur-xl',
+      container: 'gap-4',
       left: 'lg:flex-1 flex items-center gap-2',
       center: 'hidden flex-1 justify-center lg:flex',
-      right: 'flex items-center justify-end lg:flex-1 gap-1.5',
+      right: 'flex items-center justify-end lg:flex-1 gap-px',
       title:
-        'rounded-full transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
+        'transition-opacity duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:opacity-75 active:opacity-60 motion-reduce:transition-none',
       toggle: 'lg:hidden',
-      body: 'bg-default/95 p-4 sm:p-6',
+      body: 'bg-default/90 p-4 backdrop-blur-xl sm:p-6',
     }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
     mode="drawer"
-    class="shadow-[0_1px_0_rgba(255,255,255,0.03)]"
   >
     <AppHeaderCenter />
 
     <template #title>
       <AppHeaderLogo class="h-6 w-auto shrink-0" />
+      <span class="text-highlighted hidden text-sm font-semibold tracking-[-0.02em] sm:inline">
+        Inspira UI
+      </span>
     </template>
 
     <template #right>
-      <AppHeaderCTA />
-
       <template v-if="isEnabled && locales.length > 1">
         <ClientOnly>
           <LanguageSelect />
 
           <template #fallback>
-            <div class="h-8 w-8 animate-pulse rounded-md bg-neutral-200 dark:bg-neutral-800" />
+            <div class="bg-elevated/50 size-9 animate-pulse" />
           </template>
         </ClientOnly>
 
@@ -61,7 +61,8 @@ const links = computed(() =>
       </template>
 
       <UContentSearchButton
-        class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100 lg:hidden"
+        tooltip
+        class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:hidden"
         :ui="{ leadingIcon: 'size-4' }"
       />
 
@@ -69,11 +70,11 @@ const links = computed(() =>
         <UColorModeButton
           color="neutral"
           variant="ghost"
-          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+          class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none"
         />
 
         <template #fallback>
-          <div class="h-8 w-8 animate-pulse rounded-md bg-neutral-200 dark:bg-neutral-800" />
+          <div class="bg-elevated/50 size-9 animate-pulse" />
         </template>
       </ClientOnly>
 
@@ -82,7 +83,7 @@ const links = computed(() =>
           v-for="(link, index) of links"
           :key="index"
           v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
-          class="bg-elevated/45 ring-default/60 hover:bg-elevated/70 rounded-full ring transition-colors duration-150 active:scale-[0.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+          class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none"
           :ui="{ leadingIcon: 'size-4' }"
         />
       </template>
@@ -91,7 +92,7 @@ const links = computed(() =>
     <template #toggle="{ open, toggle }">
       <IconMenuToggle
         :open="open"
-        class="lg:hidden"
+        class="rounded-none lg:hidden"
         @click="toggle"
       />
     </template>

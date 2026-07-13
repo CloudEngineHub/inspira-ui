@@ -16,51 +16,37 @@ const proofTransition = computed(() =>
 </script>
 
 <template>
-  <div class="text-highlighted relative isolate overflow-hidden pt-8 pb-24 sm:pt-12">
-    <div
-      aria-hidden="true"
-      class="bg-primary/6 pointer-events-none absolute top-[30rem] left-1/2 size-[30rem] -translate-x-1/2 rounded-full blur-3xl"
-    />
-
+  <div class="text-highlighted relative isolate pb-24 sm:pb-32">
     <Hero />
     <QuickLinks />
 
     <Motion
       as="section"
-      class="relative mt-28 sm:mt-40"
+      class="relative py-20 sm:py-24 lg:py-32"
       :initial="proofInitial"
       :while-in-view="proofInView"
       :transition="proofTransition"
       :viewport="{ once: true, amount: 0.18 }"
     >
-      <div
-        aria-hidden="true"
-        class="from-default via-border/70 to-default absolute -top-10 left-1/2 h-px w-screen -translate-x-1/2 bg-linear-to-r"
-      />
-
-      <div class="max-w-3xl">
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
         <h2
-          class="text-highlighted max-w-2xl text-4xl leading-[0.96] font-semibold tracking-[-0.04em] text-balance sm:text-5xl"
+          class="text-highlighted text-4xl leading-[0.98] font-semibold tracking-[-0.04em] text-balance sm:text-5xl lg:col-span-7"
         >
           Built in public, supported by the community.
         </h2>
-        <p class="text-muted mt-5 max-w-2xl text-base leading-7 text-pretty">
-          See project activity, sponsorship, community links, and the people helping Inspira UI
-          grow.
+        <p class="text-muted max-w-xl text-base leading-7 text-pretty lg:col-span-4 lg:col-start-9">
+          Meet the people supporting the project, join the community, or help fund what comes next.
         </p>
       </div>
 
-      <div class="mt-10 grid gap-4 lg:grid-cols-[1.18fr_0.82fr]">
-        <RepoStats />
-        <div class="grid gap-4">
-          <SupportUs />
-          <JoinTheCommunity />
-        </div>
+      <div class="border-default/70 mt-12 grid border-y lg:grid-cols-12">
+        <JoinTheCommunity class="lg:col-span-7 lg:pr-10" />
+        <SupportUs
+          class="border-default/70 border-t lg:col-span-5 lg:border-t-0 lg:border-l lg:pl-10"
+        />
       </div>
 
-      <div class="mt-4">
-        <ThanksSupporters />
-      </div>
+      <ThanksSupporters />
     </Motion>
   </div>
 </template>

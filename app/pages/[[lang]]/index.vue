@@ -186,7 +186,7 @@ const editLink = computed(() => {
     </template>
   </UPage>
   <UPage v-else-if="page && isLandingPage">
-    <UPageBody class="container mx-auto max-w-328 px-4">
+    <UPageBody class="mx-auto w-full max-w-[96rem] px-5 sm:px-8 lg:px-12">
       <Landing />
     </UPageBody>
   </UPage>

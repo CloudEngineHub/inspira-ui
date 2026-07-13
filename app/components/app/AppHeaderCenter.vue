@@ -1,26 +1,23 @@
 <template>
-  <div class="hidden w-full max-w-lg lg:block">
+  <div class="hidden w-full max-w-xl lg:block">
     <UContentSearchButton
       :collapsed="false"
+      label="Search documentation"
       variant="subtle"
       size="sm"
-      class="group bg-elevated/40 ring-default/55 hover:bg-elevated/65 h-9 w-full justify-start rounded-[1.125rem] px-3.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring transition-colors duration-150 active:scale-[0.985] motion-reduce:transition-none motion-reduce:active:scale-100"
+      class="group border-default/70 bg-elevated/25 hover:bg-elevated/50 h-10 w-full justify-start rounded-none border px-4 text-sm transition-[transform,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.99] motion-reduce:transition-none"
       :ui="{
-        leadingIcon: 'size-4 text-muted transition-colors group-hover:text-default',
+        leadingIcon:
+          'size-4 text-muted transition-colors duration-300 group-hover:text-highlighted',
         label: 'text-muted font-normal',
-        trailing: 'ms-auto hidden items-center gap-1 lg:flex',
+        trailing: 'ms-auto hidden items-center lg:flex',
       }"
     >
       <template #trailing>
         <span
-          class="bg-default/60 text-dimmed ring-default/60 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[0.62rem] font-medium ring"
+          class="border-default/70 text-dimmed border-l py-0.5 pl-3 font-mono text-[0.65rem] font-medium tracking-[0.08em]"
         >
-          ⌘
-        </span>
-        <span
-          class="bg-default/60 text-dimmed ring-default/60 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[0.62rem] font-medium ring"
-        >
-          K
+          ⌘ K
         </span>
       </template>
     </UContentSearchButton>

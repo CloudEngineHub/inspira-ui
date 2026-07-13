@@ -22,7 +22,7 @@ const proofTransition = computed(() =>
 
     <Motion
       as="section"
-      class="relative py-20 sm:py-24 lg:py-32"
+      class="relative py-20 sm:py-24 lg:py-56"
       :initial="proofInitial"
       :while-in-view="proofInView"
       :transition="proofTransition"

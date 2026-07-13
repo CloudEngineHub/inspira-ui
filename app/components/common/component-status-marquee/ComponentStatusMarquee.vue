@@ -46,7 +46,7 @@ const releaseGroups = computed(() => {
       <UContainer class="flex h-12 items-stretch overflow-hidden px-0 sm:px-6 lg:px-8">
         <UMarquee
           :overlay="false"
-          :repeat="2"
+          :repeat="4"
           pause-on-hover
           class="min-w-0 flex-1 [--duration:14s] [--gap:--spacing(0)]"
           :ui="{ content: 'w-auto! justify-start motion-reduce:animate-none' }"

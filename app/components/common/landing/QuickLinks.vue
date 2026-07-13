@@ -44,7 +44,7 @@ const links = [
   <Motion
     id="quickLinks"
     as="section"
-    class="border-default/70 relative border-b py-20 sm:py-24 lg:py-32"
+    class="border-default/70 relative border-b py-20 sm:py-24 lg:py-32 lg:pb-56"
     :initial="sectionInitial"
     :while-in-view="sectionInView"
     :transition="sectionTransition"

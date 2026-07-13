@@ -20,7 +20,7 @@ const collections = ["Backgrounds", "Cards", "Interactions", "Text effects", "Vi
 </script>
 
 <template>
-  <section class="border-default/70 relative border-b lg:py-40">
+  <section class="border-default/70 relative border-b lg:mt-48 lg:mb-36">
     <div class="grid gap-12 lg:mt-4 lg:grid-cols-12 lg:items-end lg:gap-8">
       <Motion
         as="div"

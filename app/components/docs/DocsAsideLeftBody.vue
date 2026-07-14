@@ -244,7 +244,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
         <section
           v-for="group in navGroups"
           :key="group.key"
-          class="border-default/65 min-w-0 border-t pt-4 first:border-t-0 first:pt-0"
+          class="border-default/65 mb-12 min-w-0 border-t pt-4 first:border-t-0 first:pt-0"
         >
           <div
             v-if="group.title"

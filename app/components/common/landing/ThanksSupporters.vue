@@ -1,6 +1,6 @@
 <template>
-  <div class="border-default/70 grid border-b lg:grid-cols-12">
-    <div class="py-10 lg:col-span-4 lg:py-14 lg:pr-10">
+  <div class="bg-border/70 grid gap-px lg:grid-cols-12">
+    <div class="bg-default p-6 sm:p-8 lg:col-span-4 lg:p-10">
       <div>
         <h3 class="text-highlighted text-3xl leading-tight font-semibold tracking-[-0.03em]">
           Amazing people behind Inspira UI.
@@ -24,9 +24,7 @@
       </NuxtLink>
     </div>
 
-    <div
-      class="border-default/70 bg-muted/20 flex items-center border-t p-5 sm:p-8 lg:col-span-8 lg:border-t-0 lg:border-l"
-    >
+    <div class="bg-default flex items-center p-6 sm:p-8 lg:col-span-8 lg:p-10">
       <NuxtImg
         class="mx-auto aspect-16/6 w-full max-w-4xl object-contain sm:aspect-16/5"
         src="https://contrib.rocks/image?repo=unovue/inspira-ui"

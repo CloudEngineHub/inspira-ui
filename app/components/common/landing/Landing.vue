@@ -39,12 +39,14 @@ const proofTransition = computed(() =>
         </p>
       </div>
 
-      <div class="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
-        <JoinTheCommunity class="lg:col-span-7" />
-        <SupportUs class="lg:col-span-5" />
-      </div>
+      <div class="border-default/70 bg-border/70 mt-14 grid gap-px border">
+        <div class="grid gap-px lg:grid-cols-12">
+          <JoinTheCommunity class="bg-default lg:col-span-7" />
+          <SupportUs class="bg-default lg:col-span-5" />
+        </div>
 
-      <ThanksSupporters />
+        <ThanksSupporters />
+      </div>
     </Motion>
   </div>
 </template>

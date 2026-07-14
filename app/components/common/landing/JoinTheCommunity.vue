@@ -32,8 +32,8 @@ const links = [
 </script>
 
 <template>
-  <div class="px-1 py-8 sm:px-8 sm:py-10 lg:px-0">
-    <div class="flex items-start justify-between gap-6">
+  <div class="flex h-full flex-col">
+    <div class="flex items-start justify-between gap-6 p-6 sm:p-8 lg:p-10">
       <div>
         <h3 class="text-highlighted text-2xl leading-tight font-semibold tracking-[-0.03em]">
           Stay close to the project.
@@ -48,14 +48,14 @@ const links = [
       />
     </div>
 
-    <div class="border-default/70 mt-6 grid border-t sm:grid-cols-2">
+    <div class="border-default/70 bg-border/70 mt-auto grid gap-px border-t sm:grid-cols-2">
       <NuxtLink
         v-for="link in links"
         :key="link.to"
         :to="link.to"
         :target="link.target"
         rel="noopener noreferrer"
-        class="group border-default/70 hover:bg-elevated/35 focus-visible:ring-primary flex min-h-16 items-center justify-between gap-4 border-b px-1 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset motion-reduce:transition-none sm:px-3 sm:odd:border-r"
+        class="group bg-default hover:bg-elevated/35 focus-visible:ring-primary flex min-h-20 items-center justify-between gap-4 px-6 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset motion-reduce:transition-none sm:px-8 lg:px-10"
       >
         <div class="flex items-center gap-4">
           <UIcon

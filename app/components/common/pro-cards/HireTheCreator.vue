@@ -1,5 +1,5 @@
 <template>
-  <div class="border-default/70 border-b py-5">
+  <div class="border-default/70 border-t py-5">
     <NuxtLink
       to="https://rahulv.dev/?connect&referrer=inspira-ui"
       target="_blank"

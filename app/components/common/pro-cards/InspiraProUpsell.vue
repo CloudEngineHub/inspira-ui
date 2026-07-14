@@ -1,5 +1,5 @@
 <template>
-  <div class="border-default/70 border-b py-5">
+  <div class="py-5">
     <NuxtLink
       to="https://pro.inspira-ui.com"
       target="_blank"
@@ -24,27 +24,6 @@
         <p class="text-muted mt-2 text-sm leading-5">
           Ship faster with ready-to-use Vue and Nuxt templates, sections, and page blocks.
         </p>
-
-        <div
-          v-if="false"
-          class="mt-4 grid grid-cols-3 gap-1.5"
-        >
-          <span
-            class="rounded-xl bg-white/6 px-2 py-2 text-center text-[0.65rem] font-medium text-white/72 ring-1 ring-white/10"
-          >
-            Templates
-          </span>
-          <span
-            class="rounded-xl bg-white/6 px-2 py-2 text-center text-[0.65rem] font-medium text-white/72 ring-1 ring-white/10"
-          >
-            Sections
-          </span>
-          <span
-            class="rounded-xl bg-white/6 px-2 py-2 text-center text-[0.65rem] font-medium text-white/72 ring-1 ring-white/10"
-          >
-            Blocks
-          </span>
-        </div>
 
         <div
           class="bg-info mt-5 flex h-9 items-center justify-between px-3 text-sm font-semibold text-white"

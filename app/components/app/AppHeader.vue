@@ -50,7 +50,7 @@ const links = computed(() =>
           <LanguageSelect />
 
           <template #fallback>
-            <div class="bg-elevated/50 size-9 animate-pulse" />
+            <div class="bg-elevated/50 size-11 animate-pulse" />
           </template>
         </ClientOnly>
 
@@ -62,7 +62,7 @@ const links = computed(() =>
 
       <UContentSearchButton
         tooltip
-        class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:hidden"
+        class="hover:bg-elevated/60 size-11 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:hidden"
         :ui="{ leadingIcon: 'size-4' }"
       />
 
@@ -70,11 +70,11 @@ const links = computed(() =>
         <UColorModeButton
           color="neutral"
           variant="ghost"
-          class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none"
+          class="hover:bg-elevated/60 size-11 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:size-9"
         />
 
         <template #fallback>
-          <div class="bg-elevated/50 size-9 animate-pulse" />
+          <div class="bg-elevated/50 size-11 animate-pulse lg:size-9" />
         </template>
       </ClientOnly>
 
@@ -83,7 +83,7 @@ const links = computed(() =>
           v-for="(link, index) of links"
           :key="index"
           v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
-          class="hover:bg-elevated/60 size-9 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none"
+          class="hover:bg-elevated/60 size-11 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:size-9"
           :ui="{ leadingIcon: 'size-4' }"
         />
       </template>

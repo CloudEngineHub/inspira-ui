@@ -20,9 +20,7 @@ const communityLabels: Record<string, string> = {
 
 const communityLinks = computed(() => {
   return (appConfig.toc?.bottom?.links ?? [])
-    .filter((link) =>
-      ["Star on Github", "Join Discord", "Create Issue", "Forum"].includes(link.label),
-    )
+    .filter((link) => ["Star on Github", "Join Discord"].includes(link.label))
     .map((link) => ({
       ...link,
       label: communityLabels[link.label] ?? link.label,
@@ -51,7 +49,7 @@ const communityLinks = computed(() => {
 
     <div
       v-if="communityLinks.length"
-      class="border-default/70 border-b py-5"
+      class="border-default/70 border-b pt-4"
     >
       <div>
         <div class="flex items-center justify-between gap-3 px-2 pb-3">
@@ -62,7 +60,7 @@ const communityLinks = computed(() => {
           </div>
         </div>
 
-        <div class="border-default/60 grid border-t">
+        <div class="border-default/60 grid grid-cols-2 border-t">
           <UButton
             v-for="link in communityLinks"
             :key="link.label"
@@ -70,7 +68,7 @@ const communityLinks = computed(() => {
             color="neutral"
             variant="ghost"
             size="sm"
-            class="group border-default/60 hover:bg-elevated/45 h-9 justify-start rounded-none border-b px-2 transition-colors duration-150 motion-reduce:transition-none"
+            class="group border-default/60 hover:bg-elevated/45 h-10 justify-start rounded-none border-e px-2 transition-colors duration-150 last:border-e-0 motion-reduce:transition-none"
             :ui="{
               leadingIcon: 'size-4 text-muted group-hover:text-toned',
               label: 'truncate text-left text-xs font-medium',

@@ -27,7 +27,7 @@ const filterTransition = computed(() =>
       },
 );
 
-const { data: collection } = await useAsyncData("component_collection", () => {
+const { data: collection } = await useAsyncData(`component_collection_${locale.value}`, () => {
   return queryCollection(`docs_${locale.value}` as any).all() as Promise<DocsEnCollectionItem[]>;
 });
 
@@ -238,7 +238,8 @@ const componentSections = computed(() => {
                 <span
                   class="text-toned font-mono text-[0.65rem] tracking-[0.2em] uppercase tabular-nums"
                 >
-                  {{ filteredComponents.length }} / {{ components.length }}
+                  {{ filteredComponents.length }}
+                  {{ filteredComponents.length === 1 ? "component" : "components" }}
                 </span>
                 <span class="bg-default/40 h-px w-8" />
                 <span class="text-muted text-sm font-medium">
@@ -287,7 +288,7 @@ const componentSections = computed(() => {
                   v-if="search"
                   type="button"
                   aria-label="Clear search"
-                  class="border-default/70 text-muted hover:bg-elevated/60 hover:text-highlighted grid size-7 place-items-center border transition-colors duration-150 motion-reduce:transition-none"
+                  class="border-default/70 text-muted hover:bg-elevated/60 hover:text-highlighted -my-px -me-px grid size-11 shrink-0 place-items-center border transition-colors duration-150 motion-reduce:transition-none"
                   @click="search = ''"
                 >
                   <UIcon
@@ -296,27 +297,12 @@ const componentSections = computed(() => {
                   />
                 </button>
               </div>
-
-              <div class="border-default/70 grid grid-cols-3 border">
-                <div class="border-default/70 border-e px-3 py-2.5">
-                  <p class="text-highlighted font-mono text-sm tabular-nums">
-                    {{ components.length }}
-                  </p>
-                  <p class="text-muted mt-0.5 text-[0.65rem]">Total</p>
-                </div>
-                <div class="border-default/70 bg-success/[0.025] border-e px-3 py-2.5">
-                  <p class="text-success font-mono text-sm tabular-nums">{{ newCount }}</p>
-                  <p class="text-muted mt-0.5 text-[0.65rem]">New</p>
-                </div>
-                <div class="bg-warning/[0.025] px-3 py-2.5">
-                  <p class="text-warning font-mono text-sm tabular-nums">{{ updatedCount }}</p>
-                  <p class="text-muted mt-0.5 text-[0.65rem]">Updated</p>
-                </div>
-              </div>
             </div>
           </div>
 
-          <div class="border-default/70 flex flex-wrap gap-1.5 border-t p-5 sm:px-7">
+          <div
+            class="border-default/70 flex flex-nowrap gap-1.5 overflow-x-auto border-t p-5 [scrollbar-width:none] sm:flex-wrap sm:overflow-visible sm:px-7 [&::-webkit-scrollbar]:hidden"
+          >
             <button
               v-for="category in categoryOptions"
               :key="category.id"
@@ -371,7 +357,7 @@ const componentSections = computed(() => {
 
         <div
           v-else
-          class="space-y-14"
+          class="space-y-12"
         >
           <section
             v-for="section in componentSections"
@@ -408,7 +394,7 @@ const componentSections = computed(() => {
             </header>
 
             <div
-              class="border-default/70 bg-border/70 grid grid-cols-1 gap-px border md:grid-cols-2 xl:grid-cols-3"
+              class="border-default/70 bg-border/70 grid grid-cols-1 gap-px border md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
             >
               <NuxtLink
                 v-for="component in section.items"

@@ -64,8 +64,8 @@ const description = page.value.seo?.description || page.value.description;
 useSeoMeta({
   title: isLandingPage.value ? "Inspira UI" : title,
   ogTitle: isLandingPage.value ? "Inspira UI" : title,
-  description: isLandingPage.value ? "Build beautiful website using Vue & Nuxt." : description,
-  ogDescription: isLandingPage.value ? "Build beautiful website using Vue & Nuxt." : description,
+  description: isLandingPage.value ? "Animated UI components for Vue and Nuxt." : description,
+  ogDescription: isLandingPage.value ? "Animated UI components for Vue and Nuxt." : description,
 });
 
 const headline = ref(findPageHeadline(navigation?.value, page.value?.path));

@@ -254,7 +254,12 @@ watch(activeInstallationTab, (tab) => {
 
           <slot name="instructions" />
 
-          <div class="text-muted mt-8 mb-4 text-sm">Source files</div>
+          <div
+            v-if="componentFiles.length"
+            class="text-muted mt-8 mb-4 text-sm"
+          >
+            Source files
+          </div>
 
           <RuntimeCodeGroup
             v-if="componentCodeItems.length"

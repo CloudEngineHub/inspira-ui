@@ -11,7 +11,7 @@ const collectionName = computed(() => (isEnabled.value ? `docs_${locale.value}` 
 const componentPath = computed(() => `/${locale.value}/components`);
 const changelogPath = computed(() => `/${locale.value}/changelogs`);
 
-const { data: collection } = await useAsyncData("new_component_collection", () => {
+const { data: collection } = await useAsyncData(`new_component_collection_${locale.value}`, () => {
   return queryCollection(collectionName.value as any).all() as Promise<DocsEnCollectionItem[]>;
 });
 

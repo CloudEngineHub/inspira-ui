@@ -240,11 +240,11 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
       aria-label="Documentation"
       @mouseleave="hoveredKey = null"
     >
-      <div class="space-y-4">
+      <div>
         <section
           v-for="group in navGroups"
           :key="group.key"
-          class="border-default/65 mb-12 min-w-0 border-t pt-4 first:border-t-0 first:pt-0"
+          class="border-default/65 mb-7 min-w-0 border-t pt-4 first:border-t-0 first:pt-0 last:mb-0"
         >
           <div
             v-if="group.title"
@@ -281,7 +281,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 <motion.span
                   v-if="isCurrent(link)"
                   :layout-id="`${indicatorId}-active`"
-                  class="bg-elevated/65 border-primary/70 pointer-events-none absolute inset-0"
+                  class="bg-elevated/65 pointer-events-none absolute inset-0"
                   :transition="navMotionTransition"
                 />
 
@@ -325,7 +325,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                 >
                   <span
                     v-if="link.statusBadge"
-                    class="rounded-none border px-1.5 py-px font-mono text-[0.52rem] font-semibold tracking-[0.1em] uppercase"
+                    class="rounded-none border px-1.5 py-px font-mono text-[0.6rem] font-semibold tracking-[0.08em] uppercase"
                     :class="statusBadgeClass(link.statusBadge)"
                   >
                     {{ link.statusBadge }}
@@ -370,14 +370,14 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                     <motion.span
                       v-if="isCurrent(child)"
                       :layout-id="`${indicatorId}-active`"
-                      class="bg-elevated/65 border-primary/70 pointer-events-none absolute inset-0 border-s-2"
+                      class="bg-elevated/65 pointer-events-none absolute inset-0"
                       :transition="navMotionTransition"
                     />
 
                     <motion.span
                       v-else-if="hoveredKey === itemKey(child)"
                       :layout-id="`${indicatorId}-hover`"
-                      class="bg-elevated/35 pointer-events-none absolute inset-0 border-s-2 border-transparent"
+                      class="bg-elevated/35 pointer-events-none absolute inset-0"
                       :initial="navHoverInitial"
                       :animate="navHoverAnimate"
                       :transition="navHoverTransition"
@@ -408,7 +408,7 @@ watch(navWithData, scrollActiveLinkIntoView, { deep: true });
                     >
                       <span
                         v-if="child.statusBadge"
-                        class="rounded-none border px-1.5 py-px font-mono text-[0.52rem] font-semibold tracking-[0.1em] uppercase"
+                        class="rounded-none border px-1.5 py-px font-mono text-[0.6rem] font-semibold tracking-[0.08em] uppercase"
                         :class="statusBadgeClass(child.statusBadge)"
                       >
                         {{ child.statusBadge }}

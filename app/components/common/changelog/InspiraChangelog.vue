@@ -81,9 +81,8 @@ const changelogGroups = computed(() => {
 const timelineRef = ref<HTMLElement | null>(null);
 const entryRefs = ref<HTMLElement[]>([]);
 const activeIndex = ref(0);
-const progressHeight = ref(0);
+const progressScale = ref(0);
 let observer: IntersectionObserver | undefined;
-let resizeHandler: (() => void) | undefined;
 
 function resolvePath(to: string) {
   if (to.startsWith("http")) {
@@ -114,8 +113,11 @@ function updateProgress(index = activeIndex.value) {
   const timelineRect = timeline.getBoundingClientRect();
   const markerRect = marker.getBoundingClientRect();
 
-  progressHeight.value = Math.max(0, markerRect.top - timelineRect.top + markerRect.height / 2);
+  const progress = Math.max(0, markerRect.top - timelineRect.top + markerRect.height / 2);
+  progressScale.value = timelineRect.height ? Math.min(1, progress / timelineRect.height) : 0;
 }
+
+useResizeObserver(timelineRef, () => updateProgress());
 
 onMounted(async () => {
   await nextTick();
@@ -148,17 +150,11 @@ onMounted(async () => {
 
   entryRefs.value.forEach((entry) => observer?.observe(entry));
 
-  resizeHandler = () => updateProgress();
-  window.addEventListener("resize", resizeHandler, { passive: true });
   updateProgress();
 });
 
 onBeforeUnmount(() => {
   observer?.disconnect();
-
-  if (resizeHandler) {
-    window.removeEventListener("resize", resizeHandler);
-  }
 });
 </script>
 
@@ -174,8 +170,8 @@ onBeforeUnmount(() => {
       />
       <span
         aria-hidden="true"
-        class="bg-primary absolute top-0 left-[0.28rem] w-px transition-[height] duration-300 ease-out motion-reduce:transition-none"
-        :style="{ height: `${progressHeight}px` }"
+        class="bg-primary absolute inset-y-0 left-[0.28rem] w-px origin-top transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
+        :style="{ transform: `scaleY(${progressScale})` }"
       />
       <div
         v-for="(group, i) in changelogGroups"

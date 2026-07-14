@@ -12,16 +12,15 @@ const labelWhitespace = /\s+/g;
 const labelFirstCharacter = /^./;
 const configControlStackClass = [
   "flex flex-col gap-2.5 p-3",
-  "[&_.form-field]:grid [&_.form-field]:min-h-14 [&_.form-field]:grid-cols-[minmax(0,1fr)_minmax(8rem,auto)] [&_.form-field]:items-center [&_.form-field]:gap-4 [&_.form-field]:rounded-2xl [&_.form-field]:bg-elevated/45 [&_.form-field]:px-3.5 [&_.form-field]:py-3 [&_.form-field]:transition-colors [&_.form-field]:duration-150 [&_.form-field]:ease-[cubic-bezier(0.23,1,0.32,1)] [&_.form-field:hover]:bg-elevated/60",
+  "[&_.form-field]:grid [&_.form-field]:min-h-14 [&_.form-field]:grid-cols-[minmax(0,1fr)_minmax(8rem,auto)] [&_.form-field]:items-center [&_.form-field]:gap-4 [&_.form-field]:rounded-none [&_.form-field]:border-b [&_.form-field]:border-default/60 [&_.form-field]:bg-elevated/45 [&_.form-field]:px-3.5 [&_.form-field]:py-3 [&_.form-field]:transition-colors [&_.form-field]:duration-150 [&_.form-field]:ease-[cubic-bezier(0.23,1,0.32,1)] [&_.form-field:hover]:bg-elevated/60",
   "[&_.form-field:has(textarea)]:grid-cols-1 [&_.form-field:has(textarea)]:items-stretch",
   "[&_.form-field>div]:min-w-0 [&_.form-field>div:last-child]:mt-0 [&_.form-field>div:last-child]:flex [&_.form-field>div:last-child]:justify-end [&_.form-field:has(textarea)>div:last-child]:justify-stretch",
   "[&_.form-field_label]:text-muted [&_.form-field_label]:text-[0.8rem] [&_.form-field_label]:leading-[1.35] [&_.form-field_label]:font-medium [&_.form-field_label]:tracking-normal",
   "[&_.form-field_input]:text-[0.8125rem] [&_.form-field_textarea]:text-[0.8125rem]",
-  "[&_.form-field>div:last-child>.relative.inline-flex]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>button]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>.relative.inline-flex]:rounded-full",
-  "[&_.form-field>div:last-child>.relative.inline-flex_input]:min-h-9 [&_.form-field>div:last-child>.relative.inline-flex_input]:rounded-[0.875rem] [&_.form-field>div:last-child>button]:min-h-9 [&_.form-field>div:last-child>button]:rounded-[0.875rem] [&_.form-field_textarea]:min-h-26 [&_.form-field_textarea]:resize-y [&_.form-field_textarea]:rounded-[0.875rem]",
+  "[&_.form-field>div:last-child>.relative.inline-flex]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>button]:max-w-[min(100%,13rem)] [&_.form-field>div:last-child>.relative.inline-flex]:rounded-none",
+  "[&_.form-field>div:last-child>.relative.inline-flex_input]:min-h-9 [&_.form-field>div:last-child>.relative.inline-flex_input]:rounded-none [&_.form-field>div:last-child>button]:min-h-9 [&_.form-field>div:last-child>button]:rounded-none [&_.form-field_textarea]:min-h-26 [&_.form-field_textarea]:resize-y [&_.form-field_textarea]:rounded-none",
   "[&_.form-field>div:last-child>.relative.inline-flex]:bg-default/70 [&_.form-field>div:last-child>.relative.inline-flex]:ring [&_.form-field>div:last-child>.relative.inline-flex]:ring-muted/80",
   "max-[480px]:[&_.form-field]:grid-cols-1 max-[480px]:[&_.form-field]:items-stretch max-[480px]:[&_.form-field>div:last-child]:justify-stretch max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:w-full max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:max-w-none max-[480px]:[&_.form-field>div:last-child>button]:w-full max-[480px]:[&_.form-field>div:last-child>button]:max-w-none",
-  "[&_.form-field]:!rounded-none [&_.form-field]:border-b [&_.form-field]:border-default/60 [&_.form-field>div:last-child>.relative.inline-flex]:!rounded-none [&_.form-field>div:last-child>.relative.inline-flex_input]:!rounded-none [&_.form-field>div:last-child>button]:!rounded-none [&_.form-field_textarea]:!rounded-none",
 ];
 
 function refreshPreview() {
@@ -65,8 +64,10 @@ onUpdated(() => {
 
 <template>
   <div class="flex w-full flex-col items-start justify-start gap-4">
-    <div class="border-default/70 bg-default relative w-full overflow-hidden rounded-none border">
-      <div class="absolute top-3 right-3 z-999 flex items-center gap-px">
+    <div
+      class="border-default/70 bg-default relative isolate w-full overflow-hidden rounded-none border"
+    >
+      <div class="absolute top-3 right-3 z-50 flex items-center gap-px">
         <UButton
           icon="i-lucide-refresh-cw"
           color="neutral"
@@ -94,7 +95,7 @@ onUpdated(() => {
 
       <div
         :key="`stageRefreshKey${refreshKey}`"
-        class="relative flex min-h-88 items-center justify-center p-6 sm:min-h-96 sm:p-8"
+        class="relative z-0 flex min-h-88 items-center justify-center p-6 sm:min-h-96 sm:p-8"
       >
         <slot name="component" />
       </div>

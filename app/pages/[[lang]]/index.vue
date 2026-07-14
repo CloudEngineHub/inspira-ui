@@ -143,7 +143,7 @@ const editLink = computed(() => {
         :value="page"
       />
 
-      <USeparator class="my-12">
+      <div class="my-12 flex justify-center">
         <div
           v-if="github"
           :class="docsPageUi.footerActions"
@@ -155,7 +155,7 @@ const editLink = computed(() => {
             :to="editLink"
             target="_blank"
             icon="i-lucide-pen"
-            class="rounded-full"
+            class="rounded-none"
             :ui="docsPageUi.footerButton"
           >
             {{ t("docs.edit") }}
@@ -168,13 +168,13 @@ const editLink = computed(() => {
             :to="`${github.url}/issues/new/choose`"
             target="_blank"
             icon="i-lucide-alert-circle"
-            class="rounded-full"
+            class="rounded-none"
             :ui="docsPageUi.footerButton"
           >
             {{ t("docs.report") }}
           </UButton>
         </div>
-      </USeparator>
+      </div>
       <UContentSurround
         :surround="surround"
         :ui="docsPageUi.surround"

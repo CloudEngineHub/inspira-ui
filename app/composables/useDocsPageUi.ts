@@ -1,48 +1,44 @@
 export function useDocsPageUi() {
   return {
     header: {
-      root: "border-b border-default/70 py-10 sm:py-12",
-      container: "space-y-5",
-      wrapper: "flex flex-col gap-5 md:flex-row md:items-end md:justify-between",
-      headline:
-        "text-[0.68rem] font-medium tracking-[0.22em] text-toned uppercase",
+      root: "border-b border-default/70 py-12 sm:py-16",
+      container: "space-y-6",
+      wrapper: "flex flex-col gap-6 md:flex-row md:items-start md:justify-between",
+      headline: "font-mono text-[0.65rem] font-medium tracking-[0.24em] text-primary uppercase",
       title:
-        "max-w-3xl text-4xl font-semibold tracking-tight text-highlighted sm:text-5xl",
-      description: "max-w-2xl text-base leading-7 text-muted sm:text-lg",
-      links: "flex flex-wrap items-center gap-2",
+        "max-w-3xl text-4xl font-medium leading-[0.98] tracking-tight text-highlighted sm:text-6xl",
+      description: "max-w-2xl text-base leading-7 text-muted sm:text-[1.0625rem]",
+      links: "flex flex-wrap items-center gap-px",
     },
-    bodyClass: "mt-10 space-y-14 pb-28",
+    bodyClass: "mt-12 space-y-16 pb-24 sm:mt-16",
     badge: {
-      base:
-        "rounded-full px-2.5 py-1 text-[0.68rem] font-medium tracking-[0.14em] uppercase",
+      base: "rounded-none border border-default/70 bg-elevated/35 px-2.5 py-1 font-mono text-[0.62rem] font-medium tracking-[0.16em] uppercase",
     },
     headerLinkButton:
-      "rounded-full px-3 transition-[background-color,color,transform] duration-150 active:scale-[0.98]",
+      "rounded-none border border-default/70 px-3 transition-[background-color,color] duration-150 hover:bg-elevated/60 motion-reduce:transition-none",
     footerActions:
-      "flex items-center gap-1 rounded-full border border-default/70 bg-elevated/45 p-1 text-sm text-muted backdrop-blur",
+      "flex items-center gap-px border border-default/70 bg-elevated/25 p-1 text-sm text-muted",
     footerButton: {
       leadingIcon: "size-3.5",
     },
     surround: {
-      root: "grid grid-cols-1 gap-3 sm:grid-cols-2",
-      link:
-        "group rounded-2xl border border-default/70 bg-elevated/45 px-5 py-5 transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-elevated/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/50",
+      root: "grid grid-cols-1 gap-px border border-default/70 bg-default sm:grid-cols-2",
+      link: "group rounded-none bg-default px-5 py-6 transition-colors duration-200 hover:bg-elevated/55 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/50 motion-reduce:transition-none",
       linkLeading:
-        "mb-4 inline-flex size-9 items-center justify-center rounded-full bg-default/70 ring ring-default/70 transition-colors group-hover:bg-inverted",
+        "mb-5 inline-flex size-8 items-center justify-center border border-default/70 bg-elevated/40 transition-colors duration-200 group-hover:border-primary/50 group-hover:bg-primary/10 motion-reduce:transition-none",
       linkLeadingIcon:
-        "size-4 text-muted transition-[color,translate] group-hover:text-inverted",
-      linkTitle: "text-sm font-medium text-highlighted",
-      linkDescription: "mt-1 line-clamp-2 text-sm text-muted",
+        "size-3.5 text-muted transition-[color,translate] duration-200 group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:transition-none",
+      linkTitle: "text-sm font-semibold text-highlighted",
+      linkDescription: "mt-1.5 line-clamp-2 text-sm leading-6 text-muted",
     },
     toc: {
       root: "bg-transparent lg:bg-transparent",
-      trigger: "text-sm font-medium",
-      list: "space-y-0.5",
-      listWithChildren: "ms-3 border-s border-muted/70 ps-3",
-      link:
-        "rounded-full px-2.5 py-1.5 text-[0.8125rem] transition-[background-color,color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]",
-      indicator: "bg-inverted/60",
-      bottom: "hidden lg:flex lg:flex-col gap-4",
+      trigger: "font-mono text-[0.65rem] font-medium tracking-[0.18em] uppercase",
+      list: "space-y-px",
+      listWithChildren: "ms-2 border-s border-default/70 ps-2",
+      link: "rounded-none border-s border-transparent px-2.5 py-1.5 text-[0.8125rem] transition-[border-color,background-color,color] duration-150 hover:border-default hover:bg-elevated/40 motion-reduce:transition-none",
+      indicator: "w-px rounded-none bg-primary",
+      bottom: "hidden border-t border-default/70 pt-6 lg:flex lg:flex-col lg:gap-0",
     },
   } as const;
 }

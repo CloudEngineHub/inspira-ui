@@ -10,7 +10,7 @@ const props = defineProps<{
   <CarbonAdsScript
     :class="
       cn(
-        'w-fit gap-4 rounded-lg border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-white/5 dark:text-white',
+        'border-default/70 bg-elevated/20 text-default [&_.carbon-poweredby]:text-muted [&_.carbon-poweredby:hover]:text-highlighted w-fit gap-4 rounded-none border p-4 [&_.carbon-poweredby]:text-sm [&_.carbon-poweredby]:transition-colors',
         props.class,
       )
     "
@@ -19,15 +19,3 @@ const props = defineProps<{
     format="cover"
   />
 </template>
-
-<style>
-@reference "../../../assets/css/main.css";
-
-#carbon-responsive .carbon-poweredby {
-  @apply text-sm text-zinc-800 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-zinc-50;
-}
-
-#carbonads {
-  @apply p-4;
-}
-</style>

@@ -21,6 +21,7 @@ const configControlStackClass = [
   "[&_.form-field>div:last-child>.relative.inline-flex_input]:min-h-9 [&_.form-field>div:last-child>.relative.inline-flex_input]:rounded-[0.875rem] [&_.form-field>div:last-child>button]:min-h-9 [&_.form-field>div:last-child>button]:rounded-[0.875rem] [&_.form-field_textarea]:min-h-26 [&_.form-field_textarea]:resize-y [&_.form-field_textarea]:rounded-[0.875rem]",
   "[&_.form-field>div:last-child>.relative.inline-flex]:bg-default/70 [&_.form-field>div:last-child>.relative.inline-flex]:ring [&_.form-field>div:last-child>.relative.inline-flex]:ring-muted/80",
   "max-[480px]:[&_.form-field]:grid-cols-1 max-[480px]:[&_.form-field]:items-stretch max-[480px]:[&_.form-field>div:last-child]:justify-stretch max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:w-full max-[480px]:[&_.form-field>div:last-child>.relative.inline-flex]:max-w-none max-[480px]:[&_.form-field>div:last-child>button]:w-full max-[480px]:[&_.form-field>div:last-child>button]:max-w-none",
+  "[&_.form-field]:!rounded-none [&_.form-field]:border-b [&_.form-field]:border-default/60 [&_.form-field>div:last-child>.relative.inline-flex]:!rounded-none [&_.form-field>div:last-child>.relative.inline-flex_input]:!rounded-none [&_.form-field>div:last-child>button]:!rounded-none [&_.form-field_textarea]:!rounded-none",
 ];
 
 function refreshPreview() {
@@ -64,49 +65,38 @@ onUpdated(() => {
 
 <template>
   <div class="flex w-full flex-col items-start justify-start gap-4">
-    <div
-      class="bg-elevated/70 ring-default/70 relative w-full overflow-hidden rounded-[2.5rem] p-2 shadow-[0_28px_90px_-58px_rgba(15,23,42,0.62)] ring dark:bg-white/[0.035] dark:shadow-none"
-    >
-      <div
-        class="bg-default ring-default/70 relative min-h-88 overflow-hidden rounded-4xl ring sm:min-h-96"
-      >
-        <div
-          aria-hidden="true"
-          class="bg-primary/8 pointer-events-none absolute top-0 right-12 size-56 rounded-full blur-3xl"
+    <div class="border-default/70 bg-default relative w-full overflow-hidden rounded-none border">
+      <div class="absolute top-3 right-3 z-999 flex items-center gap-px">
+        <UButton
+          icon="i-lucide-refresh-cw"
+          color="neutral"
+          variant="subtle"
+          size="sm"
+          aria-label="Refresh preview"
+          title="Refresh preview"
+          class="border-default/70 bg-default/85 hover:bg-elevated grid size-9 place-items-center rounded-none border p-0 backdrop-blur transition-colors duration-150 motion-reduce:transition-none"
+          :ui="{ leadingIcon: 'size-4 shrink-0' }"
+          @click="refreshPreview"
         />
+        <UButton
+          v-if="$slots.config"
+          icon="i-lucide-sliders-horizontal"
+          color="neutral"
+          variant="subtle"
+          size="sm"
+          aria-label="Customize props"
+          title="Customize props"
+          class="border-default/70 bg-default/85 hover:bg-elevated grid size-9 place-items-center rounded-none border p-0 backdrop-blur transition-colors duration-150 motion-reduce:transition-none"
+          :ui="{ leadingIcon: 'size-4 shrink-0' }"
+          @click="open = true"
+        />
+      </div>
 
-        <div class="absolute top-4 right-4 z-999 flex items-center gap-2">
-          <UButton
-            icon="i-lucide-refresh-cw"
-            color="neutral"
-            variant="subtle"
-            size="sm"
-            aria-label="Refresh preview"
-            title="Refresh preview"
-            class="grid size-9 place-items-center rounded-full p-0 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.96]"
-            :ui="{ leadingIcon: 'size-4 shrink-0' }"
-            @click="refreshPreview"
-          />
-          <UButton
-            v-if="$slots.config"
-            icon="i-lucide-sliders-horizontal"
-            color="neutral"
-            variant="subtle"
-            size="sm"
-            aria-label="Customize props"
-            title="Customize props"
-            class="grid size-9 place-items-center rounded-full p-0 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.96]"
-            :ui="{ leadingIcon: 'size-4 shrink-0' }"
-            @click="open = true"
-          />
-        </div>
-
-        <div
-          :key="`stageRefreshKey${refreshKey}`"
-          class="relative flex min-h-88 items-center justify-center p-6 sm:min-h-96 sm:p-8"
-        >
-          <slot name="component" />
-        </div>
+      <div
+        :key="`stageRefreshKey${refreshKey}`"
+        class="relative flex min-h-88 items-center justify-center p-6 sm:min-h-96 sm:p-8"
+      >
+        <slot name="component" />
       </div>
     </div>
 
@@ -121,10 +111,10 @@ onUpdated(() => {
       :inset="isDesktop"
       :ui="{
         content:
-          'bg-default/92 ring-default/70 shadow-[0_32px_120px_-56px_rgba(15,23,42,0.72)] backdrop-blur-xl md:w-108 md:rounded-[1.75rem]',
+          'border-default/70 bg-default/94 rounded-none border-s shadow-[0_32px_120px_-56px_rgba(15,23,42,0.72)] backdrop-blur-xl md:w-108 md:rounded-none',
         container: 'h-full gap-0 overflow-hidden p-0',
         header: 'border-muted/60 shrink-0 border-b px-5 py-4',
-        body: 'bg-elevated/15 min-h-0 flex-1 overflow-y-auto',
+        body: 'bg-default min-h-0 flex-1 overflow-y-auto',
       }"
     >
       <template #header>
@@ -142,7 +132,7 @@ onUpdated(() => {
             variant="ghost"
             icon="i-lucide-x"
             aria-label="Close customize panel"
-            class="grid size-9 shrink-0 place-items-center rounded-full p-0 transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.96]"
+            class="border-default/70 hover:bg-elevated grid size-9 shrink-0 place-items-center rounded-none border p-0 transition-colors duration-150 motion-reduce:transition-none"
             :ui="{ leadingIcon: 'size-4 shrink-0' }"
             @click="open = false"
           />

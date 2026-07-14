@@ -9,19 +9,19 @@ const label = computed(() => color.value || "Choose color");
   <UPopover
     :ui="{
       content:
-        'rounded-2xl bg-default/95 p-1 shadow-[0_20px_80px_-36px_rgba(15,23,42,0.58)] ring-default/80 backdrop-blur-xl',
+        'border-default/80 rounded-none border bg-default/95 p-1 shadow-[0_20px_80px_-36px_rgba(15,23,42,0.58)] backdrop-blur-xl',
     }"
   >
     <UButton
       :label="label"
       color="neutral"
       variant="subtle"
-      class="h-9 max-w-full justify-start rounded-full px-2.5 font-mono text-xs uppercase tabular-nums"
+      class="border-default/70 h-9 max-w-full justify-start rounded-none border px-2.5 font-mono text-xs uppercase tabular-nums"
     >
       <template #leading>
         <span
           :style="chip"
-          class="ring-default/80 size-4 rounded-full ring"
+          class="border-default/80 size-4 rounded-none border"
         />
       </template>
     </UButton>

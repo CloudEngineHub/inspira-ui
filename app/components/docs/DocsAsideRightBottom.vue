@@ -31,10 +31,10 @@ const communityLinks = computed(() => {
 </script>
 
 <template>
-  <div class="hidden lg:flex lg:flex-col lg:gap-3">
+  <div class="hidden lg:flex lg:flex-col lg:gap-0">
     <div
       v-if="showExplainWithAi"
-      class="bg-elevated/35 ring-default/55 rounded-[1.5rem] p-1 ring"
+      class="border-default/70 border-b py-3"
     >
       <UButton
         :icon="explainIcon"
@@ -43,7 +43,7 @@ const communityLinks = computed(() => {
         color="neutral"
         variant="ghost"
         size="sm"
-        class="h-10 justify-start rounded-[1.25rem] px-3 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] motion-reduce:transition-none"
+        class="hover:bg-elevated/45 h-9 justify-start rounded-none px-2 transition-colors duration-150 motion-reduce:transition-none"
         :ui="{ leadingIcon: 'size-4 text-muted', label: 'font-medium' }"
         @click="open(`Explain the page ${pageUrl}`, true)"
       />
@@ -51,10 +51,10 @@ const communityLinks = computed(() => {
 
     <div
       v-if="communityLinks.length"
-      class="bg-elevated/35 ring-default/60 rounded-[1.75rem] p-1 ring"
+      class="border-default/70 border-b py-5"
     >
-      <div class="rounded-[calc(1.75rem-0.25rem)] p-3">
-        <div class="flex items-center justify-between gap-3 px-1 pb-2.5">
+      <div>
+        <div class="flex items-center justify-between gap-3 px-2 pb-3">
           <div
             class="text-toned font-mono text-[0.62rem] font-semibold tracking-[0.18em] uppercase"
           >
@@ -62,15 +62,15 @@ const communityLinks = computed(() => {
           </div>
         </div>
 
-        <div class="grid gap-1.5">
+        <div class="border-default/60 grid border-t">
           <UButton
             v-for="link in communityLinks"
             :key="link.label"
             v-bind="link"
             color="neutral"
-            variant="soft"
+            variant="ghost"
             size="sm"
-            class="group h-8 justify-start rounded-xl px-2.5 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none"
+            class="group border-default/60 hover:bg-elevated/45 h-9 justify-start rounded-none border-b px-2 transition-colors duration-150 motion-reduce:transition-none"
             :ui="{
               leadingIcon: 'size-4 text-muted group-hover:text-toned',
               label: 'truncate text-left text-xs font-medium',
@@ -86,7 +86,7 @@ const communityLinks = computed(() => {
 
     <ClientOnly v-if="showAd">
       <InspiraCarbonAds
-        class="bg-elevated/35 text-default ring-default/60 w-full rounded-[1.75rem] border-0 ring dark:bg-white/[0.035]"
+        class="border-default/70 bg-elevated/20 text-default mt-6 w-full rounded-none border"
       />
     </ClientOnly>
   </div>

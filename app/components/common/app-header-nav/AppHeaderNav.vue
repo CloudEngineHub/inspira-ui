@@ -18,24 +18,26 @@ const items = computed(() =>
 
 <template>
   <nav
-    class="sticky top-[calc(var(--ui-header-height)+0.75rem)] z-40 hidden justify-center py-3 lg:flex"
+    class="border-default/70 bg-default/88 sticky top-[var(--ui-header-height)] z-40 hidden h-12 border-b backdrop-blur-xl lg:block"
     aria-label="Primary navigation"
   >
-    <div
-      class="bg-default/20 ring-default/65 rounded-full p-2 shadow-[0_18px_70px_-55px_rgba(0,0,0,0.8)] ring backdrop-blur-lg"
-    >
+    <UContainer class="flex h-full items-center justify-center">
       <UNavigationMenu
         :items="items"
         color="neutral"
-        variant="pill"
-        :highlight="false"
+        variant="link"
+        highlight
+        highlight-color="primary"
         :ui="{
-          root: 'items-center',
-          list: 'gap-1',
-          item: 'py-0',
-          link: 'rounded-full px-3.5 py-1.5 text-[0.8125rem] transition-colors duration-150 before:rounded-full before:transition-colors before:duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
+          root: 'h-full items-center',
+          list: 'h-full gap-0',
+          item: 'h-full py-0',
+          link: 'h-full rounded-none px-5 text-[0.8125rem] font-medium text-muted transition-colors duration-150 hover:text-highlighted data-[active=true]:text-highlighted active:bg-elevated/50 motion-reduce:transition-none',
+          linkLeadingIcon: 'size-3.5',
+          linkTrailingIcon: 'size-3.5',
+          indicator: 'h-px rounded-none',
         }"
       />
-    </div>
+    </UContainer>
   </nav>
 </template>

@@ -6,18 +6,23 @@ const isRoot = isRootPage();
 </script>
 
 <template>
-  <UMain class="relative -mt-16 pt-16">
+  <UMain class="bg-default relative -mt-16 pt-16">
     <ComponentStatusMarquee inline />
-    <div class="dark:pattern-background-d pattern-background-l absolute inset-0 z-[-1]" />
     <AppHeaderNav />
-    <UContainer>
+    <UContainer class="relative">
       <UPage :key="route.fullPath">
         <template #left>
-          <UPageAside v-if="!isRoot">
+          <UPageAside
+            v-if="!isRoot"
+            class="lg:top-[calc(var(--ui-header-height)+3rem)] lg:max-h-[calc(100vh-var(--ui-header-height)-3rem)]"
+          >
             <DocsAsideLeftTop />
             <DocsAsideLeftBody />
           </UPageAside>
-          <UPageAside v-else>
+          <UPageAside
+            v-else
+            class="lg:top-[calc(var(--ui-header-height)+3rem)] lg:max-h-[calc(100vh-var(--ui-header-height)-3rem)]"
+          >
             <DocsAsideLeftTop />
           </UPageAside>
         </template>

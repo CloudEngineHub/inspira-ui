@@ -48,7 +48,9 @@ const {
       </ComponentTabs>
     </ClientOnly>
     <template #fallback>
-      <div class="flex h-32 items-center justify-center gap-3 text-lg">
+      <div
+        class="border-default/70 text-muted flex h-32 items-center justify-center gap-3 border text-sm"
+      >
         <UIcon
           name="line-md:loading-twotone-loop"
           size="28"

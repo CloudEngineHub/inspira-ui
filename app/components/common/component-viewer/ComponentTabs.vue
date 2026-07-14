@@ -174,16 +174,16 @@ watch(activeInstallationTab, (tab) => {
   <UTabs
     v-model="activeTab"
     size="lg"
-    variant="pill"
+    variant="link"
     color="neutral"
     :items="items"
     class="mt-5 w-full"
     :ui="{
-      list: 'w-fit max-w-full gap-1 overflow-auto rounded-full bg-elevated/70 p-1 ring ring-default/70',
-      indicator: 'rounded-full',
+      list: 'border-default/70 w-fit max-w-full gap-0 overflow-x-auto border bg-elevated/20',
+      indicator: 'h-px rounded-none',
       trigger:
-        'h-10 min-w-fit rounded-full px-4 text-sm transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
-      content: 'pt-6 focus:outline-none',
+        'h-11 min-w-fit rounded-none border-e border-default/60 px-4 text-sm transition-colors duration-150 last:border-e-0 hover:bg-elevated/45 motion-reduce:transition-none',
+      content: 'pt-8 focus:outline-none',
     }"
   >
     <template #code>
@@ -203,7 +203,7 @@ watch(activeInstallationTab, (tab) => {
       </div>
       <div
         v-else
-        class="text-muted bg-elevated/35 ring-default/70 flex min-h-40 items-center justify-center gap-3 rounded-3xl ring"
+        class="border-default/70 bg-elevated/20 text-muted flex min-h-40 items-center justify-center gap-3 rounded-none border"
       >
         <UIcon
           name="line-md:loading-twotone-loop"
@@ -224,9 +224,9 @@ watch(activeInstallationTab, (tab) => {
         color="neutral"
         :ui="{
           root: 'gap-4',
-          list: 'w-fit gap-5 border-muted',
+          list: 'border-default/70 w-fit gap-5 border-b',
           trigger:
-            'px-0 text-sm transition-colors duration-150 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100',
+            'rounded-none px-0 text-sm transition-colors duration-150 motion-reduce:transition-none',
           content: 'pt-4',
         }"
       >
@@ -262,7 +262,7 @@ watch(activeInstallationTab, (tab) => {
           />
           <div
             v-else-if="isComponentCodeLoading"
-            class="text-muted bg-elevated/35 ring-default/70 flex min-h-40 items-center justify-center gap-3 rounded-3xl ring"
+            class="border-default/70 bg-elevated/20 text-muted flex min-h-40 items-center justify-center gap-3 rounded-none border"
           >
             <UIcon
               name="line-md:loading-twotone-loop"
@@ -275,7 +275,7 @@ watch(activeInstallationTab, (tab) => {
     </template>
 
     <template #apiTab>
-      <div class="bg-default/55 ring-default/70 rounded-3xl p-5 ring">
+      <div class="py-2">
         <slot
           name="api"
           class="my-4"
@@ -287,9 +287,9 @@ watch(activeInstallationTab, (tab) => {
       v-if="showInstallation"
       #creditsTab
     >
-      <UPageCard class="bg-default/55 ring-default/70 ring">
+      <div class="py-2">
         <slot name="credits" />
-      </UPageCard>
+      </div>
     </template>
   </UTabs>
 </template>

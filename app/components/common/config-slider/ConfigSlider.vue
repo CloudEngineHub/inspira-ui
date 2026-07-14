@@ -39,7 +39,7 @@ const valueLabel = computed(() =>
       }"
     />
     <span
-      class="text-highlighted bg-default/80 ring-default/70 min-w-12 rounded-full px-2.5 py-1 text-right font-mono text-xs tabular-nums ring"
+      class="border-default/70 bg-default/80 text-highlighted min-w-12 rounded-none border px-2.5 py-1 text-right font-mono text-xs tabular-nums"
     >
       {{ valueLabel }}
     </span>

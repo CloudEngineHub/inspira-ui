@@ -117,15 +117,15 @@ const editLink = computed(() => {
     </UPageHeader>
 
     <UPageBody :class="docsPageUi.bodyClass">
-      <ClientOnly v-if="showAd">
-        <InspiraCarbonAds />
-      </ClientOnly>
       <ContentRenderer
         v-if="page"
         :value="page"
       />
+      <ClientOnly v-if="showAd">
+        <InspiraCarbonAds class="mx-auto max-w-full" />
+      </ClientOnly>
 
-      <USeparator class="my-12">
+      <div class="my-12 flex justify-center">
         <div
           v-if="github"
           :class="docsPageUi.footerActions"
@@ -137,7 +137,7 @@ const editLink = computed(() => {
             :to="editLink"
             target="_blank"
             icon="i-lucide-pen"
-            class="rounded-full"
+            class="rounded-none"
             :ui="docsPageUi.footerButton"
           >
             {{ t("docs.edit") }}
@@ -150,13 +150,13 @@ const editLink = computed(() => {
             :to="`${github.url}/issues/new/choose`"
             target="_blank"
             icon="i-lucide-alert-circle"
-            class="rounded-full"
+            class="rounded-none"
             :ui="docsPageUi.footerButton"
           >
             {{ t("docs.report") }}
           </UButton>
         </div>
-      </USeparator>
+      </div>
       <UContentSurround
         :surround="surround"
         :ui="docsPageUi.surround"

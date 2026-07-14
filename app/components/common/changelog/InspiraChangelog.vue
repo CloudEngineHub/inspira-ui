@@ -17,37 +17,37 @@ const typeMeta: Record<
   release: {
     label: "Release",
     icon: "i-lucide-rocket",
-    chip: "bg-primary/10 text-primary ring-primary/20",
+    chip: "border-primary/25 bg-primary/8 text-primary",
     dot: "bg-primary shadow-[0_0_24px_color-mix(in_oklab,var(--ui-primary)_50%,transparent)]",
   },
   added: {
     label: "Added",
     icon: "i-lucide-plus",
-    chip: "bg-success/10 text-success ring-success/20",
+    chip: "border-success/25 bg-success/8 text-success",
     dot: "bg-success shadow-[0_0_24px_color-mix(in_oklab,var(--ui-success)_50%,transparent)]",
   },
   updated: {
     label: "Updated",
     icon: "i-lucide-refresh-cw",
-    chip: "bg-info/10 text-info ring-info/20",
-    dot: "bg-info shadow-[0_0_24px_color-mix(in_oklab,var(--ui-info)_50%,transparent)]",
+    chip: "border-warning/25 bg-warning/8 text-warning",
+    dot: "bg-warning shadow-[0_0_24px_color-mix(in_oklab,var(--ui-warning)_50%,transparent)]",
   },
   fixed: {
     label: "Fixed",
     icon: "i-lucide-wrench",
-    chip: "bg-secondary/10 text-secondary ring-secondary/20",
+    chip: "border-secondary/25 bg-secondary/8 text-secondary",
     dot: "bg-secondary shadow-[0_0_24px_color-mix(in_oklab,var(--ui-secondary)_50%,transparent)]",
   },
   removed: {
     label: "Removed",
     icon: "i-lucide-trash-2",
-    chip: "bg-error/10 text-error ring-error/20",
+    chip: "border-error/25 bg-error/8 text-error",
     dot: "bg-error shadow-[0_0_24px_color-mix(in_oklab,var(--ui-error)_50%,transparent)]",
   },
   migration: {
     label: "Milestone",
     icon: "i-lucide-git-branch",
-    chip: "bg-elevated text-toned ring-default",
+    chip: "border-default/70 bg-elevated text-toned",
     dot: "bg-toned",
   },
 };
@@ -168,6 +168,15 @@ onBeforeUnmount(() => {
       ref="timelineRef"
       class="relative mx-auto max-w-5xl"
     >
+      <span
+        aria-hidden="true"
+        class="bg-default/60 absolute inset-y-0 left-[0.28rem] w-px"
+      />
+      <span
+        aria-hidden="true"
+        class="bg-primary absolute top-0 left-[0.28rem] w-px transition-[height] duration-300 ease-out motion-reduce:transition-none"
+        :style="{ height: `${progressHeight}px` }"
+      />
       <div
         v-for="(group, i) in changelogGroups"
         :key="group.year"
@@ -218,56 +227,47 @@ onBeforeUnmount(() => {
           </time>
 
           <div
-            class="bg-elevated/35 ring-default/70 relative rounded-[1.75rem] p-1.5 shadow-[0_18px_70px_-54px_rgba(15,23,42,0.6)] ring backdrop-blur-xl transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none dark:shadow-none"
+            class="border-default/70 bg-elevated/15 group-hover:border-default relative border p-5 transition-colors duration-200 motion-reduce:transition-none sm:p-6"
           >
-            <div
-              class="bg-default/30 ring-default/60 relative overflow-hidden rounded-[calc(1.75rem-0.375rem)] p-5 ring backdrop-blur-xl sm:p-6"
-            >
-              <div
-                aria-hidden="true"
-                class="bg-primary/10 absolute -top-20 -right-20 size-48 rounded-full opacity-0 blur-3xl transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-100 motion-reduce:transition-none"
-              />
-
-              <div class="relative z-10 flex flex-col gap-5">
-                <div class="flex flex-wrap items-center gap-3">
-                  <span
-                    class="inline-flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium ring"
-                    :class="metaFor(entry).chip"
-                  >
-                    <UIcon
-                      :name="metaFor(entry).icon"
-                      class="size-3.5"
-                    />
-                    {{ metaFor(entry).label }}
-                  </span>
-                </div>
-
-                <div>
-                  <h2 class="text-highlighted text-xl leading-tight font-semibold sm:text-2xl">
-                    {{ entry.title }}
-                  </h2>
-                  <p class="text-muted mt-3 max-w-2xl text-sm leading-6 sm:text-base sm:leading-7">
-                    {{ entry.description }}
-                  </p>
-                </div>
-
-                <div
-                  v-if="entry.links?.length"
-                  class="flex flex-wrap gap-2"
+            <div class="relative flex flex-col gap-5">
+              <div class="flex flex-wrap items-center gap-3">
+                <span
+                  class="inline-flex h-7 items-center gap-1.5 rounded-none border px-2.5 font-mono text-[0.65rem] font-medium tracking-[0.08em] uppercase"
+                  :class="metaFor(entry).chip"
                 >
-                  <NuxtLink
-                    v-for="link in entry.links"
-                    :key="link.to"
-                    :to="resolvePath(link.to)"
-                    class="group/link bg-elevated/70 text-toned ring-default/70 hover:bg-accented/70 hover:text-highlighted inline-flex h-8 items-center gap-2 rounded-full px-3 text-xs font-medium ring transition-colors duration-200"
-                  >
-                    {{ link.label }}
-                    <UIcon
-                      name="i-lucide-arrow-up-right"
-                      class="size-3 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                    />
-                  </NuxtLink>
-                </div>
+                  <UIcon
+                    :name="metaFor(entry).icon"
+                    class="size-3.5"
+                  />
+                  {{ metaFor(entry).label }}
+                </span>
+              </div>
+
+              <div>
+                <h2 class="text-highlighted text-xl leading-tight font-semibold sm:text-2xl">
+                  {{ entry.title }}
+                </h2>
+                <p class="text-muted mt-3 max-w-2xl text-sm leading-6 sm:text-base sm:leading-7">
+                  {{ entry.description }}
+                </p>
+              </div>
+
+              <div
+                v-if="entry.links?.length"
+                class="flex flex-wrap gap-2"
+              >
+                <NuxtLink
+                  v-for="link in entry.links"
+                  :key="link.to"
+                  :to="resolvePath(link.to)"
+                  class="group/link border-default/70 bg-elevated/40 text-toned hover:bg-accented/70 hover:text-highlighted inline-flex h-8 items-center gap-2 rounded-none border px-3 text-xs font-medium transition-colors duration-200 motion-reduce:transition-none"
+                >
+                  {{ link.label }}
+                  <UIcon
+                    name="i-lucide-arrow-up-right"
+                    class="size-3 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                  />
+                </NuxtLink>
               </div>
             </div>
           </div>

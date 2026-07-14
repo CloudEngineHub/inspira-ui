@@ -38,6 +38,66 @@ export default defineAppConfig({
         itemDescription: "text-xs text-muted",
       },
     },
+    prosePre: {
+      slots: {
+        root: "group relative my-6",
+        header:
+          "border-default/70 bg-default relative flex items-center gap-1.5 rounded-none border border-b-0 px-4 py-3",
+        filename: "text-default text-sm/6",
+        icon: "size-4 shrink-0",
+        copy: "absolute top-[9px] right-[9px] transition-opacity duration-150 [&_button]:rounded-none lg:opacity-0 lg:group-hover:opacity-100 motion-reduce:transition-none",
+        base: "border-default/70 bg-elevated/35 rounded-none border px-4 py-4 font-mono text-sm/6 whitespace-pre-wrap break-words overflow-x-auto focus:outline-none",
+      },
+      variants: {
+        filename: {
+          true: {
+            root: "my-6 [&>pre]:my-0 [&>pre]:rounded-none",
+          },
+        },
+      },
+    },
+    proseCodeGroup: {
+      slots: {
+        root: "group relative my-6 *:not-first:!static *:not-first:!my-0",
+        list: "border-default/70 bg-default relative flex items-center gap-px overflow-x-auto rounded-none border border-b-0 p-1",
+        indicator:
+          "bg-elevated absolute inset-y-1 left-0 w-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position) rounded-none transition-[translate,width] duration-200 motion-reduce:transition-none",
+        trigger:
+          "text-default hover:bg-elevated/50 data-[state=active]:text-highlighted relative inline-flex items-center gap-1.5 rounded-none px-2.5 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 motion-reduce:transition-none",
+      },
+    },
+    proseCodeCollapse: {
+      slots: {
+        footer:
+          "bg-default/90 absolute inset-x-px bottom-px flex h-16 items-center justify-center rounded-none backdrop-blur",
+        trigger: "group rounded-none",
+      },
+    },
+    proseTable: {
+      slots: {
+        root: "border-default/70 relative my-6 overflow-x-auto border",
+        base: "w-full rounded-none border-separate border-spacing-0",
+      },
+    },
+    proseCallout: {
+      slots: {
+        base: "my-6 rounded-none px-4 py-3 text-sm/6 last:mb-0",
+      },
+    },
+    proseCard: {
+      slots: {
+        base: "border-default bg-default relative my-6 block rounded-none border p-4 transition-colors sm:p-6",
+      },
+    },
+    proseBadge: {
+      base: "rounded-none",
+    },
+    pageCard: {
+      slots: {
+        root: "relative flex rounded-none",
+        spotlight: "pointer-events-none absolute inset-0 rounded-none bg-default/90",
+      },
+    },
     formField: {
       slots: {
         wrapper: "w-full",

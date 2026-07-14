@@ -1,18 +1,18 @@
 <template>
-  <div class="grid gap-3">
+  <div class="border-default/70 border-b py-5">
     <NuxtLink
       to="https://rahulv.dev/?connect&referrer=inspira-ui"
       target="_blank"
       rel="noreferrer"
       aria-label="Hire the creator for custom Vue and Nuxt work"
-      class="group bg-elevated/35 ring-default/70 hover:bg-elevated/55 border-accent-foreground/25 relative overflow-hidden rounded-[1.5rem] border-2 border-solid p-1 ring transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none dark:border-none"
+      class="group border-default/70 bg-elevated/20 hover:bg-elevated/45 relative block overflow-hidden rounded-none border transition-colors duration-200 motion-reduce:transition-none"
     >
-      <div class="relative rounded-[calc(1.5rem-0.25rem)] p-3.5">
+      <div class="relative p-4">
         <div class="flex items-start gap-3">
           <div class="relative shrink-0">
             <span
               aria-hidden="true"
-              class="ring-default/70 block size-10 rounded-full bg-cover bg-center ring"
+              class="ring-default/70 block size-9 rounded-full bg-cover bg-center ring"
               style="background-image: url(&quot;https://github.com/rahul-vashishtha.png&quot;)"
             />
             <span
@@ -33,20 +33,20 @@
           </div>
         </div>
 
-        <p class="text-muted mt-2 text-justify text-sm leading-5">
+        <p class="text-muted mt-3 text-sm leading-5">
           Components, brand systems, and creative Vue/Nuxt development.
         </p>
 
-        <div class="mt-4 flex items-center justify-between gap-2">
+        <div class="mt-5 flex items-center justify-between gap-px">
           <div class="flex flex-1 flex-wrap gap-1">
             <span
-              class="bg-inverted text-inverted ring-default/60 w-full rounded-full px-3 py-2 text-center text-sm font-medium ring"
+              class="bg-inverted text-inverted w-full rounded-none px-3 py-2 text-center text-sm font-medium"
             >
               Contact Now
             </span>
           </div>
           <span
-            class="bg-inverted text-inverted flex size-8.5 items-center justify-center rounded-full transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:rotate-45"
+            class="bg-inverted text-inverted flex size-9 items-center justify-center rounded-none transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
           >
             <UIcon
               name="i-lucide-arrow-up-right"

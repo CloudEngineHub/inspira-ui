@@ -301,13 +301,13 @@ const componentSections = computed(() => {
           </div>
 
           <div
-            class="border-default/70 flex flex-nowrap gap-1.5 overflow-x-auto border-t p-5 [scrollbar-width:none] sm:flex-wrap sm:overflow-visible sm:px-7 [&::-webkit-scrollbar]:hidden"
+            class="border-default/70 flex flex-wrap gap-1.5 overflow-x-auto border-t p-5 [scrollbar-width:none] sm:flex-wrap sm:overflow-visible sm:px-7 [&::-webkit-scrollbar]:hidden"
           >
             <button
               v-for="category in categoryOptions"
               :key="category.id"
               type="button"
-              class="relative isolate inline-flex h-9 items-center gap-2 overflow-hidden rounded-none border px-3 text-sm font-medium transition-colors duration-200 motion-reduce:transition-none"
+              class="relative isolate inline-flex h-9 min-w-fit items-center gap-2 overflow-hidden rounded-none border px-3 text-sm font-medium transition-colors duration-200 motion-reduce:transition-none"
               :class="filterButtonClass(category.id)"
               :aria-pressed="selectedCategory === category.id"
               @click="selectedCategory = category.id"

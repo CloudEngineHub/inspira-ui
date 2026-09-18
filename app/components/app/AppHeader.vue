@@ -24,7 +24,7 @@ const links = computed(() =>
       root: 'border-b border-default/70 bg-default/85 backdrop-blur-xl',
       container: 'gap-4',
       left: 'lg:flex-1 flex items-center gap-2',
-      center: 'hidden flex-1 justify-center lg:flex',
+      center: 'hidden h-full flex-1 justify-center lg:flex',
       right: 'flex items-center justify-end lg:flex-1 gap-px',
       title:
         'transition-opacity duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:opacity-75 active:opacity-60 motion-reduce:transition-none',
@@ -35,7 +35,7 @@ const links = computed(() =>
     :title="appConfig.header?.title || site.name"
     mode="drawer"
   >
-    <AppHeaderCenter />
+    <AppHeaderNav />
 
     <template #title>
       <AppHeaderLogo class="h-6 w-auto shrink-0" />
@@ -62,7 +62,8 @@ const links = computed(() =>
 
       <UContentSearchButton
         tooltip
-        class="hover:bg-elevated/60 size-11 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:hidden"
+        aria-label="Search documentation"
+        class="hover:bg-elevated/60 size-11 rounded-none transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.94] motion-reduce:transition-none lg:size-9"
         :ui="{ leadingIcon: 'size-4' }"
       />
 

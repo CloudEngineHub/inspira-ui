@@ -1,7 +1,7 @@
 export function useDocsPageUi() {
   return {
     shell: {
-      root: "min-h-[calc(100dvh-var(--ui-header-height)-3rem)] lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-0 lg:border-x lg:border-default/70",
+      root: "min-h-[calc(100dvh-var(--ui-header-height))] lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-0 lg:border-x lg:border-default/70",
       left: "lg:col-span-1 lg:border-e lg:border-default/70",
       center: "min-w-0 lg:col-span-1",
     },
@@ -44,7 +44,7 @@ export function useDocsPageUi() {
       linkDescription: "mt-1.5 line-clamp-2 text-sm leading-[1.6] text-muted",
     },
     toc: {
-      root: "mx-0 px-4 sm:mx-0 sm:px-4 lg:top-[calc(var(--ui-header-height)+3rem)] lg:max-h-[calc(100dvh-var(--ui-header-height)-3rem)] lg:bg-transparent",
+      root: "mx-0 px-4 sm:mx-0 sm:px-4 lg:top-[var(--ui-header-height)] lg:max-h-[calc(100dvh-var(--ui-header-height))] lg:bg-transparent",
       container: "border-default/70 flex flex-col border-b py-5 lg:border-b-0 lg:py-6",
       trigger: "font-mono text-[0.6875rem] font-medium tracking-[0.12em] uppercase",
       list: "space-y-px",
@@ -54,6 +54,6 @@ export function useDocsPageUi() {
       bottom: "hidden border-t border-default/70 lg:flex lg:flex-col lg:gap-0",
     },
     rightAside:
-      "sticky top-[calc(var(--ui-header-height)+3rem)] hidden max-h-[calc(100dvh-var(--ui-header-height)-3rem)] overflow-y-auto px-4 py-6 lg:block",
+      "sticky top-[var(--ui-header-height)] hidden max-h-[calc(100dvh-var(--ui-header-height))] overflow-y-auto px-4 py-6 lg:block",
   } as const;
 }

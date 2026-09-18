@@ -15,11 +15,12 @@ const communityLabels: Record<string, string> = {
   "Star on Github": "GitHub",
   "Create Issue": "Issues",
   "Join Discord": "Discord",
+  "Follow on X": "X",
 };
 
 const communityLinks = computed(() => {
   return (appConfig.toc?.bottom?.links ?? [])
-    .filter((link) => ["Star on Github", "Join Discord"].includes(link.label))
+    .filter((link) => ["Star on Github", "Join Discord", "Follow on X"].includes(link.label))
     .map((link) => ({
       ...link,
       label: communityLabels[link.label] ?? link.label,
@@ -45,8 +46,6 @@ const communityLinks = computed(() => {
         @click="open(`Explain the page ${pageUrl}`, true)"
       />
     </div>
-
-    <HireTheCreator />
 
     <InspiraProUpsell />
 

@@ -220,7 +220,7 @@ function statusDotClass(component: DocsEnCollectionItem) {
 <template>
   <MotionConfig :transition="filterTransition">
     <section
-      class="flex w-full flex-col xl:h-[calc(100dvh-var(--ui-header-height)-3rem)] xl:overflow-hidden"
+      class="flex w-full flex-col xl:h-[calc(100dvh-var(--ui-header-height))] xl:overflow-hidden"
     >
       <header
         class="border-default/70 flex shrink-0 flex-col gap-6 border-b px-5 py-7 sm:px-7 lg:flex-row lg:items-end lg:justify-between lg:px-8 xl:px-9"

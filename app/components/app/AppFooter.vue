@@ -16,6 +16,11 @@ const ecosystemLinks = [
   { label: "Instruo", to: "https://instruo.org" },
 ];
 
+const authorLinks = [
+  { label: "Rahul Vashishtha", to: "https://rahulv.dev" },
+  { label: "Igris Labs", to: "https://igrislabs.com" },
+];
+
 const socialLinks = computed(() =>
   [
     ...Object.entries(appConfig.socials || {}).map(([key, url]) => ({
@@ -40,7 +45,7 @@ const socialLinks = computed(() =>
   <footer class="border-default/70 bg-default border-t">
     <UContainer>
       <div class="grid gap-12 py-12 sm:py-14 lg:grid-cols-12 lg:gap-8 lg:py-16">
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-4">
           <NuxtLink
             :to="localePath('/')"
             class="focus-visible:ring-primary inline-flex min-h-11 items-center gap-3 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -57,7 +62,7 @@ const socialLinks = computed(() =>
         </div>
 
         <nav
-          class="grid grid-cols-2 gap-8 sm:max-w-xl lg:col-span-5 lg:col-start-7"
+          class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:col-start-6"
           aria-label="Footer navigation"
         >
           <div>
@@ -104,6 +109,33 @@ const socialLinks = computed(() =>
                 </NuxtLink>
               </li>
             </ul>
+          </div>
+
+          <div>
+            <h2 class="text-highlighted text-sm font-medium">Author</h2>
+            <ul class="border-default/70 mt-4 border-t">
+              <li
+                v-for="link in authorLinks"
+                :key="link.label"
+                class="border-default/70 border-b"
+              >
+                <NuxtLink
+                  :to="link.to"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group text-muted hover:text-highlighted focus-visible:ring-primary flex min-h-11 items-center justify-between gap-3 text-sm transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset motion-reduce:transition-none"
+                >
+                  {{ link.label }}
+                  <UIcon
+                    name="i-lucide-arrow-up-right"
+                    class="size-3.5 shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+                  />
+                </NuxtLink>
+              </li>
+            </ul>
+            <p class="text-muted mt-3 text-xs leading-5">
+              Personal lab for experiments and products.
+            </p>
           </div>
         </nav>
       </div>

@@ -149,6 +149,12 @@ export default defineAppConfig({
     },
   },
 
+  github: {
+    owner: "Rahul Vashishtha",
+    name: "inspira-ui",
+    url: "https://github.com/unovue/inspira-ui",
+  },
+
   socials: {
     discord: "https://discord.gg/Xbh5DwJRc9",
     x: "https://x.com/rahulv_dev",
